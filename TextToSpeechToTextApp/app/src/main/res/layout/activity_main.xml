@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".MainActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/con_lay_audio_controls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@color/colorPrimary"
+            android:padding="15dp"
+            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_pitch_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pitch"
+                android:textColor="#BEF8F2"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_pitch_increase"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@null"
+                android:text="+"
+                android:textColor="#ffffff"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_pitch_value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_pitch_value" />
+
+            <TextView
+                android:id="@+id/tv_pitch_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:text="0"
+                android:textColor="#BEF8F2"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_pitch_increase"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_pitch_decrease"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@null"
+                android:text="-"
+                android:textColor="#ffffff"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_pitch_value"
+                app:layout_constraintEnd_toStartOf="@+id/tv_pitch_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_pitch_value" />
+
+            <SeekBar
+                android:id="@+id/seekbar_pitch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:progress="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_pitch_title" />
+
+            <TextView
+                android:id="@+id/tv_speech_rate_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Speed"
+                android:textColor="#BEF8F2"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seekbar_pitch" />
+
+            <Button
+                android:id="@+id/btn_speech_rate_increase"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@null"
+                android:text="+"
+                android:textColor="#ffffff"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_speech_rate_value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_speech_rate_value" />
+
+            <TextView
+                android:id="@+id/tv_speech_rate_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="0"
+                android:textColor="#BEF8F2"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_speech_rate_increase"
+                app:layout_constraintTop_toBottomOf="@+id/seekbar_pitch" />
+
+            <Button
+                android:id="@+id/btn_speech_rate_decrease"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@null"
+                android:text="-"
+                android:textColor="#ffffff"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_speech_rate_value"
+                app:layout_constraintEnd_toStartOf="@+id/tv_speech_rate_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_speech_rate_value" />
+
+            <SeekBar
+                android:id="@+id/seekbar_speech_rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:progress="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_speech_rate_title" />
+
+            <TextView
+                android:id="@+id/tv_volume_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Volume"
+                android:textColor="#BEF8F2"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seekbar_speech_rate" />
+
+            <Button
+                android:id="@+id/btn_volume_decrease"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@null"
+                android:text="-"
+                android:textColor="#ffffff"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_volume_value"
+                app:layout_constraintEnd_toStartOf="@+id/tv_volume_value"
+                app:layout_constraintTop_toTopOf="@+id/tv_volume_value" />
+
+            <TextView
+                android:id="@+id/tv_volume_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="0"
+                android:textColor="#BEF8F2"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/btn_volume_increase"
+                app:layout_constraintTop_toBottomOf="@+id/seekbar_speech_rate" />
+
+            <Button
+                android:id="@+id/btn_volume_increase"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@null"
+                android:text="+"
+                android:textColor="#ffffff"
+                android:textSize="17sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_volume_value"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_volume_value" />
+
+            <SeekBar
+                android:id="@+id/seekbar_volume"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:max="15"
+                android:min="0"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_volume_title" />
+
+            <TextView
+                android:id="@+id/tv_set_language_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Set Language"
+                android:textColor="#BEF8F2"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/seekbar_volume" />
+
+            <TextView
+                android:id="@+id/tv_set_language"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorPrimaryDark"
+                android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+                android:gravity="center_vertical"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:text="Set Language"
+                android:textColor="#BEF8F2"
+                android:textSize="16sp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_set_language_title" />
+
+            <Button
+                android:id="@+id/btn_clear_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="7dp"
+                android:background="@color/colorPrimaryDark"
+                android:text="CLEAR TEXT"
+                android:textColor="#BEF8F2"
+                app:layout_constraintEnd_toStartOf="@+id/btn_save_to_audio_file"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_set_language" />
+
+            <Button
+                android:id="@+id/btn_save_to_audio_file"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="7dp"
+                android:background="@color/colorPrimaryDark"
+                android:text="SAVE AUDIO"
+                android:textColor="#BEF8F2"
+                app:layout_constraintEnd_toStartOf="@+id/btn_open_saved_audio_folder"
+                app:layout_constraintStart_toEndOf="@+id/btn_clear_text"
+                app:layout_constraintTop_toBottomOf="@+id/tv_set_language" />
+
+            <Button
+                android:id="@+id/btn_open_saved_audio_folder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/colorPrimaryDark"
+                android:text="OPEN FOLDER"
+                android:textColor="#BEF8F2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_save_to_audio_file"
+                app:layout_constraintTop_toBottomOf="@+id/tv_set_language" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_hide_show_controls"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="7dp"
+            android:background="@color/colorPrimary"
+            android:text="Controls"
+            android:textColor="#BEF8F2"
+            app:layout_constraintEnd_toStartOf="@+id/btn_text_to_speech"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/con_lay_audio_controls" />
+
+        <Button
+            android:id="@+id/btn_text_to_speech"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="7dp"
+            android:background="@color/colorPrimary"
+            android:text="Read"
+            android:textColor="#BEF8F2"
+            app:layout_constraintEnd_toStartOf="@+id/btn_stop"
+            app:layout_constraintStart_toEndOf="@+id/btn_hide_show_controls"
+            app:layout_constraintTop_toBottomOf="@+id/con_lay_audio_controls" />
+
+        <Button
+            android:id="@+id/btn_stop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@color/colorPrimary"
+            android:text="STOP"
+            android:textColor="#BEF8F2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_text_to_speech"
+            app:layout_constraintTop_toBottomOf="@+id/con_lay_audio_controls" />
+
+        <Button
+            android:id="@+id/btn_speech_to_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@color/colorPrimary"
+            android:text="Speak"
+            android:textColor="#BEF8F2"
+            app:layout_constraintTop_toBottomOf="@+id/btn_hide_show_controls" />
+
+        <!-- If u dont add a layout around edittext it keeps getting focus all the time for every touch of a view-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_speech_to_text">
+
+            <EditText
+                android:id="@+id/et_text_to_convert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="#BEF8F2"
+                android:cursorVisible="true"
+                android:elevation="5dp"
+                android:gravity="top"
+                android:hapticFeedbackEnabled="true"
+                android:hint="Type Text"
+                android:minHeight="250dp"
+                android:nestedScrollingEnabled="true"
+                android:padding="15dp"
+                android:textColor="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary"
+                android:textCursorDrawable="@android:drawable/dark_header"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
