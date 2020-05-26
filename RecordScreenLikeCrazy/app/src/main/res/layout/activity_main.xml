@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/con_lay_home"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <VideoView
+        android:id="@+id/vv_screen_recording_video"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/toggle_btn_start_stop_recording"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SurfaceView
+        android:id="@+id/surface_view_camera_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
+
+    <ToggleButton
+        android:id="@+id/toggle_btn_start_stop_recording"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="START RECORDING"
+        android:textOn="STOP RECORDING"
+        app:layout_constraintBottom_toTopOf="@+id/btn_stop_camera"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/toggle_btn_flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="FLASH ON"
+        android:textOn="FLASH OFF"
+        app:layout_constraintBottom_toTopOf="@+id/btn_stop_camera"
+        app:layout_constraintStart_toEndOf="@+id/toggle_btn_start_stop_recording" />
+
+    <TextView
+        android:id="@+id/tv_countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="0"
+        android:textColor="@android:color/white"
+        android:textSize="120sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_front_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FRONT CAM"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_stop_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="STOP CAMERA"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_front_camera" />
+
+    <Button
+        android:id="@+id/btn_rear_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="REAR CAM"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btn_stop_camera" />
+</androidx.constraintlayout.widget.ConstraintLayout>
