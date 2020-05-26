@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/con_lay_fresco"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#000000"
+    tools:context=".FrescoImageViewerActivity">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/img_fresco_full_image"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:background="#000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:fadeDuration="300"
+        fresco:failureImage="@drawable/ic_error_outline_black_24dp"
+        fresco:failureImageScaleType="centerInside"
+        fresco:progressBarAutoRotateInterval="1000"
+        fresco:progressBarImage="@drawable/ic_loading"
+        fresco:progressBarImageScaleType="centerInside"
+        fresco:retryImage="@drawable/ic_refresh_black_24dp"
+        fresco:retryImageScaleType="centerCrop" />
+
+    <ImageView
+        android:id="@+id/poster_slider_fade"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:alpha="0.2"
+        android:contentDescription="Image"
+        android:scaleType="centerCrop"
+        android:src="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:contentDescription="Image"
+        android:elevation="5dp"
+        android:src="@drawable/ic_back"
+        android:tint="#ffffff"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_rotate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="ROTATE"
+        android:textColor="#ffffff"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/img_back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/img_back" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

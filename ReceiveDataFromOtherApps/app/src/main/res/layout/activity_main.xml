@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EEEEEE"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="Receive Text"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_receive_text"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:background="#D3D3D3"
+            android:ellipsize="end"
+            android:hint="Receive Text"
+            android:maxLines="3"
+            android:padding="15dp"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="Receive Images"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_receive_image_1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:contentDescription="Image 1"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/iv_receive_image_2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:contentDescription="Image 2"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/iv_receive_image_3"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimary"
+            android:contentDescription="Image 3"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="Receive Videos"
+            android:textSize="16sp" />
+
+        <VideoView
+            android:id="@+id/vv_receive_video_1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center" />
+
+        <VideoView
+            android:id="@+id/vv_receive_video_2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp" />
+
+        <VideoView
+            android:id="@+id/vv_receive_video_3"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:text="Receive Documents"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/iv_receive_doc_1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="Doc 1"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/iv_receive_doc_2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="Doc 2"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:id="@+id/iv_receive_doc_3"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorPrimaryDark"
+            android:contentDescription="Doc 3"
+            android:scaleType="centerCrop" />
+    </LinearLayout>
+</ScrollView>
