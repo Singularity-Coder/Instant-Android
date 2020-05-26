@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "897678195109",
+    "firebase_url": "https://personal-c27da.firebaseio.com",
+    "project_id": "personal-c27da",
+    "storage_bucket": "personal-c27da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897678195109:android:c1f8cb2ced3f182d5e104c",
+        "android_client_info": {
+          "package_name": "com.singularitycoder.firebaseemailauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897678195109-06qsf7utp4kr8gini27pv5gtodmjuua2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARuUPsL19siQ2wQqrQoK0Q2pSg5Kx0VR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897678195109-06qsf7utp4kr8gini27pv5gtodmjuua2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897678195109:android:b990d3941bb4a39e5e104c",
+        "android_client_info": {
+          "package_name": "com.singularitycoder.firebasegoogleauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897678195109-8goujeg0d48642l1c6frmablo95on2b9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.singularitycoder.firebasegoogleauth",
+            "certificate_hash": "7103a7bcaec4b678c15693a01fd6fd2046957a0e"
+          }
+        },
+        {
+          "client_id": "897678195109-06qsf7utp4kr8gini27pv5gtodmjuua2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARuUPsL19siQ2wQqrQoK0Q2pSg5Kx0VR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897678195109-06qsf7utp4kr8gini27pv5gtodmjuua2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897678195109:android:0652a7bf6700a9325e104c",
+        "android_client_info": {
+          "package_name": "com.singularitycoder.firecloudmessage1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897678195109-06qsf7utp4kr8gini27pv5gtodmjuua2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARuUPsL19siQ2wQqrQoK0Q2pSg5Kx0VR8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897678195109-06qsf7utp4kr8gini27pv5gtodmjuua2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
