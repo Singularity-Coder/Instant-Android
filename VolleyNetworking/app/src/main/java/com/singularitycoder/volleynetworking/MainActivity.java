@@ -107,11 +107,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void getNewsDataFromApi() {
         requestQueue = VolleyRequestQueue.getInstance(this).getRequestQueue();
-        getNewsWithJsonObjectRequest("in", "science", "7f04855731a54f77bff41dcfa5b7a4a4");
+        getNewsWithJsonObjectRequest("in", "science", "YOUR_NEWSAPI.ORG_API_KEY");
         requestQueue.addRequestFinishedListener(request -> {
             if (("application/json").equals(request.getBodyContentType())) {
                 runOnUiThread(() -> Toast.makeText(this, "Got Science News", Toast.LENGTH_SHORT).show());
-                getNewsWithStringRequest("in", "technology", "7f04855731a54f77bff41dcfa5b7a4a4");
+                getNewsWithStringRequest("in", "technology", "YOUR_NEWSAPI.ORG_API_KEY");
             } else {
                 runOnUiThread(() -> Toast.makeText(this, "Got Tech News", Toast.LENGTH_SHORT).show());
             }

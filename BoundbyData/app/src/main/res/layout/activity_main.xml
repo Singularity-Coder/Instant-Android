@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="mainMovieItem"
+            type="com.singularitycoder.boundbydata.MovieItem" />
+
+        <variable
+            name="addMovie"
+            type="com.singularitycoder.boundbydata.MainActivity" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EEEEEE"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            app:boxStrokeColor="@color/colorAccent">
+
+            <EditText
+                android:id="@+id/et_movie_title"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Enter Title"
+                android:text="@={mainMovieItem.title}"
+                android:textColor="@android:color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:boxStrokeColor="@color/colorAccent">
+
+            <EditText
+                android:id="@+id/et_movie_director"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="Enter Director"
+                android:text="@={mainMovieItem.director}"
+                android:textColor="@android:color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_add_movie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:onClick="@{(v) -> addMovie.addMovieItem()}"
+            android:text="ADD MOVIE"
+            android:textColor="@color/colorAccent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_movies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_movie" />
+    </LinearLayout>
+</layout>

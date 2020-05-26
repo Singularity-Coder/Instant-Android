@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Google Auth</string>
+    <string name="ex">https://androidclarified.com/google-signin-android-example/</string>
+</resources>

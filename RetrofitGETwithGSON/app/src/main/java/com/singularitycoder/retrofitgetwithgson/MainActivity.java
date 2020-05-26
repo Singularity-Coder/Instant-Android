@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getNewsDataFromApi() {
         ApiEndPoints apiService = RetrofitService.getRetrofitInstance().create(ApiEndPoints.class);
-        Call<NewsItemResponse> call = apiService.getNewsList("in", "technology", "7058c10f192f48d7bf026d1209cc8dcb");
+        Call<NewsItemResponse> call = apiService.getNewsList("in", "technology", "YOUR_NEWSAPI.ORG_API_KEY");
         call.enqueue(new Callback<NewsItemResponse>() {
 
             @Override

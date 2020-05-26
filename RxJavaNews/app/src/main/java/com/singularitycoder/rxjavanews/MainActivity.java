@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         ApiEndPoints apiService = RetrofitService.getInstance().create(ApiEndPoints.class);
         compositeDisposable.add(
                 apiService
-                        .getNewsListWithSingleObservable("in", "technology", "7f04855731a54f77bff41dcfa5b7a4a4")
+                        .getNewsListWithSingleObservable("in", "technology", "YOUR_NEWSAPI.ORG_API_KEY")
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeWith(new DisposableSingleObserver<NewsItemResponse>() {
@@ -147,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("CheckResult")
     private void getNewsDataFromApiWithDefaultObservable() {
         ApiEndPoints apiService = RetrofitService.getInstance().create(ApiEndPoints.class);
-        Observable<NewsItemResponse> newsObservable = apiService.getNewsListWithDefaultObservable("in", "technology", "7f04855731a54f77bff41dcfa5b7a4a4");
+        Observable<NewsItemResponse> newsObservable = apiService.getNewsListWithDefaultObservable("in", "technology", "YOUR_NEWSAPI.ORG_API_KEY");
         compositeDisposable.add(
                 newsObservable
                         .subscribeOn(Schedulers.io())
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
     private void getNewsDataFromApiWithMaybeObservable() {
         ApiEndPoints apiService = RetrofitService.getInstance().create(ApiEndPoints.class);
         apiService
-                .getNewsListWithMaybeObservable("in", "technology", "7f04855731a54f77bff41dcfa5b7a4a4")
+                .getNewsListWithMaybeObservable("in", "technology", "YOUR_NEWSAPI.ORG_API_KEY")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(newsItemResponse -> newsItemResponse.getArticles())
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getNewsDataFromApiWithFlowableObservable() {
         ApiEndPoints apiService = RetrofitService.getInstance().create(ApiEndPoints.class);
-        Flowable<NewsItemResponse> newsObservable = apiService.getNewsListWithFlowableObservable("in", "technology", "7f04855731a54f77bff41dcfa5b7a4a4");
+        Flowable<NewsItemResponse> newsObservable = apiService.getNewsListWithFlowableObservable("in", "technology", "YOUR_NEWSAPI.ORG_API_KEY");
         compositeDisposable.add(
                 newsObservable
                         .subscribeOn(Schedulers.io())
@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("CheckResult")
     private void getExecutionStatusWithCompletableObservable() {
         ApiEndPoints apiService = RetrofitService.getInstance().create(ApiEndPoints.class);
-        Completable newsObservable = apiService.getExecutionStatusWithCompletableObservable("in", "technology", "7f04855731a54f77bff41dcfa5b7a4a4");
+        Completable newsObservable = apiService.getExecutionStatusWithCompletableObservable("in", "technology", "YOUR_NEWSAPI.ORG_API_KEY");
         newsObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

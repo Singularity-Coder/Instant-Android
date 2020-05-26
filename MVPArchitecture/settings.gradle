@@ -1,0 +1,2 @@
+rootProject.name='MVP Architecture'
+include ':app'
