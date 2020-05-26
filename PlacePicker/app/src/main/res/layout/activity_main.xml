@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="30dp"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_select_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#DBDBDB"
+        android:padding="15dp"
+        android:onClick="autoCompletePlace"
+        android:hint="Select Place"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tv_place_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Place Name: "
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tv_place_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Place Address: "
+        android:textColor="#1E88E5" />
+
+    <TextView
+        android:id="@+id/tv_place_latitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Place Latitude: "
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tv_place_longitude"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Place Longitude: "
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tv_place_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Place Id: "
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tv_place_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Place Phone No: "
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tv_place_ratings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Place Ratings: "
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/tv_place_website"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Place Website: "
+        android:textColor="#000000" />
+
+
+
+</LinearLayout>

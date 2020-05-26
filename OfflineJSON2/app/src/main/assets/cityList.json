@@ -1,0 +1,64 @@
+{
+  "array": [
+    {
+      "id": "1",
+      "city": "Mumbai",
+      "state": "Maharashtra"
+    },
+    {
+      "id": "2",
+      "city": "Delhi",
+      "state": "Delhi"
+    },
+    {
+      "id": "3",
+      "city": "Bengaluru",
+      "state": "Karnataka"
+    },
+    {
+      "id": "4",
+      "city": "Ahmedabad",
+      "state": "Gujarat"
+    },
+    {
+      "id": "5",
+      "city": "Hyderabad",
+      "state": "Telangana"
+    },
+    {
+      "id": "6",
+      "city": "Chennai",
+      "state": "Tamil Nadu"
+    },
+    {
+      "id": "7",
+      "city": "Kolkata",
+      "state": "West Bengal"
+    },
+    {
+      "id": "8",
+      "city": "Pune",
+      "state": "Maharashtra"
+    },
+    {
+      "id": "9",
+      "city": "Jaipur",
+      "state": "Rajasthan"
+    },
+    {
+      "id": "10",
+      "city": "Surat",
+      "state": "Gujarat"
+    },
+    {
+      "id": "11",
+      "city": "Lucknow",
+      "state": "Uttar Pradesh"
+    },
+    {
+      "id": "12",
+      "city": "Kanpur",
+      "state": "Uttar Pradesh"
+    }
+  ]
+}
