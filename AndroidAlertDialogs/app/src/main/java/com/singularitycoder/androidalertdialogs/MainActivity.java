@@ -1,6 +1,5 @@
 package com.singularitycoder.androidalertdialogs;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.UiThread;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -19,8 +17,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.jakewharton.rxbinding3.view.RxView;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     @UiThread
     public void simpleAlertDialog() {
         Bundle bundle = new Bundle();
-        bundle.putBoolean("notAlertDialog", true);
+        bundle.putString("DIALOG_TYPE", "simpleAlert");
 
         DialogFragment dialogFragment = new CustomDialogFragment();
         dialogFragment.setArguments(bundle);
@@ -107,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     @UiThread
     public void listDialog() {
         Bundle bundle = new Bundle();
-        bundle.putBoolean("notAlertDialog", true);
+        bundle.putString("DIALOG_TYPE", "list");
 
         DialogFragment dialogFragment = new CustomDialogFragment();
         dialogFragment.setArguments(bundle);
@@ -124,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     @UiThread
     public void multipleChoiceListDialog() {
         Bundle bundle = new Bundle();
-        bundle.putBoolean("notAlertDialog", true);
+        bundle.putString("DIALOG_TYPE", "multipleSelection");
 
         DialogFragment dialogFragment = new CustomDialogFragment();
         dialogFragment.setArguments(bundle);
@@ -141,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     @UiThread
     public void singleChoiceListDialog() {
         Bundle bundle = new Bundle();
-        bundle.putBoolean("notAlertDialog", true);
+        bundle.putString("DIALOG_TYPE", "singleSelection");
 
         DialogFragment dialogFragment = new CustomDialogFragment();
         dialogFragment.setArguments(bundle);
@@ -158,6 +154,10 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     @UiThread
     private void embedDialogFragment() {
         findViewById(R.id.frameLayout).setVisibility(View.VISIBLE);
+
+        Bundle bundle = new Bundle();
+        bundle.putString("DIALOG_TYPE", "embed");
+
         DialogFragment dialogFragment = new CustomDialogFragment();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
