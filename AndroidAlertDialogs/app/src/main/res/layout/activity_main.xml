@@ -1,39 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="simpleAlertDialog"
-        android:text="Simple Alert Dialog" />
+        android:layout_margin="@dimen/main_act_root_layout_margin"
+        android:orientation="vertical">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="listDialog"
-        android:text="List Dialog" />
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:visibility="gone"/>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="customDialog"
-        android:text="Custom Dialog" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Result"
+            android:textColor="@android:color/black" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="multitpleChoiceListDialog"
-        android:text="Multiple Choice List Dialog" />
+        <Button
+            android:id="@+id/btn_dialog_simple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/simple_alert_dialog"
+            android:textColor="@android:color/white" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="singleChoiceListDialog"
-        android:text="Single Choice List Dialog" />
+        <Button
+            android:id="@+id/btn_dialog_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/list_dialog"
+            android:textColor="@android:color/white" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_dialog_single_choice_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/single_choice_list_dialog"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_dialog_multi_choice_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="@string/multiple_choice_list_dialog"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnEmbedDialogFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="EMBED DIALOG FRAGMENT"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnDialogFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="SIMPLE DIALOG FRAGMENT"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnDialogFragmentFullScreen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="DIALOG FRAGMENT FULL SCREEN"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btnAlertDialogFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Alert Dialog Fragment"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+</ScrollView>

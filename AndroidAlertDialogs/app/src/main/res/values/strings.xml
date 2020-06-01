@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Android Alert Dialogs</string>
+    <string name="app_name">Android Dialogs</string>
+    <string name="simple_alert_dialog">Simple Alert Dialog</string>
+    <string name="list_dialog">List Dialog</string>
+    <string name="single_choice_list_dialog">Single Choice List Dialog</string>
+    <string name="multiple_choice_list_dialog">Multiple Choice List Dialog</string>
+    <string name="custom_dialog">Custom Dialog</string>
 </resources>
