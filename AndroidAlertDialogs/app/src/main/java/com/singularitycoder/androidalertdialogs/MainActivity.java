@@ -89,176 +89,129 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
 
     @UiThread
     public void simpleAlertDialog() {
-        // Use the Builder class for constructing dialog
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("notAlertDialog", true);
 
-        // Set Optional Title
-        alertBuilder.setTitle("Delete Message");
-
-        // Set Optional Message
-        alertBuilder.setMessage("Are you sure you want to delete this message?");
-
-        // Optional Icon for dialog
-        alertBuilder.setIcon(android.R.drawable.ic_dialog_alert);
-
-        // If you want to dismiss dialog on touch of dialog bounds
-        alertBuilder.setCancelable(true);
-
-        // Set positive message
-        alertBuilder.setPositiveButton(
-                "Yes",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        makeText(MainActivity.this, "Yes clicked", LENGTH_SHORT).show();
-                        dialog.cancel();
-                    }
-                });
-
-        // Set Negative message
-        alertBuilder.setNegativeButton(
-                "No",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        makeText(MainActivity.this, "No clicked", LENGTH_SHORT).show();
-                        dialog.cancel();
-                    }
-                });
-
-        // Set neutral if user unable to decide
-        alertBuilder.setNeutralButton("Remind Later", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                makeText(MainActivity.this, "No clicked", LENGTH_SHORT).show();
-                dialog.cancel();
-            }
-        });
-
-        alertBuilder.show();
+        DialogFragment dialogFragment = new CustomDialogFragment();
+        dialogFragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (previousFragment != null) {
+            fragmentTransaction.remove(previousFragment);
+        }
+        fragmentTransaction.addToBackStack(null);
+        dialogFragment.show(fragmentTransaction, "dialog");
     }
 
     @UiThread
     public void listDialog() {
-        // Use the Builder class for constructing dialog
-        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-        alertBuilder.setTitle("What do you want to do?");
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("notAlertDialog", true);
 
-        // If you don't want to dismiss dialog on touch of dialog bounds
-        alertBuilder.setCancelable(false);
-
-        // Create a list
-        String[] selectArray = {"Option 1", "Option 2", "Option 3", "Close Dialog"};
-
-        // Add the list to builder
-        alertBuilder.setItems(selectArray, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // The 'which' argument contains the index position of the selected item
-                switch (which) {
-                    case 0:
-                        // Do something
-                        makeText(MainActivity.this, "Option 1 clicked", LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        // Do something
-                        makeText(MainActivity.this, "Option 2 clicked", LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                        // Do something
-                        makeText(MainActivity.this, "Option 3 clicked", LENGTH_SHORT).show();
-                        break;
-                    case 3:
-                        // Do something
-                        dialog.dismiss();
-                        makeText(MainActivity.this, "Dialog Closed", LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        });
-
-        alertBuilder.show();
+        DialogFragment dialogFragment = new CustomDialogFragment();
+        dialogFragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (previousFragment != null) {
+            fragmentTransaction.remove(previousFragment);
+        }
+        fragmentTransaction.addToBackStack(null);
+        dialogFragment.show(fragmentTransaction, "dialog");
     }
 
     @UiThread
-    public AlertDialog multipleChoiceListDialog() {
+    public void multipleChoiceListDialog() {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("notAlertDialog", true);
 
-        // Track the selected items
-        final ArrayList<Integer> selectedItems = new ArrayList();
-        String[] dialogList = {"Option 1", "Option 2", "Option 3", "Option 4"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        // Set dialog title
-        builder.setTitle("Select Options")
-                // Specify list array, items to be selected by default (null for none), and listener through which to receive callbacks when items selected
-                .setMultiChoiceItems(dialogList, null,
-                        new DialogInterface.OnMultiChoiceClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                                if (isChecked) {
-                                    // If user checked the item, add it to selected items
-                                    selectedItems.add(which);
-
-                                    for (int i = 0; i < selectedItems.size(); i++) {
-                                        System.out.println("Print Selected Items: " + selectedItems.get(i));
-                                    }
-                                } else if (selectedItems.contains(which)) {
-                                    // Else, if the item is already in the array, remove it
-                                    selectedItems.remove(which);
-
-                                    for (int i = 0; i < selectedItems.size(); i++) {
-                                        System.out.println("Print Deselected Items: " + selectedItems.get(i));
-                                    }
-                                }
-                            }
-                        })
-                // Set action buttons
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Save selectedItems results somewhere or return them to the component that opened the dialog
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-
-                    }
-                });
-
-        return builder.show();
+        DialogFragment dialogFragment = new CustomDialogFragment();
+        dialogFragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (previousFragment != null) {
+            fragmentTransaction.remove(previousFragment);
+        }
+        fragmentTransaction.addToBackStack(null);
+        dialogFragment.show(fragmentTransaction, "dialog");
     }
 
     @UiThread
-    public AlertDialog singleChoiceListDialog() {
-        String[] dialogList = {"Option 1", "Option 2", "Option 3", "Option 4"};
+    public void singleChoiceListDialog() {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("notAlertDialog", true);
 
-        // Must have an item checked by default in singlezchoiceListDialog
-        final int checkedItem = 0;
+        DialogFragment dialogFragment = new CustomDialogFragment();
+        dialogFragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (previousFragment != null) {
+            fragmentTransaction.remove(previousFragment);
+        }
+        fragmentTransaction.addToBackStack(null);
+        dialogFragment.show(fragmentTransaction, "dialog");
+    }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        // Set the dialog title
-        builder.setTitle("Select an Option")
-                // Specify the list array, the items to be selected by default (null for none), and the listener through which to receive callbacks when items are selected
-                .setSingleChoiceItems(dialogList, checkedItem, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        System.out.println("Checked Item: " + i);
-                    }
-                })
-                // Set the action buttons
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        // Save selectedItems results somewhere or return them to the component that opened the dialog
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
+    @UiThread
+    private void embedDialogFragment() {
+        findViewById(R.id.frameLayout).setVisibility(View.VISIBLE);
+        DialogFragment dialogFragment = new CustomDialogFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.replace(R.id.frameLayout, dialogFragment);
+        fragmentTransaction.commit();
+    }
 
-                    }
-                });
+    @UiThread
+    private void normalDialogFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("notAlertDialog", true);
+        
+        DialogFragment dialogFragment = new CustomDialogFragment();
+        dialogFragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (previousFragment != null) {
+            fragmentTransaction.remove(previousFragment);
+        }
+        fragmentTransaction.addToBackStack(null);
+        dialogFragment.show(fragmentTransaction, "dialog");
+    }
 
-        return builder.show();
+    @UiThread
+    private void dialogFragmentFullSCreen() {
+        Bundle bundle = new Bundle();
+        bundle.putString("email", "abc@email.com");
+        bundle.putBoolean("fullScreen", true);
+        bundle.putBoolean("notAlertDialog", true);
+        
+        DialogFragment dialogFragment = new CustomDialogFragment();
+        dialogFragment.setArguments(bundle);
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (previousFragment != null) {
+            fragmentTransaction.remove(previousFragment);
+        }
+        fragmentTransaction.addToBackStack(null);
+        dialogFragment.show(fragmentTransaction, "dialog");
+    }
+
+    @UiThread
+    private void alertDialogFragment() {
+        DialogFragment dialogFragment = new CustomDialogFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (previousFragment != null) {
+            fragmentTransaction.remove(previousFragment);
+        }
+        fragmentTransaction.addToBackStack(null);
+        dialogFragment.show(fragmentTransaction, "dialog");
     }
 
     public void showNoticeDialog() {
@@ -284,61 +237,6 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
             // The device is using a large layout, so show the fragment as a dialog
             newFragment.show(fragmentManager, "dialog");
         }
-    }
-
-    private void embedDialogFragment() {
-        findViewById(R.id.frameLayout).setVisibility(View.VISIBLE);
-        DialogFragment dialogFragment = new CustomDialogFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fragmentTransaction.replace(R.id.frameLayout, dialogFragment);
-        fragmentTransaction.commit();
-    }
-
-    private void normalDialogFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("notAlertDialog", true);
-        
-        DialogFragment dialogFragment = new CustomDialogFragment();
-        dialogFragment.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (previousFragment != null) {
-            fragmentTransaction.remove(previousFragment);
-        }
-        fragmentTransaction.addToBackStack(null);
-        dialogFragment.show(fragmentTransaction, "dialog");
-    }
-
-    private void dialogFragmentFullSCreen() {
-        Bundle bundle = new Bundle();
-        bundle.putString("email", "abc@email.com");
-        bundle.putBoolean("fullScreen", true);
-        bundle.putBoolean("notAlertDialog", true);
-        
-        DialogFragment dialogFragment = new CustomDialogFragment();
-        dialogFragment.setArguments(bundle);
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (previousFragment != null) {
-            fragmentTransaction.remove(previousFragment);
-        }
-        fragmentTransaction.addToBackStack(null);
-        dialogFragment.show(fragmentTransaction, "dialog");
-    }
-
-    private void alertDialogFragment() {
-        DialogFragment dialogFragment = new CustomDialogFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (previousFragment != null) {
-            fragmentTransaction.remove(previousFragment);
-        }
-        fragmentTransaction.addToBackStack(null);
-        dialogFragment.show(fragmentTransaction, "dialog");
     }
 
     // The dialog fragment receives a reference to this Activity through the Fragment.onAttach() callback, which it uses to call the following methods defined by the NoticeDialogFragment.NoticeDialogListener interface

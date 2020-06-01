@@ -2,6 +2,7 @@ package com.singularitycoder.androidalertdialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,11 +19,15 @@ import androidx.annotation.UiThread;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
+import java.util.ArrayList;
 import java.util.Map;
+
+import static android.widget.Toast.LENGTH_SHORT;
+import static android.widget.Toast.makeText;
 
 public class CustomDialogFragment extends DialogFragment {
 
-    // Use this instance of the interface to deliver action events
+    // Use getContext() instance of the interface to deliver action events
     CustomDialogFragment.NoticeDialogListener listener;
 
     public CustomDialogFragment() {
@@ -45,7 +50,7 @@ public class CustomDialogFragment extends DialogFragment {
         }
     }
 
-    // The system calls this only when creating the layout in a dialog.
+    // The system calls getContext() only when creating the layout in a dialog.
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -55,7 +60,7 @@ public class CustomDialogFragment extends DialogFragment {
             }
         }
 
-        // The only reason you might override this method when using onCreateView() is to modify any dialog characteristics. For example, the dialog includes a title by default, but your custom layout might not need it. So here you can remove the dialog title, but you must call the superclass to get the Dialog.
+        // The only reason you might override getContext() method when using onCreateView() is to modify any dialog characteristics. For example, the dialog includes a title by default, but your custom layout might not need it. So here you can remove the dialog title, but you must call the superclass to get the Dialog.
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
@@ -84,7 +89,7 @@ public class CustomDialogFragment extends DialogFragment {
         return builder.create();
     }
 
-    // The system calls this to get the DialogFragment's layout, regardless of whether it's being displayed as a dialog or an embedded fragment.
+    // The system calls getContext() to get the DialogFragment's layout, regardless of whether it's being displayed as a dialog or an embedded fragment.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout to use as dialog or embedded fragment
@@ -121,6 +126,158 @@ public class CustomDialogFragment extends DialogFragment {
     }
 
     @UiThread
+    public void simpleAlertDialog() {
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());   // Use the Builder class for constructing dialog
+        alertBuilder.setTitle("Delete Message");    // Optional Title
+        alertBuilder.setMessage("Are you sure you want to delete getContext() message?");   // Optional Message
+        alertBuilder.setIcon(android.R.drawable.ic_dialog_alert);   // Optional Icon for dialog
+        alertBuilder.setCancelable(true);   // Optional - If you want to dismiss dialog on touch of dialog bounds
+        alertBuilder.setPositiveButton( // Set positive message
+                "Yes",
+                (dialog, id) -> {
+                    makeText(getContext(), "Yes clicked", LENGTH_SHORT).show();
+                    dialog.cancel();
+                });
+        alertBuilder.setNegativeButton( // Optional - Negative message
+                "No",
+                (dialog, id) -> {
+                    makeText(getContext(), "No clicked", LENGTH_SHORT).show();
+                    dialog.cancel();
+                });
+        alertBuilder.setNeutralButton("Remind Later", (dialog, id) -> { // Optional - neutral if user unable to decide
+            makeText(getContext(), "No clicked", LENGTH_SHORT).show();
+            dialog.cancel();
+        });
+
+        alertBuilder.show();
+    }
+
+    @UiThread
+    public void listDialog() {
+        // Use the Builder class for constructing dialog
+        final AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getContext());
+        alertBuilder.setTitle("What do you want to do?");
+
+        // If you don't want to dismiss dialog on touch of dialog bounds
+        alertBuilder.setCancelable(false);
+
+        // Create a list
+        String[] selectArray = {"Option 1", "Option 2", "Option 3", "Close Dialog"};
+
+        // Add the list to builder
+        alertBuilder.setItems(selectArray, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // The 'which' argument contains the index position of the selected item
+                switch (which) {
+                    case 0:
+                        // Do something
+                        makeText(getContext(), "Option 1 clicked", LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        // Do something
+                        makeText(getContext(), "Option 2 clicked", LENGTH_SHORT).show();
+                        break;
+                    case 2:
+                        // Do something
+                        makeText(getContext(), "Option 3 clicked", LENGTH_SHORT).show();
+                        break;
+                    case 3:
+                        // Do something
+                        dialog.dismiss();
+                        makeText(getContext(), "Dialog Closed", LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
+
+        alertBuilder.show();
+    }
+
+    @UiThread
+    public AlertDialog multipleChoiceListDialog() {
+
+        // Track the selected items
+        final ArrayList<Integer> selectedItems = new ArrayList();
+        String[] dialogList = {"Option 1", "Option 2", "Option 3", "Option 4"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        // Set dialog title
+        builder.setTitle("Select Options")
+                // Specify list array, items to be selected by default (null for none), and listener through which to receive callbacks when items selected
+                .setMultiChoiceItems(dialogList, null,
+                        new DialogInterface.OnMultiChoiceClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                                if (isChecked) {
+                                    // If user checked the item, add it to selected items
+                                    selectedItems.add(which);
+
+                                    for (int i = 0; i < selectedItems.size(); i++) {
+                                        System.out.println("Print Selected Items: " + selectedItems.get(i));
+                                    }
+                                } else if (selectedItems.contains(which)) {
+                                    // Else, if the item is already in the array, remove it
+                                    selectedItems.remove(which);
+
+                                    for (int i = 0; i < selectedItems.size(); i++) {
+                                        System.out.println("Print Deselected Items: " + selectedItems.get(i));
+                                    }
+                                }
+                            }
+                        })
+                // Set action buttons
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Save selectedItems results somewhere or return them to the component that opened the dialog
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+
+        return builder.show();
+    }
+
+    @UiThread
+    public AlertDialog singleChoiceListDialog() {
+        String[] dialogList = {"Option 1", "Option 2", "Option 3", "Option 4"};
+
+        // Must have an item checked by default in singlezchoiceListDialog
+        final int checkedItem = 0;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        // Set the dialog title
+        builder.setTitle("Select an Option")
+                // Specify the list array, the items to be selected by default (null for none), and the listener through which to receive callbacks when items are selected
+                .setSingleChoiceItems(dialogList, checkedItem, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        System.out.println("Checked Item: " + i);
+                    }
+                })
+                // Set the action buttons
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // Save selectedItems results somewhere or return them to the component that opened the dialog
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+
+        return builder.show();
+    }
+
+    @UiThread
     public void customDialog() {
         // Instantiate Dialog class
         final Dialog dialog = new Dialog(getContext());
@@ -149,7 +306,7 @@ public class CustomDialogFragment extends DialogFragment {
         dialog.show();
     }
 
-    /* The activity that creates an instance of this dialog fragment must implement this interface in order to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it. */
+    /* The activity that creates an instance of getContext() dialog fragment must implement getContext() interface in order to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it. */
     public interface NoticeDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog);
         public void onDialogNegativeClick(DialogFragment dialog);
