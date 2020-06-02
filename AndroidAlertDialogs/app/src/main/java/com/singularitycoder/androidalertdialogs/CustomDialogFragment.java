@@ -19,7 +19,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
@@ -30,9 +29,6 @@ public class CustomDialogFragment extends DialogFragment {
     CustomDialogListener listener;
 
     public CustomDialogFragment() {
-    }
-
-    public CustomDialogFragment(Map<String, String> dialogDetails) {
     }
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
@@ -99,15 +95,16 @@ public class CustomDialogFragment extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        final EditText editText = view.findViewById(R.id.et_email);
+        final EditText etEmail = view.findViewById(R.id.et_email);
         final Button btnDone = view.findViewById(R.id.btn_done);
 
-        if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString("email")))
-            editText.setText(getArguments().getString("email"));
+        if (null != getArguments() && !TextUtils.isEmpty(getArguments().getString("EMAIL"))) {
+            etEmail.setText(getArguments().getString("EMAIL"));
+        }
 
         btnDone.setOnClickListener(view1 -> {
             DialogEditTextListener dialogEditTextListener = (DialogEditTextListener) getActivity();
-            dialogEditTextListener.onEditingFinishedDialog(editText.getText().toString());
+            dialogEditTextListener.onEditingFinishedDialog(etEmail.getText().toString());
             dismiss();
         });
     }
@@ -116,11 +113,9 @@ public class CustomDialogFragment extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        boolean setFullScreen = false;
-        if (getArguments() != null) setFullScreen = getArguments().getBoolean("fullScreen");
-
-        if (setFullScreen)
+        if (null != getArguments() && ("fullScreen").equals(getArguments().getString("DIALOG_TYPE"))) {
             setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);
+        }
     }
 
     @UiThread
@@ -224,7 +219,7 @@ public class CustomDialogFragment extends DialogFragment {
     public void singleChoiceListDialog(AlertDialog.Builder builder) {
         String[] dialogList = {"Option 1", "Option 2", "Option 3", "Option 4"};
 
-        // Must have an item checked by default in singlezchoiceListDialog
+        // Must have an item checked by default in singleChoiceListDialog
         final int checkedItem = 0;
 
         // Set the dialog title
@@ -244,11 +239,11 @@ public class CustomDialogFragment extends DialogFragment {
     }
 
     @UiThread
-    public void customDialog() {
+    public void customDialog(View view) {
         // Instantiate Dialog class
         final Dialog dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(false);
+        dialog.setCancelable(true);
 
         // Set custom Layout
         dialog.setContentView(R.layout.fragment_custom_dialog);
@@ -260,14 +255,18 @@ public class CustomDialogFragment extends DialogFragment {
         dialog.getWindow().setLayout((int) (displayRectangle.width() * 0.8f), dialog.getWindow().getAttributes().height);
 
         // Instantiate custom dialog views
-//        final EditText etDateDialog = dialog.findViewById(R.id.et_date_setter);
-//        final String etString = etDateDialog.getText().toString();
-//
-//        Button btnApply = dialog.findViewById(R.id.btn_ok);
-//        btnApply.setOnClickListener(view -> {
-//            Toast.makeText(getContext(), etString, LENGTH_LONG).show();
-//            dialog.dismiss();
-//        });
+        final EditText etEmail = view.findViewById(R.id.et_email);
+        final Button btnDone = view.findViewById(R.id.btn_done);
+
+        if (null != getArguments() && !TextUtils.isEmpty(getArguments().getString("email"))) {
+            etEmail.setText(getArguments().getString("email"));
+        }
+
+        btnDone.setOnClickListener(view1 -> {
+            DialogEditTextListener dialogEditTextListener = (DialogEditTextListener) getActivity();
+            dialogEditTextListener.onEditingFinishedDialog(etEmail.getText().toString());
+            dialog.dismiss();
+        });
 
         dialog.show();
     }

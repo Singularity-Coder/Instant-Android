@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     @BindView(R.id.btnDialogFragmentFullScreen)
     Button btnDialogFragmentFullScreen;
     @Nullable
+    @BindView(R.id.btnDialogFragmentFullScreen2)
+    Button btnDialogFragmentFullScreen2;
+    @Nullable
     @BindView(R.id.textView)
     TextView textView;
 
@@ -76,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
         compositeDisposable.add(RxView.clicks(btnDialogEmbed).map(o -> btnDialogEmbed).subscribe(button -> MainActivity.this.embedDialog(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
         compositeDisposable.add(RxView.clicks(btnDialogFragment).map(o -> btnDialogFragment).subscribe(button -> MainActivity.this.customDialog(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
         compositeDisposable.add(RxView.clicks(btnDialogFragmentFullScreen).map(o -> btnDialogFragmentFullScreen).subscribe(button -> MainActivity.this.fullScreenDialogType1(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
+        compositeDisposable.add(RxView.clicks(btnDialogFragmentFullScreen2).map(o -> btnDialogFragmentFullScreen2).subscribe(button -> MainActivity.this.fullScreenDialogType2(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
     }
 
     @UiThread
@@ -163,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     @UiThread
     private void customDialog() {
         Bundle bundle = new Bundle();
-        bundle.putBoolean("notAlertDialog", true);
         bundle.putString("DIALOG_TYPE", "custom");
         
         DialogFragment dialogFragment = new CustomDialogFragment();
@@ -181,9 +184,7 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     @UiThread
     private void fullScreenDialogType1() {
         Bundle bundle = new Bundle();
-        bundle.putString("email", "abc@email.com");
-        bundle.putBoolean("fullScreen", true);
-        bundle.putBoolean("notAlertDialog", true);
+        bundle.putString("EMAIL", "abc@email.com");
         bundle.putString("DIALOG_TYPE", "fullScreen");
         
         DialogFragment dialogFragment = new CustomDialogFragment();
@@ -200,9 +201,7 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
 
     public void fullScreenDialogType2() {
         Bundle bundle = new Bundle();
-        bundle.putString("email", "abc@email.com");
-        bundle.putBoolean("fullScreen", true);
-        bundle.putBoolean("notAlertDialog", true);
+        bundle.putString("EMAIL", "abc@email.com");
         bundle.putString("DIALOG_TYPE", "fullScreen");
 
         boolean isLargeLayout = true;
@@ -211,12 +210,12 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
         FragmentManager fragmentManager = getSupportFragmentManager();
         DialogFragment dialogFragment = new CustomDialogFragment();
         dialogFragment.setArguments(bundle);
+        // The device is smaller, so show the fragment fullscreen
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        // Optional - Specify a transition animation
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
         if (isLargeLayout) {
-            // The device is smaller, so show the fragment fullscreen
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            // For a little polish, specify a transition animation
-            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             // To make it fullscreen, use the 'content' root view as the container for the fragment, which is always the root view for the activity
             transaction.add(android.R.id.content, dialogFragment).addToBackStack(null).commit();
         } else {
@@ -246,7 +245,7 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     @Override
     public void onEditingFinishedDialog(String inputText) {
         if (TextUtils.isEmpty(inputText)) textView.setText("Email field is empty");
-        else textView.setText("Email: " + inputText);
+        else textView.setText(inputText);
     }
 
     @Override
