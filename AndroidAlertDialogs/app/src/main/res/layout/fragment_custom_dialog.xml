@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    android:padding="10dp"
     android:orientation="vertical">
+
+<!--    Use a textview with long text to make the dialog wide-->
 
     <EditText
         android:id="@+id/et_email"

@@ -43,6 +43,15 @@ public class CustomDialogFragment extends DialogFragment {
         }
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (null != getArguments() && ("fullScreen").equals(getArguments().getString("DIALOG_TYPE"))) {
+            setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);
+        }
+    }
+
     // The system calls getContext() only when creating the layout in a dialog.
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -50,8 +59,7 @@ public class CustomDialogFragment extends DialogFragment {
         // Build the dialog and set up the button click handlers
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        if (getArguments() != null) {
-
+        if (null != getArguments()) {
             if (("simpleAlert").equals(getArguments().getString("DIALOG_TYPE"))) {
                 simpleAlertDialog(builder);
             }
@@ -73,7 +81,7 @@ public class CustomDialogFragment extends DialogFragment {
             }
 
             if (("custom").equals(getArguments().getString("DIALOG_TYPE"))) {
-                return super.onCreateDialog(savedInstanceState);
+               return super.onCreateDialog(savedInstanceState);
             }
 
             if (("fullScreen").equals(getArguments().getString("DIALOG_TYPE"))) {
@@ -107,15 +115,6 @@ public class CustomDialogFragment extends DialogFragment {
             dialogEditTextListener.onEditingFinishedDialog(etEmail.getText().toString());
             dismiss();
         });
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (null != getArguments() && ("fullScreen").equals(getArguments().getString("DIALOG_TYPE"))) {
-            setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);
-        }
     }
 
     @UiThread
