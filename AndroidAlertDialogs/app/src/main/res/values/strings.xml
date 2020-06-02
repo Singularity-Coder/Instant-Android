@@ -4,5 +4,7 @@
     <string name="list_dialog">List Dialog</string>
     <string name="single_choice_list_dialog">Single Choice List Dialog</string>
     <string name="multiple_choice_list_dialog">Multiple Choice List Dialog</string>
+    <string name="embed_dialog">Embed Dialog</string>
     <string name="custom_dialog">Custom Dialog</string>
+    <string name="full_screen_dialog">Full Screen Dialog</string>
 </resources>

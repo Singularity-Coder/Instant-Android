@@ -26,7 +26,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import static android.widget.Toast.LENGTH_SHORT;
 import static android.widget.Toast.makeText;
 
-public class MainActivity extends AppCompatActivity implements CustomDialogFragment.NoticeDialogListener, CustomDialogFragment.DialogListener {
+public class MainActivity extends AppCompatActivity implements CustomDialogFragment.CustomDialogListener, CustomDialogFragment.DialogEditTextListener {
 
     @Nullable
     @BindView(R.id.btn_dialog_simple)
@@ -49,9 +49,6 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     @Nullable
     @BindView(R.id.btnDialogFragmentFullScreen)
     Button btnDialogFragmentFullScreen;
-    @Nullable
-    @BindView(R.id.btnAlertDialogFragment)
-    Button btnDialogAlert;
     @Nullable
     @BindView(R.id.textView)
     TextView textView;
@@ -76,11 +73,9 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
         compositeDisposable.add(RxView.clicks(btnDialogList).map(o -> btnDialogList).subscribe(button -> MainActivity.this.listDialog(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
         compositeDisposable.add(RxView.clicks(btnDialogSingleChoiceList).map(o -> btnDialogSingleChoiceList).subscribe(button -> MainActivity.this.singleChoiceListDialog(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
         compositeDisposable.add(RxView.clicks(btnDialogMultiChoiceList).map(o -> btnDialogMultiChoiceList).subscribe(button -> MainActivity.this.multipleChoiceListDialog(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
-
-        compositeDisposable.add(RxView.clicks(btnDialogEmbed).map(o -> btnDialogEmbed).subscribe(button -> MainActivity.this.embedDialogFragment(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
-        compositeDisposable.add(RxView.clicks(btnDialogFragment).map(o -> btnDialogFragment).subscribe(button -> MainActivity.this.normalDialogFragment(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
-        compositeDisposable.add(RxView.clicks(btnDialogFragmentFullScreen).map(o -> btnDialogFragmentFullScreen).subscribe(button -> MainActivity.this.dialogFragmentFullSCreen(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
-        compositeDisposable.add(RxView.clicks(btnDialogAlert).map(o -> btnDialogAlert).subscribe(button -> MainActivity.this.alertDialogFragment(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
+        compositeDisposable.add(RxView.clicks(btnDialogEmbed).map(o -> btnDialogEmbed).subscribe(button -> MainActivity.this.embedDialog(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
+        compositeDisposable.add(RxView.clicks(btnDialogFragment).map(o -> btnDialogFragment).subscribe(button -> MainActivity.this.customDialog(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
+        compositeDisposable.add(RxView.clicks(btnDialogFragmentFullScreen).map(o -> btnDialogFragmentFullScreen).subscribe(button -> MainActivity.this.fullScreenDialogType1(), throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show()));
     }
 
     @UiThread
@@ -92,12 +87,12 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
         dialogFragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("TAG_CustomDialogFragment");
         if (previousFragment != null) {
             fragmentTransaction.remove(previousFragment);
         }
         fragmentTransaction.addToBackStack(null);
-        dialogFragment.show(fragmentTransaction, "dialog");
+        dialogFragment.show(fragmentTransaction, "TAG_CustomDialogFragment");
     }
 
     @UiThread
@@ -109,12 +104,12 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
         dialogFragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("TAG_CustomDialogFragment");
         if (previousFragment != null) {
             fragmentTransaction.remove(previousFragment);
         }
         fragmentTransaction.addToBackStack(null);
-        dialogFragment.show(fragmentTransaction, "dialog");
+        dialogFragment.show(fragmentTransaction, "TAG_CustomDialogFragment");
     }
 
     @UiThread
@@ -126,12 +121,12 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
         dialogFragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("TAG_CustomDialogFragment");
         if (previousFragment != null) {
             fragmentTransaction.remove(previousFragment);
         }
         fragmentTransaction.addToBackStack(null);
-        dialogFragment.show(fragmentTransaction, "dialog");
+        dialogFragment.show(fragmentTransaction, "TAG_CustomDialogFragment");
     }
 
     @UiThread
@@ -143,16 +138,16 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
         dialogFragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("TAG_CustomDialogFragment");
         if (previousFragment != null) {
             fragmentTransaction.remove(previousFragment);
         }
         fragmentTransaction.addToBackStack(null);
-        dialogFragment.show(fragmentTransaction, "dialog");
+        dialogFragment.show(fragmentTransaction, "TAG_CustomDialogFragment");
     }
 
     @UiThread
-    private void embedDialogFragment() {
+    private void embedDialog() {
         findViewById(R.id.frameLayout).setVisibility(View.VISIBLE);
 
         Bundle bundle = new Bundle();
@@ -166,65 +161,56 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     }
 
     @UiThread
-    private void normalDialogFragment() {
+    private void customDialog() {
         Bundle bundle = new Bundle();
         bundle.putBoolean("notAlertDialog", true);
+        bundle.putString("DIALOG_TYPE", "custom");
         
         DialogFragment dialogFragment = new CustomDialogFragment();
         dialogFragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("TAG_CustomDialogFragment");
         if (previousFragment != null) {
             fragmentTransaction.remove(previousFragment);
         }
         fragmentTransaction.addToBackStack(null);
-        dialogFragment.show(fragmentTransaction, "dialog");
+        dialogFragment.show(fragmentTransaction, "TAG_CustomDialogFragment");
     }
 
     @UiThread
-    private void dialogFragmentFullSCreen() {
+    private void fullScreenDialogType1() {
         Bundle bundle = new Bundle();
         bundle.putString("email", "abc@email.com");
         bundle.putBoolean("fullScreen", true);
         bundle.putBoolean("notAlertDialog", true);
+        bundle.putString("DIALOG_TYPE", "fullScreen");
         
         DialogFragment dialogFragment = new CustomDialogFragment();
         dialogFragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
+        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("TAG_CustomDialogFragment");
         if (previousFragment != null) {
             fragmentTransaction.remove(previousFragment);
         }
         fragmentTransaction.addToBackStack(null);
-        dialogFragment.show(fragmentTransaction, "dialog");
+        dialogFragment.show(fragmentTransaction, "TAG_CustomDialogFragment");
     }
 
-    @UiThread
-    private void alertDialogFragment() {
-        DialogFragment dialogFragment = new CustomDialogFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        Fragment previousFragment = getSupportFragmentManager().findFragmentByTag("dialog");
-        if (previousFragment != null) {
-            fragmentTransaction.remove(previousFragment);
-        }
-        fragmentTransaction.addToBackStack(null);
-        dialogFragment.show(fragmentTransaction, "dialog");
-    }
+    public void fullScreenDialogType2() {
+        Bundle bundle = new Bundle();
+        bundle.putString("email", "abc@email.com");
+        bundle.putBoolean("fullScreen", true);
+        bundle.putBoolean("notAlertDialog", true);
+        bundle.putString("DIALOG_TYPE", "fullScreen");
 
-    public void showNoticeDialog() {
-        // Create an instance of the dialog fragment and show it
-        DialogFragment dialog = new CustomDialogFragment();
-        dialog.show(getSupportFragmentManager(), "TAG_NoticeDialogFragment");
-    }
-
-    public void showDialog() {
         boolean isLargeLayout = true;
 
+        // Create an instance of the dialog fragment and show it
         FragmentManager fragmentManager = getSupportFragmentManager();
-        CustomDialogFragment newFragment = new CustomDialogFragment();
+        DialogFragment dialogFragment = new CustomDialogFragment();
+        dialogFragment.setArguments(bundle);
 
         if (isLargeLayout) {
             // The device is smaller, so show the fragment fullscreen
@@ -232,10 +218,10 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
             // For a little polish, specify a transition animation
             transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
             // To make it fullscreen, use the 'content' root view as the container for the fragment, which is always the root view for the activity
-            transaction.add(android.R.id.content, newFragment).addToBackStack(null).commit();
+            transaction.add(android.R.id.content, dialogFragment).addToBackStack(null).commit();
         } else {
             // The device is using a large layout, so show the fragment as a dialog
-            newFragment.show(fragmentManager, "dialog");
+            dialogFragment.show(fragmentManager, "TAG_CustomDialogFragment");
         }
     }
 
@@ -258,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements CustomDialogFragm
     }
 
     @Override
-    public void onFinishEditDialog(String inputText) {
+    public void onEditingFinishedDialog(String inputText) {
         if (TextUtils.isEmpty(inputText)) textView.setText("Email field is empty");
         else textView.setText("Email: " + inputText);
     }

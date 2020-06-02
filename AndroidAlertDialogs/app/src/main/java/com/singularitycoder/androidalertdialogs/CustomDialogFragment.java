@@ -2,7 +2,6 @@ package com.singularitycoder.androidalertdialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -28,7 +27,7 @@ import static android.widget.Toast.makeText;
 public class CustomDialogFragment extends DialogFragment {
 
     // Use getContext() instance of the interface to deliver action events
-    CustomDialogFragment.NoticeDialogListener listener;
+    CustomDialogListener listener;
 
     public CustomDialogFragment() {
     }
@@ -42,7 +41,7 @@ public class CustomDialogFragment extends DialogFragment {
         super.onAttach(context);
         // Verify that the host activity implements the callback interface
         try {
-            listener = (CustomDialogFragment.NoticeDialogListener) context;     // Instantiate the NoticeDialogListener so we can send events to the host
+            listener = (CustomDialogListener) context;     // Instantiate the NoticeDialogListener so we can send events to the host
         } catch (ClassCastException e) {
             throw new ClassCastException(getActivity().toString() + " must implement NoticeDialogListener");    // The activity doesn't implement the interface, throw exception
         }
@@ -51,15 +50,11 @@ public class CustomDialogFragment extends DialogFragment {
     // The system calls getContext() only when creating the layout in a dialog.
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         // The only reason you might override getContext() method when using onCreateView() is to modify any dialog characteristics. For example, the dialog includes a title by default, but your custom layout might not need it. So here you can remove the dialog title, but you must call the superclass to get the Dialog.
         // Build the dialog and set up the button click handlers
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         if (getArguments() != null) {
-            if (getArguments().getBoolean("notAlertDialog")) {
-                return super.onCreateDialog(savedInstanceState);
-            }
 
             if (("simpleAlert").equals(getArguments().getString("DIALOG_TYPE"))) {
                 simpleAlertDialog(builder);
@@ -78,7 +73,15 @@ public class CustomDialogFragment extends DialogFragment {
             }
 
             if (("embed").equals(getArguments().getString("DIALOG_TYPE"))) {
+                return super.onCreateDialog(savedInstanceState);
+            }
 
+            if (("custom").equals(getArguments().getString("DIALOG_TYPE"))) {
+                return super.onCreateDialog(savedInstanceState);
+            }
+
+            if (("fullScreen").equals(getArguments().getString("DIALOG_TYPE"))) {
+                return super.onCreateDialog(savedInstanceState);
             }
         }
 
@@ -97,14 +100,14 @@ public class CustomDialogFragment extends DialogFragment {
         super.onViewCreated(view, savedInstanceState);
 
         final EditText editText = view.findViewById(R.id.et_email);
+        final Button btnDone = view.findViewById(R.id.btn_done);
 
         if (getArguments() != null && !TextUtils.isEmpty(getArguments().getString("email")))
             editText.setText(getArguments().getString("email"));
 
-        Button btnDone = view.findViewById(R.id.btn_done);
         btnDone.setOnClickListener(view1 -> {
-            CustomDialogFragment.DialogListener dialogListener = (CustomDialogFragment.DialogListener) getActivity();
-            dialogListener.onFinishEditDialog(editText.getText().toString());
+            DialogEditTextListener dialogEditTextListener = (DialogEditTextListener) getActivity();
+            dialogEditTextListener.onEditingFinishedDialog(editText.getText().toString());
             dismiss();
         });
     }
@@ -114,8 +117,7 @@ public class CustomDialogFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         boolean setFullScreen = false;
-        if (getArguments() != null)
-            setFullScreen = getArguments().getBoolean("fullScreen");
+        if (getArguments() != null) setFullScreen = getArguments().getBoolean("fullScreen");
 
         if (setFullScreen)
             setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_DeviceDefault_Light_NoActionBar_Fullscreen);
@@ -155,29 +157,26 @@ public class CustomDialogFragment extends DialogFragment {
         String[] selectArray = {"Option 1", "Option 2", "Option 3", "Close Dialog"};
 
         // Add the list to builder
-        builder.setItems(selectArray, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // The 'which' argument contains the index position of the selected item
-                switch (which) {
-                    case 0:
-                        // Do something
-                        makeText(getContext(), "Option 1 clicked", LENGTH_SHORT).show();
-                        break;
-                    case 1:
-                        // Do something
-                        makeText(getContext(), "Option 2 clicked", LENGTH_SHORT).show();
-                        break;
-                    case 2:
-                        // Do something
-                        makeText(getContext(), "Option 3 clicked", LENGTH_SHORT).show();
-                        break;
-                    case 3:
-                        // Do something
-                        dialog.dismiss();
-                        makeText(getContext(), "Dialog Closed", LENGTH_SHORT).show();
-                        break;
-                }
+        builder.setItems(selectArray, (dialog, which) -> {
+            // The 'which' argument contains the index position of the selected item
+            switch (which) {
+                case 0:
+                    // Do something
+                    makeText(getContext(), "Option 1 clicked", LENGTH_SHORT).show();
+                    break;
+                case 1:
+                    // Do something
+                    makeText(getContext(), "Option 2 clicked", LENGTH_SHORT).show();
+                    break;
+                case 2:
+                    // Do something
+                    makeText(getContext(), "Option 3 clicked", LENGTH_SHORT).show();
+                    break;
+                case 3:
+                    // Do something
+                    dialog.dismiss();
+                    makeText(getContext(), "Dialog Closed", LENGTH_SHORT).show();
+                    break;
             }
         });
     }
@@ -274,7 +273,7 @@ public class CustomDialogFragment extends DialogFragment {
     }
 
     /* The activity that creates an instance of getContext() dialog fragment must implement getContext() interface in order to receive event callbacks. Each method passes the DialogFragment in case the host needs to query it. */
-    public interface NoticeDialogListener {
+    public interface CustomDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog);
 
         public void onDialogNegativeClick(DialogFragment dialog);
@@ -282,7 +281,7 @@ public class CustomDialogFragment extends DialogFragment {
         public void onDialogNeutralClick(DialogFragment dialog);
     }
 
-    public interface DialogListener {
-        void onFinishEditDialog(String inputText);
+    public interface DialogEditTextListener {
+        public void onEditingFinishedDialog(String inputText);
     }
 }
