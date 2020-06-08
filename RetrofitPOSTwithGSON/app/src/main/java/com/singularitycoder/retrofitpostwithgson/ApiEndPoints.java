@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Completable;
+import io.reactivex.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -38,7 +40,7 @@ public interface ApiEndPoints {
 
     @Multipart
     @POST("/api/users")
-    Call<String> setUserDataWithMultiPart(
+    Single<String> setUserDataWithMultiPart(
             @Header("Authorization") String authKey,    // This is for demo purpose. U generally won't have an Auth key during Signup.
             @Part MultipartBody.Part partImage,
             @Part MultipartBody.Part partName,

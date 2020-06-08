@@ -4,8 +4,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableObserver;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -18,6 +27,9 @@ import static java.lang.String.valueOf;
 public class MyRepository {
 
     private static final String TAG = "MyRepository";
+
+    @NonNull
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private static MyRepository _instance;
 
@@ -56,36 +68,53 @@ public class MyRepository {
         RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), password);
         MultipartBody.Part partPassword = MultipartBody.Part.createFormData("user_password", "text name", requestBodyPassword);
 
-        Call<String> call = apiService.setUserDataWithMultiPart(
-                "YOUR_OPTIONAL_AUTH_KEY",
-                partImage,
-                partName,
-                partEmail,
-                partPhone,
-                partPassword
+        compositeDisposable.add(
+                apiService
+                        .setUserDataWithMultiPart("YOUR_OPTIONAL_AUTH_KEY", partImage, partName, partEmail, partPhone, partPassword)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeWith(new DisposableSingleObserver() {
+                            @Override
+                            public void onSuccess(Object o) {
+                                Log.d(TAG, "onResponse: resp: " + o);
+                                if (null != o) {
+                                    requestStateMediator.set(o, Status.SUCCESS, "Got Data!", "CREATE ACCOUNT");
+                                    createAccountLiveData.postValue(requestStateMediator);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                requestStateMediator.set(null, Status.ERROR, e.getMessage(), null);
+                                createAccountLiveData.postValue(requestStateMediator);
+                            }
+                        })
         );
-
-//        Call<JSONObject> call = apiService.setUserDataWithTypeThree("YOUR_OPTIONAL_AUTH_KEY", sendParametersTypeThree());
-        call.enqueue(new Callback<String>() {
-
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: resp: " + response.body());
-                    if (null != response.body()) {
-                        requestStateMediator.set(response.body(), Status.SUCCESS, "Got Data!", "CREATE ACCOUNT");
-                        createAccountLiveData.postValue(requestStateMediator);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                requestStateMediator.set(null, Status.ERROR, t.getMessage(), null);
-                createAccountLiveData.postValue(requestStateMediator);
-            }
-        });
         return createAccountLiveData;
+    }
+
+    public Single<String> createAccountWithApi2(String encodedImage, String name, String email, String phone, String password) {
+
+        ApiEndPoints apiService = RetrofitService.getRetrofitInstance().create(ApiEndPoints.class);
+
+        RequestBody requestBodyImage = RequestBody.create(MediaType.parse("image/*"), encodedImage);
+        MultipartBody.Part partImage = MultipartBody.Part.createFormData("user_profile_image", "file name", requestBodyImage);
+
+        RequestBody requestBodyName = RequestBody.create(MediaType.parse("text/plain"), name);
+        MultipartBody.Part partName = MultipartBody.Part.createFormData("user_name", "text name", requestBodyName);
+
+        RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), email);
+        MultipartBody.Part partEmail = MultipartBody.Part.createFormData("user_email", "text name", requestBodyEmail);
+
+        RequestBody requestBodyPhone = RequestBody.create(MediaType.parse("text/plain"), phone);
+        MultipartBody.Part partPhone = MultipartBody.Part.createFormData("user_phone", "text name", requestBodyPhone);
+
+        RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), password);
+        MultipartBody.Part partPassword = MultipartBody.Part.createFormData("user_password", "text name", requestBodyPassword);
+
+        Single<String> observer = apiService.setUserDataWithMultiPart("YOUR_OPTIONAL_AUTH_KEY", partImage, partName, partEmail, partPhone, partPassword);
+
+        return observer;
     }
 
 
@@ -104,5 +133,4 @@ public class MyRepository {
         mutableLiveData.setValue("name is " + name + " password is " + password);
         return mutableLiveData;
     }
-
 }

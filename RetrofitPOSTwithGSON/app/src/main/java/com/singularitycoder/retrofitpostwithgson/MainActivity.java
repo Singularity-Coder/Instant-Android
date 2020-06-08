@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,11 +22,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.jakewharton.rxbinding3.view.RxView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +43,7 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
 import okhttp3.RequestBody;
 
 import static java.lang.String.valueOf;
@@ -68,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
     @Nullable
     @BindView(R.id.btn_create_account)
     Button btnCreateAccount;
+
+    @NonNull
+    private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     private Unbinder unbinder;
     private ProgressDialog progressDialog;
@@ -99,7 +107,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setClickListeners() {
-        btnCreateAccount.setOnClickListener(view -> createAccount());
+        compositeDisposable.add(
+                RxView.clicks(btnCreateAccount)
+                        .map(o -> btnCreateAccount)
+                        .subscribe(
+                                button -> MainActivity.this.createAccount(),
+                                throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show())
+                );
     }
 
     private boolean hasValidInput(
@@ -190,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         if (hasInternet(this)) {
             if (hasValidInput(etName, etEmail, etPhone, etPassword)) {
                 MyViewModel myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
-                myViewModel.createAccountFromRepository(
+                myViewModel.createAccountFromRepository2(
                         encodedProfileImage(),
                         valueOf(etName.getText()),
                         valueOf(etEmail.getText()),
@@ -235,7 +249,8 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(() -> {
                         if (null != progressDialog && progressDialog.isShowing()) progressDialog.dismiss();
                         tvNoInternet.setVisibility(View.GONE);
-                        Toast.makeText(this, valueOf(requestStateMediator.getMessage()), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, valueOf(requestStateMediator.getMessage()), Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "liveDataObserver: error: " +  requestStateMediator.getMessage());
                     });
                 }
             };
@@ -301,5 +316,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        compositeDisposable.dispose();
     }
 }

@@ -22,39 +22,39 @@ public class OwnerListActivityTest {
 
     private static final int ITEM_POSITION = 3;
 
-    private OwnerListActivity ownerListActivity;
+    private MainActivity mainActivity;
 
     @Rule
-    public ActivityTestRule<OwnerListActivity> activityTestRule = new ActivityTestRule<>(OwnerListActivity.class);
+    public ActivityTestRule<MainActivity> activityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Before
     public void setUp() throws Exception {
-        ownerListActivity = activityTestRule.getActivity();
+        mainActivity = activityTestRule.getActivity();
     }
 
     // RECYCLER ////////////////////////////////////////////////////////
 
     @Test
     public void testOnViewHolderCliked() {
-        Espresso.onView(ViewMatchers.withId(R.id.recycler)).perform(RecyclerViewActions.actionOnItemAtPosition(1, ViewActions.click()));
+        Espresso.onView(ViewMatchers.withId(R.id.recycler_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(1, ViewActions.click()));
     }
 
     @Test
     public void scrollToPosition() {
-        RecyclerView recyclerView = activityTestRule.getActivity().findViewById(R.id.recycler);
+        RecyclerView recyclerView = activityTestRule.getActivity().findViewById(R.id.recycler_movies);
         int itemCount = recyclerView.getAdapter().getItemCount();
-        Espresso.onView(ViewMatchers.withId(R.id.recycler)).perform(RecyclerViewActions.scrollToPosition(itemCount - 1));
+        Espresso.onView(ViewMatchers.withId(R.id.recycler_movies)).perform(RecyclerViewActions.scrollToPosition(itemCount - 1));
     }
 
     @Test
     public void checkStringOnItemMatches() {
-        Espresso.onView(ViewMatchers.withId(R.id.recycler)).perform(RecyclerViewActions.actionOnItemAtPosition(ITEM_POSITION, ViewActions.click()));
+        Espresso.onView(ViewMatchers.withId(R.id.recycler_movies)).perform(RecyclerViewActions.actionOnItemAtPosition(ITEM_POSITION, ViewActions.click()));
         String title = "Title 4";
         Espresso.onView(ViewMatchers.withText(title)).check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
 
     @After
     public void tearDown() throws Exception {
-        ownerListActivity = null;
+        mainActivity = null;
     }
 }

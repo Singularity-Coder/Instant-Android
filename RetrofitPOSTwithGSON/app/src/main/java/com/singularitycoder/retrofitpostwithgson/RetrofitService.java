@@ -1,5 +1,7 @@
 package com.singularitycoder.retrofitpostwithgson;
 
+import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -31,6 +33,7 @@ class RetrofitService {
                     .Builder()
                     .client(getHttpClientBuilder().build())
                     .baseUrl("https://reqres.in/")
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 //                    .addConverterFactory(GsonConverterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .build();
