@@ -30,12 +30,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.jakewharton.rxbinding3.view.RxView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,7 +39,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
-import okhttp3.RequestBody;
 
 import static java.lang.String.valueOf;
 
@@ -199,6 +194,22 @@ public class MainActivity extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null;
     }
 
+    private String encodedProfileImage() {
+        String encodedImage = "";
+        Uri uri = Uri.parse("android.resource://com.singularitycoder.postretrofitting/" + R.mipmap.ic_launcher);
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
+            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 75, stream);
+            byte[] byteArray = stream.toByteArray();
+            encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return encodedImage;
+    }
+
     private void createAccount() {
         if (hasInternet(this)) {
             if (hasValidInput(etName, etEmail, etPhone, etPassword)) {
@@ -255,60 +266,6 @@ public class MainActivity extends AppCompatActivity {
             };
         }
         return observer;
-    }
-
-    private String encodedProfileImage() {
-        String encodedImage = "";
-        Uri uri = Uri.parse("android.resource://com.singularitycoder.postretrofitting/" + R.mipmap.ic_launcher);
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), true);
-            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 75, stream);
-            byte[] byteArray = stream.toByteArray();
-            encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return encodedImage;
-    }
-
-    private RequestBody sendParametersTypeOne() {
-        // U can use a Map instead of JSONObject as well. This is how you pass it to RequestBody - String.valueOf(new JSONObject(mapParams)))
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("user_profile_image", encodedProfileImage());
-            jsonObject.put("user_name", valueOf(etName.getText()));
-            jsonObject.put("user_email", valueOf(etEmail.getText()));
-            jsonObject.put("user_phone", valueOf(etPhone.getText()));
-            jsonObject.put("user_password", valueOf(etPassword.getText()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), String.valueOf(jsonObject));
-        return body;
-    }
-
-    private CreateAccountRequest sendParametersTypeTwo() {
-        CreateAccountRequest createAccountRequest = new CreateAccountRequest(
-                encodedProfileImage(),
-                valueOf(etName.getText()),
-                valueOf(etEmail.getText()),
-                valueOf(etPhone.getText()),
-                valueOf(etPassword.getText())
-        );
-        return createAccountRequest;
-    }
-
-    private HashMap<String, String> sendParametersTypeThree() {
-        HashMap<String, String> parameters = new HashMap<>();
-        parameters.put("user_profile_image", encodedProfileImage());
-        parameters.put("user_name", valueOf(etName.getText()));
-        parameters.put("user_email", valueOf(etEmail.getText()));
-        parameters.put("user_phone", valueOf(etPhone.getText()));
-        parameters.put("user_password", valueOf(etPassword.getText()));
-        return parameters;
     }
 
     @Override

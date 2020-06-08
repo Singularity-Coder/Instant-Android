@@ -5,6 +5,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -32,6 +37,44 @@ public class MyRepository {
             _instance = new MyRepository();
         }
         return _instance;
+    }
+
+    private RequestBody sendParametersTypeOne(String encodedImage, String name, String email, String phone, String password) {
+        // U can use a Map instead of JSONObject as well. This is how you pass it to RequestBody - String.valueOf(new JSONObject(mapParams)))
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_profile_image", encodedImage);
+            jsonObject.put("user_name", name);
+            jsonObject.put("user_email", email);
+            jsonObject.put("user_phone", phone);
+            jsonObject.put("user_password", password);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/json; charset=utf-8"), String.valueOf(jsonObject));
+        return body;
+    }
+
+    private CreateAccountRequest sendParametersTypeTwo(String encodedImage, String name, String email, String phone, String password) {
+        CreateAccountRequest createAccountRequest = new CreateAccountRequest(
+                encodedImage,
+                name,
+                email,
+                phone,
+                password
+        );
+        return createAccountRequest;
+    }
+
+    private HashMap<String, String> sendParametersTypeThree(String encodedImage, String name, String email, String phone, String password) {
+        HashMap<String, String> parameters = new HashMap<>();
+        parameters.put("user_profile_image", encodedImage);
+        parameters.put("user_name", name);
+        parameters.put("user_email", email);
+        parameters.put("user_phone", password);
+        parameters.put("user_password", password);
+        return parameters;
     }
 
     public MutableLiveData<RequestStateMediator> createAccountWithApi(String encodedImage, String name, String email, String phone, String password) {
