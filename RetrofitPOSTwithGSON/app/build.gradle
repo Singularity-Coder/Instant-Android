@@ -64,16 +64,9 @@ dependencies {
     // Espresso for Instrumentation/Android UI Testing
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    // Espresso Testing Recycler
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
-
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
-
-    // Room DB
-    implementation "androidx.room:room-runtime:2.2.5"
-    annotationProcessor "androidx.room:room-compiler:2.2.5"
 
     // Dagger
     implementation "com.google.dagger:dagger:2.27"
@@ -86,12 +79,6 @@ dependencies {
 
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:2.2.18"
-
-    // RxJava Math
-//    implementation "io.reactivex.rxjava-math:1.0.0"
-
-    // RxJava Call Adapter
-    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 
     // Rx Lifecycle
     implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.2.0'
