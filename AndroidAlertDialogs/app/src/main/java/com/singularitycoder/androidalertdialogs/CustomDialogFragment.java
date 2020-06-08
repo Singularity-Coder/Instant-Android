@@ -26,7 +26,7 @@ import static android.widget.Toast.makeText;
 public class CustomDialogFragment extends DialogFragment {
 
     // Use getContext() instance of the interface to deliver action events
-    CustomDialogListener listener;
+    private CustomDialogListener listener;
 
     public CustomDialogFragment() {
     }

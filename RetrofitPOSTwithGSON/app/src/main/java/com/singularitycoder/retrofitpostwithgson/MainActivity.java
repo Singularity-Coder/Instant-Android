@@ -12,7 +12,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,8 +21,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,12 +36,10 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static java.lang.String.valueOf;
 
@@ -47,11 +47,30 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    @Nullable
+    @BindView(R.id.tv_no_internet)
+    TextView tvNoInternet;
+    @Nullable
+    @BindView(R.id.iv_profile_image)
+    ImageView ivProfileImage;
+    @Nullable
+    @BindView(R.id.et_name)
+    EditText etName;
+    @Nullable
+    @BindView(R.id.et_email)
+    EditText etEmail;
+    @Nullable
+    @BindView(R.id.et_phone)
+    EditText etPhone;
+    @Nullable
+    @BindView(R.id.et_password)
+    EditText etPassword;
+    @Nullable
+    @BindView(R.id.btn_create_account)
+    Button btnCreateAccount;
+
+    private Unbinder unbinder;
     private ProgressDialog progressDialog;
-    private TextView tvNoInternet;
-    private ImageView ivProfileImage;
-    private EditText etName, etEmail, etPhone, etPassword;
-    private Button btnCreateAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,17 +93,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading...");
-        progressDialog.setCancelable(false);
-
-        tvNoInternet = findViewById(R.id.tv_no_internet);
-        ivProfileImage = findViewById(R.id.iv_profile_image);
-        etName = findViewById(R.id.et_name);
-        etEmail = findViewById(R.id.et_email);
-        etPhone = findViewById(R.id.et_phone);
-        etPassword = findViewById(R.id.et_password);
-        btnCreateAccount = findViewById(R.id.btn_create_account);
     }
 
     private void setClickListeners() {
@@ -178,11 +189,58 @@ public class MainActivity extends AppCompatActivity {
     private void createAccount() {
         if (hasInternet(this)) {
             if (hasValidInput(etName, etEmail, etPhone, etPassword)) {
-                AsyncTask.execute(this::createAccountWithApi);
+                MyViewModel myViewModel = new ViewModelProvider(this).get(MyViewModel.class);
+                myViewModel.createAccountFromRepository(
+                        encodedProfileImage(),
+                        valueOf(etName.getText()),
+                        valueOf(etEmail.getText()),
+                        valueOf(etPhone.getText()),
+                        valueOf(etPassword.getText())
+                ).observe(MainActivity.this, liveDataObserver());
             }
         } else {
             tvNoInternet.setVisibility(View.VISIBLE);
         }
+    }
+
+    private Observer liveDataObserver() {
+        Observer<RequestStateMediator> observer = null;
+        if (hasInternet(this)) {
+            observer = requestStateMediator -> {
+
+                if (Status.LOADING == requestStateMediator.getStatus()) {
+                    runOnUiThread(() -> {
+                        progressDialog.setMessage(valueOf(requestStateMediator.getMessage()));
+                        progressDialog.setCancelable(false);
+                        progressDialog.setCanceledOnTouchOutside(false);
+                        if (null != progressDialog && !progressDialog.isShowing()) progressDialog.show();
+                    });
+                }
+
+                if (Status.SUCCESS == requestStateMediator.getStatus()) {
+                    runOnUiThread(() -> {
+                        if (("CREATE ACCOUNT").equals(requestStateMediator.getKey())) {
+                            Toast.makeText(MainActivity.this, valueOf(requestStateMediator.getData()), Toast.LENGTH_SHORT).show();
+                            if (null != progressDialog && progressDialog.isShowing()) progressDialog.dismiss();
+                            tvNoInternet.setVisibility(View.GONE);
+                        }
+                    });
+                }
+
+                if (Status.EMPTY == requestStateMediator.getStatus()) {
+
+                }
+
+                if (Status.ERROR == requestStateMediator.getStatus()) {
+                    runOnUiThread(() -> {
+                        if (null != progressDialog && progressDialog.isShowing()) progressDialog.dismiss();
+                        tvNoInternet.setVisibility(View.GONE);
+                        Toast.makeText(this, valueOf(requestStateMediator.getMessage()), Toast.LENGTH_SHORT).show();
+                    });
+                }
+            };
+        }
+        return observer;
     }
 
     private String encodedProfileImage() {
@@ -239,69 +297,9 @@ public class MainActivity extends AppCompatActivity {
         return parameters;
     }
 
-    private void createAccountWithApi() {
-        runOnUiThread(() -> {
-            if (null != progressDialog && !progressDialog.isShowing()) progressDialog.show();
-        });
-
-        ApiEndPoints apiService = RetrofitService.getRetrofitInstance().create(ApiEndPoints.class);
-
-        RequestBody requestBodyImage = RequestBody.create(MediaType.parse("image/*"), encodedProfileImage());
-        MultipartBody.Part partImage = MultipartBody.Part.createFormData("user_profile_image", "file name", requestBodyImage);
-
-        RequestBody requestBodyName = RequestBody.create(MediaType.parse("text/plain"), valueOf(etName.getText()));
-        MultipartBody.Part partName = MultipartBody.Part.createFormData("user_name", "text name", requestBodyName);
-
-        RequestBody requestBodyEmail = RequestBody.create(MediaType.parse("text/plain"), valueOf(etEmail.getText()));
-        MultipartBody.Part partEmail = MultipartBody.Part.createFormData("user_email", "text name", requestBodyEmail);
-
-        RequestBody requestBodyPhone = RequestBody.create(MediaType.parse("text/plain"), valueOf(etPhone.getText()));
-        MultipartBody.Part partPhone = MultipartBody.Part.createFormData("user_phone", "text name", requestBodyPhone);
-
-        RequestBody requestBodyPassword = RequestBody.create(MediaType.parse("text/plain"), valueOf(etPassword.getText()));
-        MultipartBody.Part partPassword = MultipartBody.Part.createFormData("user_password", "text name", requestBodyPassword);
-
-        Call<String> call = apiService.setUserDataWithMultiPart(
-                "YOUR_OPTIONAL_AUTH_KEY",
-                partImage,
-                partName,
-                partEmail,
-                partPhone,
-                partPassword
-        );
-
-//        Call<JSONObject> call = apiService.setUserDataWithTypeThree("YOUR_OPTIONAL_AUTH_KEY", sendParametersTypeThree());
-        call.enqueue(new Callback<String>() {
-
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    Log.d(TAG, "onResponse: resp: " + response.body());
-                    if (null != response.body()) {
-                        runOnUiThread(() -> {
-                            Toast.makeText(MainActivity.this, valueOf(response.body()), Toast.LENGTH_SHORT).show();
-                            if (null != progressDialog && progressDialog.isShowing()) progressDialog.dismiss();
-                            tvNoInternet.setVisibility(View.GONE);
-                        });
-                    }
-                } else {
-                    runOnUiThread(() -> {
-                        Toast.makeText(MainActivity.this, "Something is wrong. Try again!", Toast.LENGTH_SHORT).show();
-                        if (null != progressDialog && progressDialog.isShowing()) progressDialog.dismiss();
-                        tvNoInternet.setVisibility(View.GONE);
-                        Log.d(TAG, "onResponse: error: " + response.errorBody().toString());
-                    });
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                runOnUiThread(() -> {
-                    if (null != progressDialog && progressDialog.isShowing()) progressDialog.dismiss();
-                    tvNoInternet.setVisibility(View.GONE);
-                    Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-                });
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbinder.unbind();
     }
 }

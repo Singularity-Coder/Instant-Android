@@ -6,7 +6,7 @@
     android:padding="10dp"
     android:orientation="vertical">
 
-<!--    Use a textview with long text to make the dialog wide-->
+<!--   Hack: Use a textview with long text to make the dialog wide -->
 
     <EditText
         android:id="@+id/et_email"

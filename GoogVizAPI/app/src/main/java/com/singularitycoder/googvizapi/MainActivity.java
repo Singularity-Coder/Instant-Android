@@ -62,7 +62,8 @@ import droidninja.filepicker.FilePickerConst;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private static final String CLOUD_VISION_API_KEY = "YOUR_GOOGLE_CLOUD_VISION_API_KEY";
+//    private static final String CLOUD_VISION_API_KEY = "YOUR_GOOGLE_CLOUD_VISION_API_KEY";
+    private static final String CLOUD_VISION_API_KEY = "27303614742-gkcffbb9t99hunbs4as4risad6qu086c.apps.googleusercontent.com";
 
     private final String[] visionSearchTypeArray = new String[]{"LABEL_DETECTION", "LOGO_DETECTION", "SAFE_SEARCH_DETECTION", "IMAGE_PROPERTIES", "LANDMARK_DETECTION", "FACE_DETECTION", "TEXT_DETECTION", "DOCUMENT_TEXT_DETECTION"};
     private final String[] visionSearchTypeAliasArray = new String[]{"Labels", "Logos", "Kid Safety", "Image Properties", "Landmarks", "Faces", "Text", "Lot's of Text"};
