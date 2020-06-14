@@ -34,7 +34,6 @@ public class MyRepositoryTest {
     public void setUp() throws Exception {
         // Old way
 //        MockitoAnnotations.initMocks(Repository.class);
-
     }
 
     @Test

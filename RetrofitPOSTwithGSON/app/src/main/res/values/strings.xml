@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Retrofit Multipart</string>
+    <string name="string_name">Name</string>
+    <string name="string_email">Email</string>
+    <string name="string_phone">Phone</string>
+    <string name="string_password">Password</string>
+    <string name="string_empty" />
 </resources>

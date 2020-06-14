@@ -10,12 +10,22 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    sourceSets {
+        androidTest.java.srcDirs += "src/test-common/java"
+        test.java.srcDirs += "src/test-common/java"
     }
     compileOptions {
         sourceCompatibility = 1.8
@@ -32,6 +42,11 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 
+    // JUnit5 Local Unit Tests
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.3.2"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.3.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.2"
+
     // Mockito for Local Unit Testing
     implementation 'org.mockito:mockito-core:2.19.0'
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
@@ -40,8 +55,12 @@ dependencies {
     implementation 'org.mockito:mockito-android:2.19.0'
 
     // Instrumentation/Android Testing
+    androidTestImplementation 'junit:junit:4.12'
+
+    // AndroidX Testing
+    androidTestImplementation "androidx.test:core:1.2.0"
+    androidTestImplementation "androidx.test:runner:1.2.0"
     androidTestImplementation 'androidx.test:rules:1.2.0'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.annotation:annotation:1.1.0'
 
     // Espresso for Instrumentation/Android UI Testing
@@ -49,6 +68,9 @@ dependencies {
 
     // Espresso Testing Recycler
     androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+
+    // Architecture Components testing
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
 
     // Recycler
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
@@ -60,4 +82,29 @@ dependencies {
     implementation "androidx.room:room-runtime:2.2.5"
     annotationProcessor "androidx.room:room-compiler:2.2.5"
     androidTestImplementation 'androidx.room:room-testing:2.2.5'
+    implementation "androidx.room:room-rxjava2:2.2.5"
+
+    // Dagger2 Core
+    implementation "com.google.dagger:dagger:2.27"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.24"
+
+    // Dagger2 Android
+    implementation "com.google.dagger:dagger-android:2.23.2"
+    implementation "com.google.dagger:dagger-android-support:2.23.2"
+    annotationProcessor "com.google.dagger:dagger-android-processor:2.24"
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+
+    // Reactive Streams - Converts Observable to LiveData
+    implementation "android.arch.lifecycle:reactivestreams:1.1.1"
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:2.2.18"
+
+    // RxAndroid
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    // Rx-Retrofit Call Adapter
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
 }

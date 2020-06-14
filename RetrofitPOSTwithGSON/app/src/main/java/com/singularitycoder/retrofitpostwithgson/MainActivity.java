@@ -23,10 +23,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.test.espresso.IdlingResource;
 
 import com.jakewharton.rxbinding3.view.RxView;
 
@@ -71,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
     @NonNull
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
+    @Nullable
+    private ApiIdlingResource idlingResource;
+
     private Unbinder unbinder;
     private ProgressDialog progressDialog;
 
@@ -107,10 +112,10 @@ public class MainActivity extends AppCompatActivity {
                         .subscribe(
                                 button -> MainActivity.this.createAccount(),
                                 throwable -> Toast.makeText(MainActivity.this, throwable.getMessage(), Toast.LENGTH_SHORT).show())
-                );
+        );
     }
 
-    private boolean hasValidInput(
+    public boolean hasValidInput(
             EditText etName,
             EditText etEmail,
             EditText etPhone,
@@ -166,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean hasValidPassword(final String password) {
+    public boolean hasValidPassword(final String password) {
         Pattern pattern;
         Matcher matcher;
         final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z]).{8,}$";
@@ -177,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    private boolean hasValidEmail(final String email) {
+    public boolean hasValidEmail(final String email) {
         Pattern pattern;
         Matcher matcher;
         final String EMAIL_PATTERN = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
@@ -188,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    private boolean hasInternet(Context context) {
+    public boolean hasInternet(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert cm != null;
         return cm.getActiveNetworkInfo() != null;
@@ -219,7 +224,8 @@ public class MainActivity extends AppCompatActivity {
                         valueOf(etName.getText()),
                         valueOf(etEmail.getText()),
                         valueOf(etPhone.getText()),
-                        valueOf(etPassword.getText())
+                        valueOf(etPassword.getText()),
+                        idlingResource
                 ).observe(MainActivity.this, liveDataObserver());
             }
         } else {
@@ -232,35 +238,43 @@ public class MainActivity extends AppCompatActivity {
         if (hasInternet(this)) {
             observer = requestStateMediator -> {
 
-                if (Status.LOADING == requestStateMediator.getStatus()) {
+                if (UiState.LOADING == requestStateMediator.getStatus()) {
                     runOnUiThread(() -> {
                         progressDialog.setMessage(valueOf(requestStateMediator.getMessage()));
                         progressDialog.setCancelable(false);
                         progressDialog.setCanceledOnTouchOutside(false);
-                        if (null != progressDialog && !progressDialog.isShowing()) progressDialog.show();
+                        if (null != progressDialog && !progressDialog.isShowing())
+                            progressDialog.show();
                     });
                 }
 
-                if (Status.SUCCESS == requestStateMediator.getStatus()) {
+                if (UiState.SUCCESS == requestStateMediator.getStatus()) {
                     runOnUiThread(() -> {
                         if (("CREATE ACCOUNT").equals(requestStateMediator.getKey())) {
                             Toast.makeText(MainActivity.this, valueOf(requestStateMediator.getData()), Toast.LENGTH_SHORT).show();
-                            if (null != progressDialog && progressDialog.isShowing()) progressDialog.dismiss();
+                            if (null != progressDialog && progressDialog.isShowing())
+                                progressDialog.dismiss();
                             tvNoInternet.setVisibility(View.GONE);
                         }
                     });
                 }
 
-                if (Status.EMPTY == requestStateMediator.getStatus()) {
-
-                }
-
-                if (Status.ERROR == requestStateMediator.getStatus()) {
+                if (UiState.EMPTY == requestStateMediator.getStatus()) {
                     runOnUiThread(() -> {
-                        if (null != progressDialog && progressDialog.isShowing()) progressDialog.dismiss();
+                        if (null != progressDialog && progressDialog.isShowing())
+                            progressDialog.dismiss();
                         tvNoInternet.setVisibility(View.GONE);
                         Toast.makeText(this, valueOf(requestStateMediator.getMessage()), Toast.LENGTH_LONG).show();
-                        Log.d(TAG, "liveDataObserver: error: " +  requestStateMediator.getMessage());
+                    });
+                }
+
+                if (UiState.ERROR == requestStateMediator.getStatus()) {
+                    runOnUiThread(() -> {
+                        if (null != progressDialog && progressDialog.isShowing())
+                            progressDialog.dismiss();
+                        tvNoInternet.setVisibility(View.GONE);
+                        Toast.makeText(this, valueOf(requestStateMediator.getMessage()), Toast.LENGTH_LONG).show();
+                        Log.d(TAG, "liveDataObserver: error: " + requestStateMediator.getMessage());
                     });
                 }
             };
@@ -273,5 +287,13 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         unbinder.unbind();
         compositeDisposable.dispose();
+    }
+
+    // Only called from test, creates and returns a new WaitingStateResource
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getWaitingState() {
+        if (null == idlingResource) idlingResource = new ApiIdlingResource();
+        return idlingResource;
     }
 }

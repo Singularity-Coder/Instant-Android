@@ -3,6 +3,7 @@ package com.singularitycoder.retrofitpostwithgson;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.MutableLiveData;
 
 import org.json.JSONException;
@@ -77,11 +78,20 @@ public class MyRepository {
         return parameters;
     }
 
-    public MutableLiveData<RequestStateMediator> createAccountWithApi(String encodedImage, String name, String email, String phone, String password) {
+    public MutableLiveData<RequestStateMediator> createAccountWithApi(
+            @Nullable final String encodedImage,
+            @NonNull final String name,
+            @NonNull final String email,
+            @NonNull final String phone,
+            @NonNull final String password,
+            @Nullable final ApiIdlingResource idlingResource) {
+
+        if (null != idlingResource) idlingResource.setIdleState(false);
+
         final MutableLiveData<RequestStateMediator> createAccountLiveData = new MutableLiveData<>();
         final RequestStateMediator requestStateMediator = new RequestStateMediator();
 
-        requestStateMediator.set(null, Status.LOADING, "Loading...", null);
+        requestStateMediator.set(null, UiState.LOADING, "Loading...", null);
         createAccountLiveData.postValue(requestStateMediator);
 
         ApiEndPoints apiService = RetrofitService.getRetrofitInstance().create(ApiEndPoints.class);
@@ -111,22 +121,29 @@ public class MyRepository {
                             public void onSuccess(Object o) {
                                 Log.d(TAG, "onResponse: resp: " + o);
                                 if (null != o) {
-                                    requestStateMediator.set(o, Status.SUCCESS, "Got Data!", "CREATE ACCOUNT");
+                                    requestStateMediator.set(o, UiState.SUCCESS, "Got Data!", "CREATE ACCOUNT");
                                     createAccountLiveData.postValue(requestStateMediator);
+                                    if (null != idlingResource) idlingResource.setIdleState(true);
                                 }
                             }
 
                             @Override
                             public void onError(Throwable e) {
-                                requestStateMediator.set(null, Status.ERROR, e.getMessage(), null);
+                                requestStateMediator.set(null, UiState.ERROR, e.getMessage(), null);
                                 createAccountLiveData.postValue(requestStateMediator);
+                                if (null != idlingResource) idlingResource.setIdleState(true);
                             }
                         })
         );
         return createAccountLiveData;
     }
 
-    public Single<String> createAccountWithApi2(String encodedImage, String name, String email, String phone, String password) {
+    public Single<String> createAccountWithApi2(
+            @Nullable final String encodedImage,
+            @NonNull final String name,
+            @NonNull final String email,
+            @NonNull final String phone,
+            @NonNull final String password) {
 
         ApiEndPoints apiService = RetrofitService.getRetrofitInstance().create(ApiEndPoints.class);
 
@@ -148,22 +165,5 @@ public class MyRepository {
         Single<String> observer = apiService.setUserDataWithMultiPart("YOUR_OPTIONAL_AUTH_KEY", partImage, partName, partEmail, partPhone, partPassword);
 
         return observer;
-    }
-
-
-    // Test Stuff
-    public MutableLiveData<String> mutableLiveData = new MutableLiveData<>();
-
-    public String getData() {
-        return "This is data";
-    }
-
-    public void getValues(String a, String b) {
-        Log.d(TAG, "getValues: " + a + " " + b);
-    }
-
-    public MutableLiveData<String> getMutableLiveData(String name, String password) {
-        mutableLiveData.setValue("name is " + name + " password is " + password);
-        return mutableLiveData;
     }
 }

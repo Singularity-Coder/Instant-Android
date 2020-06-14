@@ -24,7 +24,7 @@ public interface MovieDao {
     void deleteMovie(MovieItem movieItem);
 
     @Query("SELECT * FROM movie_table WHERE id=:id")
-    MovieItem getMovie(int id);
+    MovieItem getMovie(int id);          // Custom Query to Get a single Movie.
 
     @Query("SELECT * FROM movie_table ORDER BY title DESC")
     List<MovieItem> getAllMovies();      // Custom Query to Get All Movies.

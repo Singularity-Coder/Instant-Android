@@ -1,6 +1,6 @@
 package com.singularitycoder.retrofitpostwithgson;
 
-public enum Status {
+public enum UiState {
     LOADING,
     SUCCESS,
     EMPTY,

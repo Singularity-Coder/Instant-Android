@@ -20,10 +20,11 @@
             android:src="@mipmap/ic_launcher" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_name_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:hint="Name"
+            android:hint="@string/string_name"
             app:boxStrokeColor="@color/colorAccent">
 
             <EditText
@@ -34,10 +35,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_email_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Email"
+            android:hint="@string/string_email"
             app:boxStrokeColor="@color/colorAccent">
 
             <EditText
@@ -48,10 +50,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_phone_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Phone"
+            android:hint="@string/string_phone"
             app:boxStrokeColor="@color/colorAccent">
 
             <EditText
@@ -62,10 +65,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/et_password_wrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Password"
+            android:hint="@string/string_password"
             app:boxStrokeColor="@color/colorAccent"
             app:passwordToggleEnabled="true">
 

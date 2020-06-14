@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'jacoco'  // Generates Code Coverage Reports
 
 android {
     compileSdkVersion 29
@@ -15,6 +16,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
         }
     }
     compileOptions {
@@ -60,9 +64,15 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.annotation:annotation:1.1.0'
+    androidTestImplementation 'com.google.firebase:firebase-appindexing:19.1.0'
 
     // Espresso for Instrumentation/Android UI Testing
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
+
+    // UI Automator Tests
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 
     // ViewModel and LiveData
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
