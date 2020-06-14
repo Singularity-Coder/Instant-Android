@@ -1,43 +1,23 @@
 package com.singularitycoder.retrofitpostwithgson;
 
 import android.content.Context;
-import android.os.IBinder;
-import android.util.Log;
-import android.util.Patterns;
-import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.FailureHandler;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
-import androidx.test.espresso.NoMatchingViewException;
-import androidx.test.espresso.Root;
-import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.idling.CountingIdlingResource;
-import androidx.test.espresso.matcher.RootMatchers;
-import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiDevice;
 
-import junit.framework.AssertionFailedError;
-
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matchers;
-import org.hamcrest.TypeSafeMatcher;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,30 +25,20 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static androidx.test.espresso.Espresso.*;
-import static androidx.test.espresso.Espresso.onData;
+import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.*;
-import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.RootMatchers.*;
-import static androidx.test.espresso.matcher.ViewMatchers.*;
+import static androidx.test.espresso.matcher.RootMatchers.isDialog;
+import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static java.lang.String.valueOf;
-import static org.hamcrest.Matchers.*;
-import static org.hamcrest.Matchers.anyOf;
-import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -159,7 +129,7 @@ public class MainActivityUiTest {
 
     @Test
     public void editTexts_onCreate_haveHints() {
-        onView(withId(R.id.et_name_wrapper)).check(matches(withHint(R.string.string_name)));
+        onView(withId(R.id.et_name_wrapper)).check(matches(TestHelpers.withHint("Name")));
 //        onView(withId(R.id.et_name_wrapper)).check(matches(withHint(R.string.string_name)));
 //        onView(withId(R.id.et_email_wrapper)).check(matches(withHint(R.string.string_email)));
 //        onView(withId(R.id.et_phone_wrapper)).check(matches(withHint(R.string.string_phone)));
@@ -168,7 +138,15 @@ public class MainActivityUiTest {
 
     @Test
     public void statusBarColor_onCreate_colorDark() {
-//        Window window = activityTestRule.getActivity().getWindow();
+        Window window = activityTestRule.getActivity().getWindow();
+
+        onView(allOf(instanceOf(Window.class)))
+                .inRoot(withDecorView(is(activityTestRule.getActivity().getWindow().getDecorView())))
+                .check(matches(isDisplayed()));
+
+//        onView(allOf(instanceOf(Window.class)))
+//                .inRoot(withDecorView(is(activityTestRule.getActivity().getWindow().getDecorView())))
+//                .check(matches(TestHelpers.withColor(R.color.colorPrimaryDark)));
     }
 
     @Test
@@ -184,6 +162,7 @@ public class MainActivityUiTest {
         onView(withId(R.id.et_email))
                 .perform(typeText("codehithesh@gmail.com"));
 
+        // Close the keyboard as Espresso will use the text keyboard instead of the number keyboard and test will fail
         closeSoftKeyboard();
 
         // Type Phone
@@ -216,7 +195,7 @@ public class MainActivityUiTest {
         assertTrue(valueOf(etEmail.getText()), activityTestRule.getActivity().hasValidEmail(valueOf(etEmail.getText())));
 
         // check valid phone
-        assertTrue(valueOf(etPhone.getText()), hasValidPhoneNumber(valueOf(etPhone.getText())));
+        assertTrue(valueOf(etPhone.getText()), TestHelpers.hasValidPhoneNumber(valueOf(etPhone.getText())));
 
         // check valid password
         assertTrue(valueOf(etPassword.getText()), activityTestRule.getActivity().hasValidPassword(valueOf(etPassword.getText())));
@@ -269,10 +248,5 @@ public class MainActivityUiTest {
     public void tearDown() throws Exception {
         if (null != idlingResource) IdlingRegistry.getInstance().unregister(idlingResource);
         mainActivity = null;
-    }
-
-    private boolean hasValidPhoneNumber(final String phone) {
-        if (phone.length() < 10) return false;
-        else return true;
     }
 }

@@ -369,47 +369,6 @@ SPDX-License-Identifier: Apache-2.0 */
         }
     }
 
-//    public static Matcher<View> withHint(final String expectedHint) {
-//        return new TypeSafeMatcher<View>() {
-//
-//            @Override
-//            public boolean matchesSafely(View view) {
-//                if (!(view instanceof EditText)) {
-//                    return false;
-//                }
-//
-//                String hint = ((EditText) view).getHint().toString();
-//
-//                return expectedHint.equals(hint);
-//            }
-//
-//            @Override
-//            public void describeTo(Description description) {
-//            }
-//        };
-//    }
-
-
-//    public static Matcher<View> withCustomHint(final Matcher<String> stringMatcher) {
-//        return new BaseMatcher<View>() {
-//            @Override
-//            public void describeTo(Description description) {
-//            }
-//
-//            @Override
-//            public boolean matches(Object item) {
-//                try {
-//                    Method method = item.getClass().getMethod("getHint");
-//                    return stringMatcher.matches(method.invoke(item));
-//                } catch (NoSuchMethodException e) {
-//                } catch (InvocationTargetException e) {
-//                } catch (IllegalAccessException e) {
-//                }
-//                return false;
-//            }
-//        };
-//    }
-
 
     @After
     public void tearDown() throws Exception {
