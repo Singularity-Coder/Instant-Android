@@ -104,6 +104,7 @@ public class TestHelpers {
         };
     }
 
+    // https://stackoverflow.com/questions/20334455/android-espresso-how-to-check-edittext-hint
     public static Matcher<View> withHint(final String expectedHint) {
         return new TypeSafeMatcher<View>() {
 
