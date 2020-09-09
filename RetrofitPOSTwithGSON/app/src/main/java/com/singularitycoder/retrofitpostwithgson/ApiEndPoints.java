@@ -21,26 +21,26 @@ public interface ApiEndPoints {
 
     @POST("/api/users")
     Call<String> setUserDataWithTypeOne(
-            @Header("Authorization") String authKey,    // This is for demo purpose. U generally won't have an Auth key during Signup.
+            @Header("Authorization") String authKey,
             @Body RequestBody jsonObject
     );
 
     @POST("/api/users")
     Call<JSONObject> setUserDataWithTypeTwo(
-            @Header("Authorization") String authKey,    // This is for demo purpose. U generally won't have an Auth key during Signup.
+            @Header("Authorization") String authKey,
             @Body CreateAccountRequest createAccountRequestObject
     );
 
     @POST("/api/users")
     Call<JSONObject> setUserDataWithTypeThree(
-            @Header("Authorization") String authKey,    // This is for demo purpose. U generally won't have an Auth key during Signup.
+            @Header("Authorization") String authKey,
             @Body HashMap<String, String> body
     );
 
     @Multipart
     @POST("/api/users")
     Single<String> setUserDataWithMultiPart(
-            @Header("Authorization") String authKey,    // This is for demo purpose. U generally won't have an Auth key during Signup.
+            @Header("Authorization") String authKey,
             @Part MultipartBody.Part partImage,
             @Part MultipartBody.Part partName,
             @Part MultipartBody.Part partEmail,
@@ -51,14 +51,14 @@ public interface ApiEndPoints {
     @Multipart
     @POST("/api/users")
     Call<String> setUserDataWithMultiPartMap(
-            @Header("Authorization") String authKey,    // This is for demo purpose. U generally won't have an Auth key during Signup.
+            @Header("Authorization") String authKey,
             @PartMap Map<String, RequestBody> partMap
     );
 
     @Multipart
     @POST("/api/users")
     Call<String> setUserDataWithMultiPartList(
-            @Header("Authorization") String authKey,    // This is for demo purpose. U generally won't have an Auth key during Signup.
+            @Header("Authorization") String authKey,
             @Part List<Part> partList
     );
 }

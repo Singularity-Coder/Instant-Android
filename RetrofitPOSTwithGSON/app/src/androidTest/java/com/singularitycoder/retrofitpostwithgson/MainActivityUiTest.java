@@ -13,7 +13,7 @@ import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.idling.CountingIdlingResource;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.filters.LargeTest;
+import androidx.test.filters.MediumTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiDevice;
@@ -44,7 +44,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-@LargeTest // Execution time > 1000ms. Test App Components. Most UI tests are large tests
+@MediumTest // Execution time ~1000ms. Test App Components. Most UI tests are medium tests
 @RunWith(AndroidJUnit4.class)
 public class MainActivityUiTest {
 
@@ -126,7 +126,6 @@ public class MainActivityUiTest {
         assertEquals("", etPhone.getText().toString());
         assertEquals("", etPassword.getText().toString());
     }
-
 
     public void editTexts_onCreate_haveHints() {
 //        onView(withId(R.id.et_name_wrapper)).check(matches(TestHelpers.withHint("Name")));

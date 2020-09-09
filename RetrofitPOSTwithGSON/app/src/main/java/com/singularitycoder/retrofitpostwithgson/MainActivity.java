@@ -44,9 +44,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
 import static java.lang.String.valueOf;
 
-public class MainActivity extends AppCompatActivity {
-
-    private static final String TAG = "MainActivity";
+public final class MainActivity extends AppCompatActivity {
 
     @Nullable
     @BindView(R.id.tv_no_internet)
@@ -71,12 +69,18 @@ public class MainActivity extends AppCompatActivity {
     Button btnCreateAccount;
 
     @NonNull
+    private final String TAG = "MainActivity";
+
+    @NonNull
     private final CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Nullable
     private ApiIdlingResource idlingResource;
 
+    @Nullable
     private Unbinder unbinder;
+
+    @Nullable
     private ProgressDialog progressDialog;
 
     @Override
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    public boolean hasValidInput(
+    private boolean hasValidInput(
             EditText etName,
             EditText etEmail,
             EditText etPhone,
@@ -171,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean hasValidPassword(final String password) {
+    public final boolean hasValidPassword(final String password) {
         Pattern pattern;
         Matcher matcher;
         final String PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z]).{8,}$";
@@ -182,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    public boolean hasValidEmail(final String email) {
+    public final boolean hasValidEmail(final String email) {
         Pattern pattern;
         Matcher matcher;
         final String EMAIL_PATTERN = "^[\\w-\\+]+(\\.[\\w]+)*@[\\w-]+(\\.[\\w]+)*(\\.[a-z]{2,})$";
@@ -193,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         return matcher.matches();
     }
 
-    public boolean hasInternet(Context context) {
+    private boolean hasInternet(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert cm != null;
         return cm.getActiveNetworkInfo() != null;

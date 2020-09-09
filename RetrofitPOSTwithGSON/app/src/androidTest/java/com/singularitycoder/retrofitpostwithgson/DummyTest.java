@@ -50,6 +50,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.is;
@@ -79,7 +80,7 @@ public class DummyTest {
         idlingResource = activityTestRule.getActivity().getWaitingState();
         IdlingRegistry.getInstance().register(idlingResource);
 
-        uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        uiDevice = UiDevice.getInstance(getInstrumentation());
 
         etName = mainActivity.findViewById(R.id.et_name);
         etEmail = mainActivity.findViewById(R.id.et_email);
@@ -228,7 +229,53 @@ public class DummyTest {
                 .check(matches(isDisplayed()));
 
         onView(withId(android.R.id.button3)).perform(click());
+
+
+//        onView(allOf(withId(R.id.recycler),withText("what"))).perform(click());
+// https://codelabs.developers.google.com/codelabs/android-testing/#0
+
+        getInstrumentation().waitForIdleSync();
     }
+
+//    public Matcher<View> withItemText(final String itemText) {
+//        checkArgument(!TextUtils.isEmpty(itemText),"cannot be null");
+//        return new TypeSafeMatcher<View>() {
+//            @Override
+//            protected boolean matchesSafely(View item) {
+//                return allOf(isDescendantOfA(isAssignableFrom(RecyclerView.class)),withText(itemText)).matches(item);
+//            }
+//
+//            @Override
+//            public void describeTo(Description description) {
+//                description.appendText("is descendant of a RecyclerView with text" + itemText);
+//            }
+//        };
+//    }
+
+    // https://stackoverflow.com/questions/27396583/how-to-click-on-an-item-inside-a-recyclerview-in-espresso
+//    Custom ViewAction:
+//    public void clickOnImageViewAtRow(int position) {
+//        onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(position, new ClickOnImageView()));
+//    }
+//
+//    public class ClickOnImageView implements ViewAction{
+//        ViewAction click = click();
+//
+//        @Override
+//        public Matcher<View> getConstraints() {
+//            return click.getConstraints();
+//        }
+//
+//        @Override
+//        public String getDescription() {
+//            return " click on custom image view";
+//        }
+//
+//        @Override
+//        public void perform(UiController uiController, View view) {
+//            click.perform(uiController, view.findViewById(R.id.imageView));
+//        }
+//    }
 
     public static class LiveDataTestUtil {
         public static <T> T getOrAwaitValue(final LiveData<T> liveData) throws InterruptedException {

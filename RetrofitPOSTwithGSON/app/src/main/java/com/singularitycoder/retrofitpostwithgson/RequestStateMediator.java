@@ -3,7 +3,9 @@ package com.singularitycoder.retrofitpostwithgson;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-public class RequestStateMediator<T, E, V, K> {
+import org.jetbrains.annotations.NotNull;
+
+public final class RequestStateMediator<T, E, V, K> {
 
     @Nullable
     private T dataObject;
@@ -28,14 +30,17 @@ public class RequestStateMediator<T, E, V, K> {
         return dataObject;
     }
 
+    @NotNull
     public E getStatus() {
         return status;
     }
 
+    @Nullable
     public V getMessage() {
         return message;
     }
 
+    @Nullable
     public K getKey() {
         return key;
     }

@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // VIEW: This is the "V" in MVP
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
