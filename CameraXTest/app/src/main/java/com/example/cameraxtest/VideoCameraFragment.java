@@ -42,9 +42,6 @@ public final class VideoCameraFragment extends Fragment implements ListDialogFra
     private final String TAG = "VideoCameraFragment";
 
     @NonNull
-    private final String DATE_FORMAT_FILENAME = "yyyy-MM-dd-HH-mm-ss-SSS";
-
-    @NonNull
     private final AppUtils appUtils = AppUtils.getInstance();
 
     @NonNull
@@ -152,6 +149,7 @@ public final class VideoCameraFragment extends Fragment implements ListDialogFra
         binding.ivStartVideo.setVisibility(View.GONE);
         binding.ivStopVideo.setVisibility(View.VISIBLE);
         binding.tvElapsedVideoTime.setVisibility(View.VISIBLE);
+        final String DATE_FORMAT_FILENAME = "yyyy-MM-dd-HH-mm-ss-SSS";
         final File videoFile = new File(videoOutputDirectory, new SimpleDateFormat(DATE_FORMAT_FILENAME, Locale.getDefault()).format(System.currentTimeMillis()) + ".mp4");   // Create time-stamped output file to hold the image
         final VideoCapture.OutputFileOptions outputOptions = new VideoCapture.OutputFileOptions.Builder(videoFile).build();   // Create output options object which contains file + metadata
         videoCapture.startRecording(outputOptions, ContextCompat.getMainExecutor(getContext()), new VideoCapture.OnVideoSavedCallback() {
@@ -181,14 +179,16 @@ public final class VideoCameraFragment extends Fragment implements ListDialogFra
 
     @SuppressLint("RestrictedApi")
     private Void startVideoCamera(@NonNull final String cameraFacing) {
-        final ListenableFuture cameraProviderFuture = ProcessCameraProvider.getInstance(getContext());
+        final ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(getContext());
         cameraProviderFuture.addListener(() -> {
             try {
-                final ProcessCameraProvider cameraProvider = ProcessCameraProvider.getInstance(getContext()).get(); // Camera provider is now guaranteed to be available
+                final ProcessCameraProvider cameraProvider = cameraProviderFuture.get(); // Camera provider is now guaranteed to be available
 
                 final Preview preview = new Preview.Builder().build();  // Set up the view finder use case to display camera preview
 
-                videoCapture = new VideoCapture.Builder()
+                final VideoCapture.Builder videoCaptureBuilder = new VideoCapture.Builder();
+
+                videoCapture = videoCaptureBuilder
                         .setTargetRotation(Surface.ROTATION_0)
                         .setTargetResolution(defaultResolution)
                         .build();    // Set up the capture use case to allow users to take photos

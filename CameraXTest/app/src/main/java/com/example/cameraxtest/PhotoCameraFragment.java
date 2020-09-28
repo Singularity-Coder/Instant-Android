@@ -18,9 +18,14 @@ import androidx.annotation.Nullable;
 import androidx.camera.core.Camera;
 import androidx.camera.core.CameraInfo;
 import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.Preview;
+import androidx.camera.extensions.BokehImageCaptureExtender;
+import androidx.camera.extensions.HdrImageCaptureExtender;
+import androidx.camera.extensions.ImageCaptureExtender;
+import androidx.camera.extensions.NightImageCaptureExtender;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -41,9 +46,6 @@ public final class PhotoCameraFragment extends Fragment implements ListDialogFra
 
     @NonNull
     private final String TAG = "PhotoCameraFragment";
-
-    @NonNull
-    private final String DATE_FORMAT_FILENAME = "yyyy-MM-dd-HH-mm-ss-SSS";
 
     @NonNull
     private final AppUtils appUtils = AppUtils.getInstance();
@@ -91,6 +93,10 @@ public final class PhotoCameraFragment extends Fragment implements ListDialogFra
 
     @Nullable
     private FragmentPhotoCameraBinding binding;
+
+    // todo flash
+    // todo camera modes
+    // todo aspect ratio
 
     public PhotoCameraFragment() {
     }
@@ -140,6 +146,7 @@ public final class PhotoCameraFragment extends Fragment implements ListDialogFra
     }
 
     private void takePhoto() {
+        final String DATE_FORMAT_FILENAME = "yyyy-MM-dd-HH-mm-ss-SSS";
         final File photoFile = new File(imageOutputDirectory, new SimpleDateFormat(DATE_FORMAT_FILENAME, Locale.getDefault()).format(System.currentTimeMillis()) + ".jpg");   // Create time-stamped output file to hold the image
         final ImageCapture.OutputFileOptions outputOptions = new ImageCapture.OutputFileOptions.Builder(photoFile).build();   // Create output options object which contains file + metadata
         imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(getContext()), new ImageCapture.OnImageSavedCallback() {  // Set up image capture listener, which is triggered after photo has been taken
@@ -163,14 +170,18 @@ public final class PhotoCameraFragment extends Fragment implements ListDialogFra
     }
 
     private Void startImageCamera(@NonNull final String cameraFacing) {
-        final ListenableFuture cameraProviderFuture = ProcessCameraProvider.getInstance(getContext());
+        final ListenableFuture<ProcessCameraProvider> cameraProviderFuture = ProcessCameraProvider.getInstance(getContext());
         cameraProviderFuture.addListener(() -> {
             try {
-                final ProcessCameraProvider cameraProvider = ProcessCameraProvider.getInstance(getContext()).get(); // Camera provider is now guaranteed to be available
+                final ProcessCameraProvider cameraProvider = cameraProviderFuture.get(); // Camera provider is now guaranteed to be available
 
                 final Preview preview = new Preview.Builder().build();  // Set up the view finder use case to display camera preview
 
-                imageCapture = new ImageCapture.Builder()
+                final ImageAnalysis imageAnalysis = new ImageAnalysis.Builder().build();
+
+                final ImageCapture.Builder imageCaptureBuilder = new ImageCapture.Builder();
+
+                imageCapture = imageCaptureBuilder
                         .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                         .setTargetRotation(Surface.ROTATION_0)
                         .setFlashMode(ImageCapture.FLASH_MODE_AUTO)
@@ -180,13 +191,15 @@ public final class PhotoCameraFragment extends Fragment implements ListDialogFra
                 CameraSelector cameraSelector = null;
                 if (("FRONT").equals(cameraFacing)) {
                     this.cameraFacing = "BACK";
-                    cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA;    // Choose the camera by requiring a lens facing
+                    cameraSelector = new CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build();
                 }
 
                 if (("BACK").equals(cameraFacing)) {
                     this.cameraFacing = "FRONT";
-                    cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;    // Choose the camera by requiring a lens facing
+                    cameraSelector = new CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build();
                 }
+
+                setUpVendorExtensions(imageCaptureBuilder, cameraSelector);
 
                 preview.setSurfaceProvider(binding.previewViewFinder.getSurfaceProvider());     // Connect the preview use case to the previewView
 
@@ -196,6 +209,7 @@ public final class PhotoCameraFragment extends Fragment implements ListDialogFra
                         this,
                         cameraSelector,
                         preview,
+                        imageAnalysis,
                         imageCapture);  // Attach use cases to the camera with the same lifecycle owner
 
                 final CameraInfo cameraInfo = camera.getCameraInfo();
@@ -204,6 +218,30 @@ public final class PhotoCameraFragment extends Fragment implements ListDialogFra
             }
         }, ContextCompat.getMainExecutor(getContext()));
         return null;
+    }
+
+    private void setUpVendorExtensions(ImageCapture.Builder imageCaptureBuilder, CameraSelector cameraSelector) {
+        final HdrImageCaptureExtender hdrImageCaptureExtender = HdrImageCaptureExtender.create(imageCaptureBuilder);    // Vendor-Extensions
+        final BokehImageCaptureExtender bokehImageCaptureExtender = BokehImageCaptureExtender.create(imageCaptureBuilder);
+        final NightImageCaptureExtender nightImageCaptureExtender = NightImageCaptureExtender.create(imageCaptureBuilder);
+
+        if (hdrImageCaptureExtender.isExtensionAvailable(cameraSelector)) {     // if extension is available
+            hdrImageCaptureExtender.enableExtension(cameraSelector);
+        } else {
+            Toast.makeText(getContext(), "You don't have HDR Mode!", Toast.LENGTH_SHORT).show();
+        }
+
+        if (bokehImageCaptureExtender.isExtensionAvailable(cameraSelector)) {     // if extension is available
+            bokehImageCaptureExtender.enableExtension(cameraSelector);
+        } else {
+            Toast.makeText(getContext(), "You don't have Bokeh Mode!", Toast.LENGTH_SHORT).show();
+        }
+
+        if (nightImageCaptureExtender.isExtensionAvailable(cameraSelector)) {     // if extension is available
+            nightImageCaptureExtender.enableExtension(cameraSelector);
+        } else {
+            Toast.makeText(getContext(), "You don't have Night Mode!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void dialogImageResolutions() {
