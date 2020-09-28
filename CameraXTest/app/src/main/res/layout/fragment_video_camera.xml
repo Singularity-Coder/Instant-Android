@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/con_lay_video_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
@@ -17,15 +18,41 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <TextView
+            android:id="@+id/tv_elapsed_video_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="0:0"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="32sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageButton
             android:id="@+id/iv_back"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginBottom="48dp"
+            android:layout_width="32sp"
+            android:layout_height="32sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/ic_baseline_arrow_back_24"
             android:contentDescription="@string/capture"
             android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_resolution"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="48dp"
+            android:text="480p"
+            android:textColor="@android:color/white"
+            android:textSize="28dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -75,11 +102,12 @@
         android:visibility="gone">
 
         <VideoView
-            android:id="@+id/iv_snapped_video_preview"
+            android:id="@+id/vv_snapped_video_preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/black"
-            android:orientation="vertical" />
+            android:fitsSystemWindows="false"
+            android:orientation="vertical"
+            app:layout_constraintDimensionRatio="3:4" />
 
         <ImageButton
             android:id="@+id/iv_cancel_video_camera"

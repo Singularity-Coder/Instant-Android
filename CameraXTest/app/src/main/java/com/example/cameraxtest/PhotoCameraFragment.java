@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
@@ -24,7 +23,9 @@ import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cameraxtest.databinding.FragmentPhotoCameraBinding;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -36,7 +37,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public final class PhotoCameraFragment extends Fragment {
+public final class PhotoCameraFragment extends Fragment implements ListDialogFragment.ListDialogListener {
 
     @NonNull
     private final String TAG = "PhotoCameraFragment";
@@ -64,7 +65,7 @@ public final class PhotoCameraFragment extends Fragment {
             new Size(4320, 7680)};
 
     @NonNull
-    private final String[] resolution = {
+    private final String[] resolutionArray = {
             "360p",
             "480p",
             "720p (HD Ready)",
@@ -81,6 +82,9 @@ public final class PhotoCameraFragment extends Fragment {
 
     @Nullable
     private File imageOutputDirectory;
+
+    @Nullable
+    private Size defaultResolution = new Size(360, 480);
 
     @Nullable
     private ExecutorService cameraExecutor;
@@ -113,8 +117,11 @@ public final class PhotoCameraFragment extends Fragment {
     }
 
     private void setUpListeners() {
+        binding.conLayPhotoRoot.setOnClickListener(v -> {
+        });
         binding.ivSnapImage.setOnClickListener(view -> takePhoto());
         binding.ivBack.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStackImmediate());
+        binding.tvResolution.setOnClickListener(v -> dialogImageResolutions());
         binding.ivFlipCamera.setOnClickListener(view -> {
             if (("FRONT").equals(cameraFacing)) {
                 appUtils.checkPermissionsThenDo(getActivity(), () -> startImageCamera("FRONT"), null, CAMERA_PERMISSIONS);
@@ -167,7 +174,7 @@ public final class PhotoCameraFragment extends Fragment {
                         .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                         .setTargetRotation(Surface.ROTATION_0)
                         .setFlashMode(ImageCapture.FLASH_MODE_AUTO)
-                        .setTargetResolution(resolutionSizes[1])
+                        .setTargetResolution(defaultResolution)
                         .build();    // Set up the capture use case to allow users to take photos
 
                 CameraSelector cameraSelector = null;
@@ -199,9 +206,44 @@ public final class PhotoCameraFragment extends Fragment {
         return null;
     }
 
+    private void dialogImageResolutions() {
+        final Bundle bundle = new Bundle();
+        bundle.putString("DIALOG_TYPE", "list");
+        bundle.putString("KEY_LIST_DIALOG_TYPE", "Image Resolutions");
+        bundle.putString("KEY_TITLE", "Choose Image Resolution");
+        bundle.putString("KEY_CONTEXT_TYPE", "fragment");
+        bundle.putString("KEY_CONTEXT_OBJECT", "PhotoCameraFragment");
+        bundle.putStringArray("KEY_LIST", resolutionArray);
+
+        final int REQUEST_CODE_LIST_DIALOG_FRAGMENT_IMAGE_RESOLUTIONS = 666;
+        final DialogFragment dialogFragment = new ListDialogFragment();
+        dialogFragment.setTargetFragment(this, REQUEST_CODE_LIST_DIALOG_FRAGMENT_IMAGE_RESOLUTIONS);
+        dialogFragment.setArguments(bundle);
+        final FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        final Fragment previousFragment = getActivity().getSupportFragmentManager().findFragmentByTag("TAG_ListDialogFragment");
+        if (previousFragment != null) fragmentTransaction.remove(previousFragment);
+        fragmentTransaction.addToBackStack(null);
+        dialogFragment.show(fragmentTransaction, "TAG_ListDialogFragment");
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         cameraExecutor.shutdown();
+    }
+
+    @Override
+    public void onListDialogItemClick(DialogFragment dialog, String listItemText, String listTitle) {
+        if (("Choose Image Resolution").equals(listTitle)) {
+            String[] resStrArr = listItemText.split(" ", 0);
+            binding.tvResolution.setText(resStrArr[0]);
+            for (int i = 0; i < resolutionArray.length; i++) {
+                if (resolutionArray[i].equals(listItemText)) {
+                    defaultResolution = resolutionSizes[i];
+                }
+            }
+            appUtils.checkPermissionsThenDo(getActivity(), () -> startImageCamera("FRONT"), null, CAMERA_PERMISSIONS);
+        }
     }
 }

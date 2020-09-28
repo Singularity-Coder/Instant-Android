@@ -1,6 +1,7 @@
 package com.example.cameraxtest;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -37,7 +38,9 @@ public final class MainActivity extends AppCompatActivity {
     }
 
     private void setUpListeners() {
-        binding.tvImage.setOnClickListener(v -> appUtils.addFragment(this, null, R.id.lin_lay_main_root, new PhotoCameraFragment()));
-        binding.tvVideo.setOnClickListener(v -> appUtils.addFragment(this, null, R.id.lin_lay_main_root, new VideoCameraFragment()));
+        binding.conLayMainRoot.setOnClickListener(v -> {
+        });
+        binding.tvImage.setOnClickListener(v -> appUtils.addFragment(this, null, R.id.con_lay_main_root, new PhotoCameraFragment()));
+        binding.tvVideo.setOnClickListener(v -> appUtils.addFragment(this, null, R.id.con_lay_main_root, new VideoCameraFragment()));
     }
 }

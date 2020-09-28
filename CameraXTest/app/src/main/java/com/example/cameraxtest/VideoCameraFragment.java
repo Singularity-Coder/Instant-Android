@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.MediaController;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,7 +23,9 @@ import androidx.camera.core.Preview;
 import androidx.camera.core.VideoCapture;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.example.cameraxtest.databinding.FragmentVideoCameraBinding;
@@ -35,7 +38,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public final class VideoCameraFragment extends Fragment {
+public final class VideoCameraFragment extends Fragment implements ListDialogFragment.ListDialogListener {
 
     @NonNull
     private final String TAG = "VideoCameraFragment";
@@ -63,7 +66,7 @@ public final class VideoCameraFragment extends Fragment {
             new Size(4320, 7680)};
 
     @NonNull
-    private final String[] resolution = {
+    private final String[] resolutionArray = {
             "360p",
             "480p",
             "720p (HD Ready)",
@@ -80,6 +83,9 @@ public final class VideoCameraFragment extends Fragment {
 
     @Nullable
     private File videoOutputDirectory;
+
+    @Nullable
+    private Size defaultResolution = new Size(360, 480);
 
     @Nullable
     private ExecutorService cameraExecutor;
@@ -116,21 +122,15 @@ public final class VideoCameraFragment extends Fragment {
 
     @SuppressLint("RestrictedApi")
     private void setUpListeners() {
+        binding.conLayVideoRoot.setOnClickListener(v -> {
+        });
         binding.ivStartVideo.setOnClickListener(v -> takeVideo());
         binding.ivBack.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStackImmediate());
+        binding.tvResolution.setOnClickListener(v -> dialogVideoResolutions());
         binding.ivStopVideo.setOnClickListener(v -> {
             videoCapture.stopRecording();
-
             binding.ivStartVideo.setVisibility(View.VISIBLE);
             binding.ivStopVideo.setVisibility(View.GONE);
-
-            binding.conLayViewFinder.setVisibility(View.GONE);
-            binding.conLayVideoPreview.setVisibility(View.VISIBLE);
-
-            Log.d(TAG, "setUpListeners: uri: " + savedUri);
-
-            binding.ivSnappedVideoPreview.setVideoURI(savedUri);
-            binding.ivSnappedVideoPreview.start();
         });
         binding.ivFlipCamera.setOnClickListener(view -> {
             if (("FRONT").equals(cameraFacing)) {
@@ -153,12 +153,22 @@ public final class VideoCameraFragment extends Fragment {
     private void takeVideo() {
         binding.ivStartVideo.setVisibility(View.GONE);
         binding.ivStopVideo.setVisibility(View.VISIBLE);
+        binding.tvElapsedVideoTime.setVisibility(View.VISIBLE);
         final File videoFile = new File(videoOutputDirectory, new SimpleDateFormat(DATE_FORMAT_FILENAME, Locale.getDefault()).format(System.currentTimeMillis()) + ".mp4");   // Create time-stamped output file to hold the image
         final VideoCapture.OutputFileOptions outputOptions = new VideoCapture.OutputFileOptions.Builder(videoFile).build();   // Create output options object which contains file + metadata
         videoCapture.startRecording(outputOptions, ContextCompat.getMainExecutor(getContext()), new VideoCapture.OnVideoSavedCallback() {
             @Override
             public void onVideoSaved(@NonNull VideoCapture.OutputFileResults outputFileResults) {
                 savedUri = Uri.fromFile(videoFile);
+
+                binding.conLayViewFinder.setVisibility(View.GONE);
+                binding.conLayVideoPreview.setVisibility(View.VISIBLE);
+
+                binding.vvSnappedVideoPreview.setVideoURI(savedUri);
+                binding.vvSnappedVideoPreview.setMediaController(new MediaController(getContext()));
+                binding.vvSnappedVideoPreview.requestFocus();
+                binding.vvSnappedVideoPreview.start();
+
                 final String msg = "Video capture succeeded: " + savedUri;
                 Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
                 Log.d(TAG, msg);
@@ -182,7 +192,7 @@ public final class VideoCameraFragment extends Fragment {
 
                 videoCapture = new VideoCapture.Builder()
                         .setTargetRotation(Surface.ROTATION_0)
-                        .setTargetResolution(new Size(480, 720))
+                        .setTargetResolution(defaultResolution)
                         .build();    // Set up the capture use case to allow users to take photos
 
                 CameraSelector cameraSelector = null;
@@ -214,9 +224,44 @@ public final class VideoCameraFragment extends Fragment {
         return null;
     }
 
+    private void dialogVideoResolutions() {
+        final Bundle bundle = new Bundle();
+        bundle.putString("DIALOG_TYPE", "list");
+        bundle.putString("KEY_LIST_DIALOG_TYPE", "Video Resolutions");
+        bundle.putString("KEY_TITLE", "Choose Video Resolution");
+        bundle.putString("KEY_CONTEXT_TYPE", "fragment");
+        bundle.putString("KEY_CONTEXT_OBJECT", "VideoCameraFragment");
+        bundle.putStringArray("KEY_LIST", resolutionArray);
+
+        final int REQUEST_CODE_LIST_DIALOG_FRAGMENT_VIDEO_RESOLUTIONS = 777;
+        final DialogFragment dialogFragment = new ListDialogFragment();
+        dialogFragment.setTargetFragment(this, REQUEST_CODE_LIST_DIALOG_FRAGMENT_VIDEO_RESOLUTIONS);
+        dialogFragment.setArguments(bundle);
+        final FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        final Fragment previousFragment = getActivity().getSupportFragmentManager().findFragmentByTag("TAG_ListDialogFragment");
+        if (previousFragment != null) fragmentTransaction.remove(previousFragment);
+        fragmentTransaction.addToBackStack(null);
+        dialogFragment.show(fragmentTransaction, "TAG_ListDialogFragment");
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         cameraExecutor.shutdown();
+    }
+
+    @Override
+    public void onListDialogItemClick(DialogFragment dialog, String listItemText, String listTitle) {
+        if (("Choose Video Resolution").equals(listTitle)) {
+            String[] resStrArr = listItemText.split(" ", 0);
+            binding.tvResolution.setText(resStrArr[0]);
+            for (int i = 0; i < resolutionArray.length; i++) {
+                if (resolutionArray[i].equals(listItemText)) {
+                    defaultResolution = resolutionSizes[i];
+                }
+            }
+            appUtils.checkPermissionsThenDo(getActivity(), () -> startVideoCamera("FRONT"), null, CAMERA_PERMISSIONS);
+        }
     }
 }
