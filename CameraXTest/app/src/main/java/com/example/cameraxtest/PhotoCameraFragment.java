@@ -84,7 +84,7 @@ public final class PhotoCameraFragment extends Fragment implements ListDialogFra
     private File imageOutputDirectory;
 
     @Nullable
-    private Size defaultResolution = new Size(360, 480);
+    private Size defaultResolution = new Size(480, 720);
 
     @Nullable
     private ExecutorService cameraExecutor;

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.util.Size;
 import android.view.LayoutInflater;
@@ -26,7 +25,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LifecycleOwner;
 
 import com.example.cameraxtest.databinding.FragmentVideoCameraBinding;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -85,7 +83,7 @@ public final class VideoCameraFragment extends Fragment implements ListDialogFra
     private File videoOutputDirectory;
 
     @Nullable
-    private Size defaultResolution = new Size(360, 480);
+    private Size defaultResolution = new Size(480, 720);
 
     @Nullable
     private ExecutorService cameraExecutor;
