@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/con_lay_view_finder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <androidx.camera.view.PreviewView
+            android:id="@+id/preview_view_finder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:id="@+id/iv_back"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="48dp"
+            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:contentDescription="@string/capture"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/iv_start_video"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/ic_shutter_video_start"
+            android:contentDescription="@string/capture"
+            android:scaleType="fitCenter"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <ImageButton
+            android:id="@+id/iv_stop_video"
+            android:layout_width="86dp"
+            android:layout_height="86dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/ic_shutter_video_stop"
+            android:contentDescription="@string/capture"
+            android:scaleType="fitCenter"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <ImageButton
+            android:id="@+id/iv_flip_camera"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="48dp"
+            android:background="@drawable/ic_baseline_flip_camera_ios_24"
+            android:contentDescription="@string/capture"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/con_lay_video_preview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <VideoView
+            android:id="@+id/iv_snapped_video_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:orientation="vertical" />
+
+        <ImageButton
+            android:id="@+id/iv_cancel_video_camera"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/ic_baseline_close_24"
+            android:contentDescription="@string/capture"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/iv_confirm_video"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/ic_baseline_check_24"
+            android:contentDescription="@string/capture"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <ImageButton
+            android:id="@+id/iv_retake_video"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="26dp"
+            android:background="@drawable/ic_baseline_refresh_24"
+            android:contentDescription="@string/capture"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

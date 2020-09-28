@@ -2,94 +2,33 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lin_lay_main_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/con_lay_view_finder"
+    <TextView
+        android:id="@+id/tv_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible">
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_baseline_photo_camera_24"
+        android:text="Take Photo"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_video"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.camera.view.PreviewView
-            android:id="@+id/preview_view_finder"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <ImageButton
-            android:id="@+id/iv_snap"
-            android:layout_width="86dp"
-            android:layout_height="86dp"
-            android:layout_marginBottom="26dp"
-            android:background="@drawable/ic_shutter"
-            android:contentDescription="@string/capture"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
-        <ImageButton
-            android:id="@+id/iv_flip_camera"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/ic_baseline_flip_camera_ios_24"
-            android:contentDescription="@string/capture"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_snap"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_snap" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/con_lay_preview"
+    <TextView
+        android:id="@+id/tv_video"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="wrap_content"
+        android:drawableTop="@drawable/ic_baseline_videocam_24"
+        android:text="Take Video"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_image" />
 
-        <ImageView
-            android:id="@+id/iv_snapped_image_preview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/black"
-            android:orientation="vertical" />
-
-        <ImageButton
-            android:id="@+id/iv_cancel_camera"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="26dp"
-            android:background="@drawable/ic_baseline_close_24"
-            android:contentDescription="@string/capture"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageButton
-            android:id="@+id/iv_confirm_image"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_marginBottom="26dp"
-            android:background="@drawable/ic_baseline_check_24"
-            android:contentDescription="@string/capture"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
-
-        <ImageButton
-            android:id="@+id/iv_retake_image"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="26dp"
-            android:background="@drawable/ic_baseline_refresh_24"
-            android:contentDescription="@string/capture"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
