@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Settings;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -35,6 +37,12 @@ public final class AppUtils {
     public static synchronized AppUtils getInstance() {
         if (null == _instance) _instance = new AppUtils();
         return _instance;
+    }
+
+    public final File getOutputDirectory(@NonNull final Activity activity, @NonNull final String fileType) {
+        final File file = new File(Environment.getExternalStorageDirectory() + "/" + activity.getResources().getString(R.string.app_name) + "/" + fileType + "/");
+        if (!file.exists()) file.mkdirs();
+        return file;
     }
 
     public final void addFragment(@NonNull final Activity activity, @Nullable final Bundle bundle, final int parentLayout, @NonNull final Fragment fragment) {

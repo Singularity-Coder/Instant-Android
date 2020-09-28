@@ -47,7 +47,30 @@ public final class VideoCameraFragment extends Fragment {
     private final AppUtils appUtils = AppUtils.getInstance();
 
     @NonNull
-    private final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO};
+    private final String[] CAMERA_PERMISSIONS = {
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO};
+
+    @NonNull
+    private final Size[] resolutionSizes = {
+            new Size(360, 480),
+            new Size(480, 720),
+            new Size(720, 1280),
+            new Size(1080, 1920),
+            new Size(1440, 2560),
+            new Size(2160, 3840),
+            new Size(4320, 7680)};
+
+    @NonNull
+    private final String[] resolution = {
+            "360p",
+            "480p",
+            "720p (HD Ready)",
+            "1080p (Full HD)",
+            "1440p (Quad HD)",
+            "2160p (Ultra HD or 4K)",
+            "4320p (8K)"};
 
     @NonNull
     private String cameraFacing = "FRONT";
@@ -87,7 +110,7 @@ public final class VideoCameraFragment extends Fragment {
     }
 
     private void initialise() {
-        videoOutputDirectory = getOutputDirectory("VIDEOS");
+        videoOutputDirectory = appUtils.getOutputDirectory(getActivity(), "VIDEOS");
         cameraExecutor = Executors.newSingleThreadExecutor();
     }
 
@@ -103,6 +126,8 @@ public final class VideoCameraFragment extends Fragment {
 
             binding.conLayViewFinder.setVisibility(View.GONE);
             binding.conLayVideoPreview.setVisibility(View.VISIBLE);
+
+            Log.d(TAG, "setUpListeners: uri: " + savedUri);
 
             binding.ivSnappedVideoPreview.setVideoURI(savedUri);
             binding.ivSnappedVideoPreview.start();
@@ -134,7 +159,7 @@ public final class VideoCameraFragment extends Fragment {
             @Override
             public void onVideoSaved(@NonNull VideoCapture.OutputFileResults outputFileResults) {
                 savedUri = Uri.fromFile(videoFile);
-                String msg = "Video capture succeeded: " + savedUri;
+                final String msg = "Video capture succeeded: " + savedUri;
                 Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
                 Log.d(TAG, msg);
             }
@@ -181,18 +206,12 @@ public final class VideoCameraFragment extends Fragment {
                         preview,
                         videoCapture);  // Attach use cases to the camera with the same lifecycle owner
 
-                CameraInfo cameraInfo = camera.getCameraInfo();
+                final CameraInfo cameraInfo = camera.getCameraInfo();
 
             } catch (InterruptedException | ExecutionException ignored) {
             }
         }, ContextCompat.getMainExecutor(getContext()));
         return null;
-    }
-
-    private File getOutputDirectory(@NonNull final String fileType) {
-        final File file = new File(Environment.getExternalStorageDirectory() + "/" + getResources().getString(R.string.app_name) + "/" + fileType + "/");
-        if (!file.exists()) file.mkdirs();
-        return file;
     }
 
     @Override

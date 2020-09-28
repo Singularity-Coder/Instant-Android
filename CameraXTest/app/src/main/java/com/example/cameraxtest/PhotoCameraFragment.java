@@ -48,7 +48,30 @@ public final class PhotoCameraFragment extends Fragment {
     private final AppUtils appUtils = AppUtils.getInstance();
 
     @NonNull
-    private final String[] CAMERA_PERMISSIONS = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO};
+    private final String[] CAMERA_PERMISSIONS = {
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.RECORD_AUDIO};
+
+    @NonNull
+    private final Size[] resolutionSizes = {
+            new Size(360, 480),
+            new Size(480, 720),
+            new Size(720, 1280),
+            new Size(1080, 1920),
+            new Size(1440, 2560),
+            new Size(2160, 3840),
+            new Size(4320, 7680)};
+
+    @NonNull
+    private final String[] resolution = {
+            "360p",
+            "480p",
+            "720p (HD Ready)",
+            "1080p (Full HD)",
+            "1440p (Quad HD)",
+            "2160p (Ultra HD or 4K)",
+            "4320p (8K)"};
 
     @NonNull
     private String cameraFacing = "FRONT";
@@ -85,7 +108,7 @@ public final class PhotoCameraFragment extends Fragment {
     }
 
     private void initialise() {
-        imageOutputDirectory = getOutputDirectory("PHOTOS");
+        imageOutputDirectory = appUtils.getOutputDirectory(getActivity(), "PHOTOS");
         cameraExecutor = Executors.newSingleThreadExecutor();
     }
 
@@ -110,15 +133,14 @@ public final class PhotoCameraFragment extends Fragment {
     }
 
     private void takePhoto() {
-        // Get a stable reference of the modifiable image capture use case
         final File photoFile = new File(imageOutputDirectory, new SimpleDateFormat(DATE_FORMAT_FILENAME, Locale.getDefault()).format(System.currentTimeMillis()) + ".jpg");   // Create time-stamped output file to hold the image
         final ImageCapture.OutputFileOptions outputOptions = new ImageCapture.OutputFileOptions.Builder(photoFile).build();   // Create output options object which contains file + metadata
         imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(getContext()), new ImageCapture.OnImageSavedCallback() {  // Set up image capture listener, which is triggered after photo has been taken
             @Override
             public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
-                Uri savedUri = Uri.fromFile(photoFile);
-                String msg = "Photo capture succeeded: " + savedUri;
-                Bitmap bitmap = BitmapFactory.decodeFile(savedUri.getPath());
+                final Uri savedUri = Uri.fromFile(photoFile);
+                final String msg = "Photo capture succeeded: " + savedUri;
+                final Bitmap bitmap = BitmapFactory.decodeFile(savedUri.getPath());
                 binding.ivSnappedImagePreview.setImageBitmap(bitmap);
                 binding.conLayViewFinder.setVisibility(View.GONE);
                 binding.conLayImagePreview.setVisibility(View.VISIBLE);
@@ -145,12 +167,10 @@ public final class PhotoCameraFragment extends Fragment {
                         .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
                         .setTargetRotation(Surface.ROTATION_0)
                         .setFlashMode(ImageCapture.FLASH_MODE_AUTO)
-                        .setTargetResolution(new Size(480, 720))
-//                        .setTargetResolution(new Size(360, 480))
+                        .setTargetResolution(resolutionSizes[1])
                         .build();    // Set up the capture use case to allow users to take photos
 
                 CameraSelector cameraSelector = null;
-//                CameraSelector cameraSelector = new CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT).build();
                 if (("FRONT").equals(cameraFacing)) {
                     this.cameraFacing = "BACK";
                     cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA;    // Choose the camera by requiring a lens facing
@@ -162,7 +182,6 @@ public final class PhotoCameraFragment extends Fragment {
                 }
 
                 preview.setSurfaceProvider(binding.previewViewFinder.getSurfaceProvider());     // Connect the preview use case to the previewView
-//                preview.setSurfaceProvider(previewView.createSurfaceProvider(camera.getCameraInfo()));
 
                 cameraProvider.unbindAll();
 
@@ -172,18 +191,12 @@ public final class PhotoCameraFragment extends Fragment {
                         preview,
                         imageCapture);  // Attach use cases to the camera with the same lifecycle owner
 
-                CameraInfo cameraInfo = camera.getCameraInfo();
+                final CameraInfo cameraInfo = camera.getCameraInfo();
 
             } catch (InterruptedException | ExecutionException ignored) {
             }
         }, ContextCompat.getMainExecutor(getContext()));
         return null;
-    }
-
-    private File getOutputDirectory(@NonNull final String fileType) {
-        final File file = new File(Environment.getExternalStorageDirectory() + "/" + getResources().getString(R.string.app_name) + "/" + fileType + "/");
-        if (!file.exists()) file.mkdirs();
-        return file;
     }
 
     @Override
