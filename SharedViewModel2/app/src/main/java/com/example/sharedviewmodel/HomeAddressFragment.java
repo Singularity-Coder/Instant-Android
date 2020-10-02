@@ -19,11 +19,11 @@ public final class HomeAddressFragment extends Fragment {
     @Nullable
     private SharedViewModel sharedViewModel;
 
+    @NonNull
+    private final AppUtils appUtils = AppUtils.getInstance();
+
     @Nullable
     private FragmentHomeAddressBinding binding;
-
-    @NonNull
-    private AppUtils appUtils = AppUtils.getInstance();
 
     public HomeAddressFragment() {
     }
@@ -46,7 +46,6 @@ public final class HomeAddressFragment extends Fragment {
     }
 
     private boolean hasValidInput() {
-
         binding.etHomeBuilding.setError(null);
         binding.etHomeStreet.setError(null);
         binding.etHomeCity.setError(null);

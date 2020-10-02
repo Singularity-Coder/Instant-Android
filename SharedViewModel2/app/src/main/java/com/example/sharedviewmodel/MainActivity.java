@@ -14,7 +14,7 @@ public final class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
 
     @NonNull
-    private AppUtils appUtils = AppUtils.getInstance();
+    private final AppUtils appUtils = AppUtils.getInstance();
 
     @Nullable
     private ActivityMainBinding binding;

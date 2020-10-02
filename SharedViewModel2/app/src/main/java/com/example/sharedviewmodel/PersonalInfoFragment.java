@@ -19,14 +19,14 @@ import static java.lang.String.valueOf;
 
 public final class PersonalInfoFragment extends Fragment {
 
-    @Nullable
-    private FragmentPersonalInfoBinding binding;
-
     @NonNull
     private final String[] professionArray = new String[]{"Android Developer", "Data Scientist", "Astronaut", "Athlete"};
 
     @Nullable
     private SharedViewModel sharedViewModel;
+
+    @Nullable
+    private FragmentPersonalInfoBinding binding;
 
     public PersonalInfoFragment() {
     }
@@ -55,7 +55,6 @@ public final class PersonalInfoFragment extends Fragment {
     }
 
     private boolean hasValidInput() {
-
         binding.etName.setError(null);
         binding.etEmail.setError(null);
         binding.etProfession.setError(null);

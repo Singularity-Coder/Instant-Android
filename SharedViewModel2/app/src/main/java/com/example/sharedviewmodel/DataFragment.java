@@ -17,14 +17,14 @@ public final class DataFragment extends Fragment {
     @Nullable
     private final String TAG = "DataFragment";
 
+    @NonNull
+    private final AppUtils appUtils = AppUtils.getInstance();
+
     @Nullable
     private SharedViewModel sharedViewModel;
 
     @Nullable
     private FragmentDataBinding binding;
-
-    @NonNull
-    private AppUtils appUtils = AppUtils.getInstance();
 
     public DataFragment() {
     }
@@ -53,7 +53,6 @@ public final class DataFragment extends Fragment {
     }
 
     private void setDataFromSharedViewModel() {
-        sharedViewModel = new ViewModelProvider(getActivity()).get(SharedViewModel.class);
         sharedViewModel.getName().observe(getViewLifecycleOwner(), string -> binding.tvName.setText("Name: " + string));
         sharedViewModel.getEmail().observe(getViewLifecycleOwner(), string -> binding.tvEmail.setText("Email: " + string));
         sharedViewModel.getProfession().observe(getViewLifecycleOwner(), string -> binding.tvProfession.setText("Profession: " + string));

@@ -43,7 +43,6 @@ public final class OfficeAddressFragment extends Fragment {
     }
 
     private boolean hasValidInput() {
-
         binding.etOfficeBuilding.setError(null);
         binding.etOfficeStreet.setError(null);
         binding.etOfficeCity.setError(null);
