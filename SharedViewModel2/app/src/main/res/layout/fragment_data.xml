@@ -15,9 +15,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:orientation="vertical"
             android:padding="24dp">
 
             <com.google.android.material.textview.MaterialTextView
@@ -42,8 +42,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardElevation="4dp"
                 app:cardBackgroundColor="#F3EAFF"
+                app:cardElevation="4dp"
                 app:contentPadding="16dp">
 
                 <LinearLayout

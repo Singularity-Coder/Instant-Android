@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/con_lay_home_address_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:padding="24dp"
-    android:id="@+id/con_lay_home_address_root"
     tools:context=".HomeAddressFragment">
 
     <com.google.android.material.textview.MaterialTextView
@@ -106,17 +106,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="Pin Code"
-        app:endIconMode="clear_text"
-        app:errorEnabled="true"
-        app:helperTextEnabled="true"
-        app:helperText="Maximum 6 digits"
         app:counterEnabled="true"
         app:counterMaxLength="4"
-        app:prefixText="53"
-        app:suffixText=""
+        app:endIconMode="clear_text"
+        app:errorEnabled="true"
+        app:helperText="Maximum 6 digits"
+        app:helperTextEnabled="true"
         app:layout_constraintTop_toBottomOf="@+id/et_home_city"
+        app:prefixText="53"
         app:startIconContentDescription="Pin Code"
-        app:startIconDrawable="@drawable/ic_twotone_my_location_24">
+        app:startIconDrawable="@drawable/ic_twotone_my_location_24"
+        app:suffixText="">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
