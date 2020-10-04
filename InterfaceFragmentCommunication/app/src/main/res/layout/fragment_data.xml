@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Access all the data sent through Shared ViewModel on this Screen"
+                android:text="Access all the data sent through Interfaces on this Screen"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
                 android:textColor="@android:color/black" />
 

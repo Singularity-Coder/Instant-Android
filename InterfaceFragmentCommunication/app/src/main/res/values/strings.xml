@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">InterfaceFragmentCommunication</string>
+
+    <string name="hint_home_building_details">Building Details</string>
+    <string name="hint_home_street_details">Street Details</string>
+    <string name="hint_home_city_details">City Details</string>
+
+    <string name="content_description_home_building_details">Building Details</string>
+    <string name="content_description_home_street_details">Street Details</string>
+    <string name="content_description_home_city_details">City Details</string>
+
+    <string name="text_send">Send</string>
+    <string name="text_cancel">Cancel</string>
+</resources>
