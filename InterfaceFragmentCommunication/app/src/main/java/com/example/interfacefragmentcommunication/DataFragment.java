@@ -40,8 +40,8 @@ public final class DataFragment extends Fragment {
     private void setUpListeners() {
         binding.conLayDataRoot.setOnClickListener(v -> {
         });
-        binding.btnHomeAddress.setOnClickListener(v -> appUtils.addFragment(getActivity(), null, R.id.con_lay_root, new HomeAddressFragment()));
-        binding.btnOfficeAddress.setOnClickListener(v -> appUtils.addFragment(getActivity(), null, R.id.con_lay_root, new OfficeAddressFragment()));
+        binding.btnHomeAddress.setOnClickListener(v -> appUtils.addFragment(getActivity(), null, R.id.fl_main, new HomeAddressFragment()));
+        binding.btnOfficeAddress.setOnClickListener(v -> appUtils.addFragment(getActivity(), null, R.id.fl_main, new OfficeAddressFragment()));
     }
 
     public void getHomeAddress(

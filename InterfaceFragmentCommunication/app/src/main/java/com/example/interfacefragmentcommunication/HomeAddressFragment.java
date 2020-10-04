@@ -56,7 +56,6 @@ public final class HomeAddressFragment extends Fragment {
         homeAddressListener = null;
     }
 
-
     private boolean hasValidInput() {
         binding.etHomeBuilding.setError(null);
         binding.etHomeStreet.setError(null);
@@ -89,7 +88,7 @@ public final class HomeAddressFragment extends Fragment {
     private void setUpListeners() {
         binding.conLayHomeAddressRoot.setOnClickListener(v -> {
         });
-        binding.btnPersonalInfo.setOnClickListener(v -> appUtils.addFragment(getActivity(), null, R.id.con_lay_root, new PersonalInfoFragment()));
+        binding.btnPersonalInfo.setOnClickListener(v -> appUtils.addFragment(getActivity(), null, R.id.fl_main, new PersonalInfoFragment()));
         binding.btnCancel.setOnClickListener(v -> getActivity().getSupportFragmentManager().popBackStackImmediate());
         binding.btnSend.setOnClickListener(v -> btnSend());
     }

@@ -29,12 +29,12 @@ public final class MainActivity
         appUtils.setStatusBarColor(this, R.color.colorPrimary);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        appUtils.addFragmentNoBackStack(this, null, R.id.con_lay_root, new DataFragment(), "data_fragment");
+        appUtils.addFragmentNoBackStack(this, null, R.id.fl_main, new DataFragment(), "data_fragment");
     }
 
     @Override
     public void onHomeAddressSendClick(String building, String street, String city, String pin) {
-        final DataFragment dataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("data_fragment");
+        final DataFragment dataFragment = (DataFragment) getSupportFragmentManager().findFragmentByTag("data_fragment");     // or u can maintain global variable for DataFragment and use the same instance to get the method
         dataFragment.getHomeAddress(building, street, city, pin);
     }
 
