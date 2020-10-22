@@ -12,7 +12,7 @@ public final class MainActivity
         extends AppCompatActivity
         implements HomeAddressFragment.HomeAddressListener,
         OfficeAddressFragment.OfficeAddressListener,
-        PersonalInfoFragment.PersonalInfoListener{
+        PersonalInfoFragment.PersonalInfoListener {
 
     @Nullable
     private final String TAG = "MainActivity";
