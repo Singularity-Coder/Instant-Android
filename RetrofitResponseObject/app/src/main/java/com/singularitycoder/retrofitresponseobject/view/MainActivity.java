@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.singularitycoder.retrofitresponseobject.R;
 import com.singularitycoder.retrofitresponseobject.adapter.NewsAdapter;
 import com.singularitycoder.retrofitresponseobject.databinding.ActivityMainBinding;
+import com.singularitycoder.retrofitresponseobject.helper.AppConstants;
 import com.singularitycoder.retrofitresponseobject.helper.AppUtils;
 import com.singularitycoder.retrofitresponseobject.helper.StateMediator;
 import com.singularitycoder.retrofitresponseobject.helper.UiState;
@@ -47,12 +48,6 @@ public final class MainActivity extends AppCompatActivity {
     private final List<NewsItem.NewsArticle> newsList = new ArrayList<>();
 
     @Nullable
-    private NewsViewModel newsViewModel;
-
-    @Nullable
-    private NewsItem.NewsResponse newsResponse;
-
-    @Nullable
     private NewsAdapter newsAdapter;
 
     @Nullable
@@ -64,14 +59,9 @@ public final class MainActivity extends AppCompatActivity {
         appUtils.setStatusBarColor(this, R.color.colorPrimaryDark);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        initialise();
         setUpRecyclerView();
         getNewsFromApi();
         binding.swipeRefreshLayout.setOnRefreshListener(this::getNewsFromApi);
-    }
-
-    private void initialise() {
-        newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
     }
 
     private void setUpRecyclerView() {
@@ -90,6 +80,7 @@ public final class MainActivity extends AppCompatActivity {
     private void showOnlineState() {
         final String country = "in";
         final String category = "technology";
+        final NewsViewModel newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
         newsViewModel.getNewsFromRepository(country, category).observe(MainActivity.this, observeLiveData());
     }
 
@@ -122,7 +113,7 @@ public final class MainActivity extends AppCompatActivity {
 
     private void showSuccessState(StateMediator<Object, UiState, String, String> stateMediator) {
         runOnUiThread(() -> {
-            if (("NEWS").equals(stateMediator.getKey())) {
+            if ((AppConstants.KEY_GET_NEWS_LIST_API_SUCCESS_STATE).equals(stateMediator.getKey())) {
                 showNewsListSuccessState(stateMediator);
             }
         });
@@ -137,7 +128,7 @@ public final class MainActivity extends AppCompatActivity {
 
         if (HttpURLConnection.HTTP_OK == response.code()) {
             if (null == response.body()) return;
-            newsResponse = response.body();
+            NewsItem.NewsResponse newsResponse = response.body();
             final List<NewsItem.NewsArticle> newsArticles = newsResponse.getArticles();
             newsList.addAll(newsArticles);
             newsAdapter.notifyDataSetChanged();

@@ -17,13 +17,16 @@ public final class RetrofitService {
     @Nullable
     private static Retrofit _instance;
 
+    private RetrofitService() {
+    }
+
     @NonNull
     public static synchronized Retrofit getInstance() {
         if (null == _instance) {
             _instance = new Retrofit
                     .Builder()
                     .client(getHttpClientBuilder().build())
-                    .baseUrl("https://newsapi.org/v2/")
+                    .baseUrl(AppConstants.BASE_URL)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();

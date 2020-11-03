@@ -20,9 +20,6 @@ import java.util.List;
 public final class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @NonNull
-    private final String TAG = "NewsAdapter";
-
-    @NonNull
     private final AppUtils appUtils = AppUtils.getInstance();
 
     @NonNull

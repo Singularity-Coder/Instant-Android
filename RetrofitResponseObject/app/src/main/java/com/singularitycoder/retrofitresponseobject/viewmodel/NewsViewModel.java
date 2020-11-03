@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.singularitycoder.retrofitresponseobject.helper.AppConstants;
 import com.singularitycoder.retrofitresponseobject.helper.StateMediator;
 import com.singularitycoder.retrofitresponseobject.helper.UiState;
 import com.singularitycoder.retrofitresponseobject.repository.NewsRepository;
@@ -48,7 +49,7 @@ public final class NewsViewModel extends ViewModel {
                             public void onSuccess(Object o) {
                                 Log.d(TAG, "onResponse: resp: " + o);
                                 if (null != o) {
-                                    stateMediator.set(o, UiState.SUCCESS, "Got Data!", "NEWS");
+                                    stateMediator.set(o, UiState.SUCCESS, "Got Data!", AppConstants.KEY_GET_NEWS_LIST_API_SUCCESS_STATE);
                                     mutableLiveData.postValue(stateMediator);
                                 }
                             }

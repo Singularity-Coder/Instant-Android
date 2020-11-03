@@ -9,7 +9,7 @@ public final class NewsItem {
 
         private String status;
         private Integer totalResults;
-        private List<NewsArticle> articles = Collections.EMPTY_LIST;
+        private final List<NewsArticle> articles = Collections.EMPTY_LIST;
 
         public List<NewsArticle> getArticles() {
             return articles;

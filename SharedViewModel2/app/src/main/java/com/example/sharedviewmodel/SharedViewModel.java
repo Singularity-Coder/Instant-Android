@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SharedViewModel extends ViewModel {
+public final class SharedViewModel extends ViewModel {
 
     // Personal Info
     private MutableLiveData<String> name = new MutableLiveData<>();

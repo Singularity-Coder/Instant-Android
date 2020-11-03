@@ -25,6 +25,9 @@ public final class AppUtils extends AppCompatActivity {
     @Nullable
     private static AppUtils _instance;
 
+    private AppUtils() {
+    }
+
     @NonNull
     public static synchronized AppUtils getInstance() {
         if (null == _instance) _instance = new AppUtils();
@@ -54,7 +57,7 @@ public final class AppUtils extends AppCompatActivity {
     public final void glideImage(Context context, String imgUrl, ImageView imageView) {
         final RequestOptions requestOptions = new RequestOptions()
                 .placeholder(R.color.colorAccent)
-                .error(R.mipmap.ic_launcher)
+                .error(android.R.color.holo_red_light)
                 .encodeQuality(40)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);
 
