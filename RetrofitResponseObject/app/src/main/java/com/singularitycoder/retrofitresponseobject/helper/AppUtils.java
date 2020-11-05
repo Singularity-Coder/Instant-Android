@@ -56,7 +56,7 @@ public final class AppUtils extends AppCompatActivity {
 
     public final void glideImage(Context context, String imgUrl, ImageView imageView) {
         final RequestOptions requestOptions = new RequestOptions()
-                .placeholder(R.color.colorAccent)
+                .placeholder(R.color.teal_200)
                 .error(android.R.color.holo_red_light)
                 .encodeQuality(40)
                 .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC);

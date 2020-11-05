@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:scaleType="centerCrop"
-        android:src="@color/colorAccent" />
+        android:src="@color/teal_200" />
 
     <TextView
         android:id="@+id/tv_title"

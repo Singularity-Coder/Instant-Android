@@ -23,6 +23,9 @@ public final class AppUtils {
     @Nullable
     private static AppUtils _instance;
 
+    private AppUtils() {
+    }
+
     @NonNull
     public static synchronized AppUtils getInstance() {
         if (null == _instance) _instance = new AppUtils();
@@ -30,7 +33,7 @@ public final class AppUtils {
     }
 
     @SuppressLint("SourceLockedOrientationActivity")
-    public final void setStatusBarColor(@NonNull final Activity activity, @NonNull final int statusBarColor) {
+    public final void setStatusBarColor(@NonNull final Activity activity, final int statusBarColor) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             final Window window = activity.getWindow();
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

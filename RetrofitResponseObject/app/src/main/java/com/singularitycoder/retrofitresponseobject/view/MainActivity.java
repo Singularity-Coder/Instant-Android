@@ -53,10 +53,27 @@ public final class MainActivity extends AppCompatActivity {
     @Nullable
     private ActivityMainBinding binding;
 
+    // todo diffutil
+    // todo shimmer
+    // todo material components
+    // todo Crashlytics
+    // todo Leak Canary
+    // todo new Android colors
+    // todo builder pattern or static factory
+    // todo replace toasts with material snackbars
+    // todo sharp edged cards
+    // todo placeholder image for no data or empty list
+    // todo network change listeners
+    // todo data binding
+    // todo navigation components with safe args
+    // todo basic recycler view animations
+    // todo night mode
+    // todo unit n espresso tests
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        appUtils.setStatusBarColor(this, R.color.colorPrimaryDark);
+        appUtils.setStatusBarColor(this, R.color.purple_500);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setUpRecyclerView();
