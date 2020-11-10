@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signup_fragment">
+
+    <fragment
+        android:id="@+id/signup_fragment"
+        android:name="com.singularitycoder.navigationcomponents.SignupFragment"
+        android:label="Signup Fragment"
+        tools:layout="@layout/fragment_signup">
+        <action
+            android:id="@+id/action_signup_fragment_to_home_fragment"
+            app:destination="@id/home_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_signup_fragment_to_login_fragment"
+            app:destination="@id/login_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/login_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.singularitycoder.navigationcomponents.LoginFragment"
+        android:label="LogIn Fragment"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_fragment_to_home_fragment"
+            app:destination="@id/home_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_login_fragment_to_signup_fragment"
+            app:destination="@id/signup_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/signup_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.singularitycoder.navigationcomponents.HomeFragment"
+        android:label="Home Fragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_fragment_to_login_fragment"
+            app:destination="@id/login_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/login_fragment" />
+        <argument
+            android:name="keyName"
+            app:argType="string" />
+        <argument
+            android:name="keyEmail"
+            app:argType="string" />
+        <argument
+            android:name="keyPassword"
+            app:argType="string" />
+        <argument
+            android:name="keyGender"
+            app:argType="string" />
+        <argument
+            android:name="keyAge"
+            app:argType="string" />
+        <argument
+            android:name="keyInterestsArray"
+            app:argType="string[]"
+            app:nullable="true" />
+        <argument
+            android:name="keySkillsArray"
+            app:argType="string[]"
+            app:nullable="true" />
+    </fragment>
+
+</navigation>
