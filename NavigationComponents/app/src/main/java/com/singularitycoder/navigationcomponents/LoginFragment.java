@@ -93,6 +93,7 @@ public final class LoginFragment extends Fragment {
             bundle.putString("KEY_PASSWORD", valueOf(binding.etPassword.getEditText().getText()));
             navController.navigate(R.id.action_login_fragment_to_home_fragment, bundle);
         });
+
         binding.btnSignup.setOnClickListener(v -> {
             // onBackPress avoid going to home and jump to login pops all added fragments including the destination we provided. which means when u land on the login frag n click back since ther r no other frags u will quit the app
             final NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.signup_fragment, true).build();

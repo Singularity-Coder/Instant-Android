@@ -7,12 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
@@ -104,7 +102,7 @@ public final class SignupFragment extends Fragment {
 
     private void restoreGenderViewState() {
         signupViewStateViewModel.getGender().observe(getViewLifecycleOwner(), string -> {
-            for (int i = 0; i < binding.chipGroupGender.getChildCount(); i++) {
+            for (byte i = 0; i < binding.chipGroupGender.getChildCount(); i++) {
                 if (string.equals(((Chip) binding.chipGroupGender.getChildAt(i)).getText())) {
                     final Chip chip = (Chip) binding.chipGroupGender.getChildAt(i);
                     chip.setTextColor(getResources().getColor(R.color.purple_100));
@@ -126,8 +124,8 @@ public final class SignupFragment extends Fragment {
             interestList.addAll(savedInterestList);
         });
         setUpInterestChips();
-        for (int i = 0; i < binding.chipGroupInterests.getChildCount(); i++) {
-            for (int j = 0; j < savedInterestList.size(); j++) {
+        for (byte i = 0; i < binding.chipGroupInterests.getChildCount(); i++) {
+            for (byte j = 0; j < savedInterestList.size(); j++) {
                 if (savedInterestList.get(j).equals(((Chip) binding.chipGroupInterests.getChildAt(i)).getText())) {
                     final Chip chip = (Chip) binding.chipGroupInterests.getChildAt(i);
                     chip.setText(savedInterestList.get(j));
@@ -152,7 +150,7 @@ public final class SignupFragment extends Fragment {
             skillList.clear();
             skillList.addAll(skillList);
         });
-        for (int i = 0; i < savedSkillList.size(); i++) {
+        for (byte i = 0; i < savedSkillList.size(); i++) {
             final Chip chip = (Chip) binding.chipGroupSkills.getChildAt(i);
             chip.setText(savedSkillList.get(i));
             chip.setLayoutDirection(View.LAYOUT_DIRECTION_LOCALE);
@@ -185,7 +183,7 @@ public final class SignupFragment extends Fragment {
     private void setUpInterestChips() {
         final String[] chipTextArray = {"Biking", "Running", "Research", "Self Improvement", "Tennis", "E-Sports"};
 
-        for (int i = 0; i < chipTextArray.length; i++) {
+        for (byte i = 0; i < chipTextArray.length; i++) {
             final Chip chipInterest = (Chip) getLayoutInflater().inflate(R.layout.chip_filter_interest, binding.chipGroupInterests, false);
             chipInterest.setText(chipTextArray[i]);
             chipInterest.setLayoutDirection(View.LAYOUT_DIRECTION_LOCALE);
@@ -198,7 +196,7 @@ public final class SignupFragment extends Fragment {
                     chipInterest.setTextColor(getResources().getColor(R.color.purple_100));
                     chipInterest.setChipBackgroundColor(ColorStateList.valueOf(getResources().getColor(R.color.purple_500)));
                 } else {
-                    for (int j = 0; j < interestList.size(); j++) {
+                    for (byte j = 0; j < interestList.size(); j++) {
                         if (valueOf(chipInterest.getText()).equals(interestList.get(j))) {
                             interestList.remove(valueOf(chipInterest.getText()));
                         }
@@ -291,6 +289,7 @@ public final class SignupFragment extends Fragment {
 
     private void setUpListeners(@NonNull View view) {
         final NavController navController = Navigation.findNavController(view);
+
         binding.btnSignup.setOnClickListener(v -> {
             if (!hasValidInput()) return;
 
@@ -306,18 +305,23 @@ public final class SignupFragment extends Fragment {
 
             navController.navigate(actionSignupFragmentToHomeFragment);
         });
+
         binding.btnLogin.setOnClickListener(v -> {
             // onBackPress avoid going to home and jump to login pops all added fragments including the destination we provided. which means when u land on the login frag n click back since ther r no other frags u will quit the app
             final NavOptions navOptions = new NavOptions.Builder().setPopUpTo(R.id.login_fragment, true).build();
             navController.navigate(R.id.action_signup_fragment_to_login_fragment, null, navOptions);
         });
+
         binding.chipGroupGender.setOnCheckedChangeListener((chipGroup, checkedId) -> {
             // Responds to child chip checked/unchecked
             final Chip chip = chipGroup.findViewById(checkedId);
             if (null != chip) gender = valueOf(chip.getText());
         });
+
         changeGenderChipBackgroundColorsOnClick();
+
         binding.etSkills.setEndIconOnClickListener(v -> setUpSkillChips());
+
         binding.etSkills.getEditText().setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 setUpSkillChips();
@@ -329,8 +333,8 @@ public final class SignupFragment extends Fragment {
 
     private void changeGenderChipBackgroundColorsOnClick() {
         final Chip[] genderChipViewsArray = {binding.chipChoiceMale, binding.chipChoiceFemale, binding.chipChoiceOther};
-        for (int i = 0; i < genderChipViewsArray.length; i++) {
-            int finalI = i;
+        for (byte i = 0; i < genderChipViewsArray.length; i++) {
+            byte finalI = i;
             genderChipViewsArray[i].setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
                     genderChipViewsArray[finalI].setTextColor(getResources().getColor(R.color.purple_100));
