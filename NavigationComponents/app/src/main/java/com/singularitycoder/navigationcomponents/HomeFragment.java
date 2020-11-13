@@ -43,6 +43,12 @@ public final class HomeFragment extends Fragment {
         binding.btnLogout.setOnClickListener(v -> navController.navigate(R.id.action_home_fragment_to_login_fragment));
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void showWelcomeSnack() {
         Snackbar.make(binding.cordLayHomeRoot, "Welcome Home! Check out your profile details before logging out.", Snackbar.LENGTH_INDEFINITE)
                 .setAction("GOT IT", v -> {

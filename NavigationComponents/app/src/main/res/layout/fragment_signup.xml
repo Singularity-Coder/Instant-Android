@@ -166,6 +166,7 @@
                     android:layout_height="wrap_content"
                     android:text="Male"
                     app:chipBackgroundColor="@color/purple_100"
+                    app:ensureMinTouchTargetSize="true"
                     app:rippleColor="@color/purple_50"
                     app:shapeAppearance="@style/CutChipSmall" />
 
@@ -176,6 +177,7 @@
                     android:layout_height="wrap_content"
                     android:text="Female"
                     app:chipBackgroundColor="@color/purple_100"
+                    app:ensureMinTouchTargetSize="true"
                     app:rippleColor="@color/purple_50"
                     app:shapeAppearance="@style/CutChipSmall" />
 
@@ -186,6 +188,7 @@
                     android:layout_height="wrap_content"
                     android:text="Other"
                     app:chipBackgroundColor="@color/purple_100"
+                    app:ensureMinTouchTargetSize="true"
                     app:rippleColor="@color/purple_50"
                     app:shapeAppearance="@style/CutChipSmall" />
 

@@ -60,6 +60,12 @@ public final class LoginFragment extends Fragment {
         loginViewStateViewModel.setPassword(valueOf(binding.etPassword.getEditText().getText()));
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void initialise() {
         loginViewStateViewModel = new ViewModelProvider(this).get(LoginViewStateViewModel.class);
     }

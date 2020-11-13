@@ -72,6 +72,8 @@ public final class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         NewsViewHolder(@NonNull View itemView) {
             super(itemView);
             binding = ListItemNewsBinding.bind(itemView);
+            itemView.setOnClickListener(v -> {
+            });
         }
     }
 }

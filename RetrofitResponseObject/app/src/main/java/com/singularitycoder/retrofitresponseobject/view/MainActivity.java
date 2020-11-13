@@ -1,5 +1,11 @@
 package com.singularitycoder.retrofitresponseobject.view;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -29,8 +36,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import retrofit2.Response;
 
@@ -53,21 +62,14 @@ public final class MainActivity extends AppCompatActivity {
     @Nullable
     private ActivityMainBinding binding;
 
-    // todo diffutil
-    // todo shimmer
-    // todo material components
-    // todo Crashlytics
-    // todo Leak Canary
-    // todo new Android colors
-    // todo builder pattern or static factory
-    // todo replace toasts with material snackbars
-    // todo sharp edged cards
     // todo placeholder image for no data or empty list
-    // todo network change listeners
-    // todo data binding
     // todo navigation components with safe args
-    // todo basic recycler view animations
     // todo night mode
+
+    // todo diffutil
+    // todo builder pattern or static factory
+    // todo data binding
+    // todo basic recycler view animations
     // todo unit n espresso tests
 
     @Override
@@ -76,9 +78,15 @@ public final class MainActivity extends AppCompatActivity {
         appUtils.setStatusBarColor(this, R.color.purple_500);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        allowNightMode();  // > API 30
         setUpRecyclerView();
         getNewsFromApi();
         binding.swipeRefreshLayout.setOnRefreshListener(this::getNewsFromApi);
+    }
+
+    private void allowNightMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        getDelegate().applyDayNight();
     }
 
     private void setUpRecyclerView() {
@@ -90,21 +98,23 @@ public final class MainActivity extends AppCompatActivity {
     }
 
     private void getNewsFromApi() {
-        if (appUtils.hasInternet(this)) showOnlineState();
-        else showOfflineState();
+        appUtils.networkStateListener(this, () -> showOnlineState(), () -> showOnlineState(), () -> showOfflineState());
     }
 
-    private void showOnlineState() {
+    private Void showOnlineState() {
+        binding.tvNoInternet.setVisibility(View.GONE);
         final String country = "in";
         final String category = "technology";
         final NewsViewModel newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
         newsViewModel.getNewsFromRepository(country, category).observe(MainActivity.this, observeLiveData());
+        return null;
     }
 
-    private void showOfflineState() {
+    private Void showOfflineState() {
         binding.tvNoInternet.setVisibility(View.VISIBLE);
         hideLoading();
         newsList.clear();
+        return null;
     }
 
     @Nullable
@@ -145,11 +155,11 @@ public final class MainActivity extends AppCompatActivity {
 
         if (HttpURLConnection.HTTP_OK == response.code()) {
             if (null == response.body()) return;
-            NewsItem.NewsResponse newsResponse = response.body();
+            final NewsItem.NewsResponse newsResponse = response.body();
             final List<NewsItem.NewsArticle> newsArticles = newsResponse.getArticles();
             newsList.addAll(newsArticles);
             newsAdapter.notifyDataSetChanged();
-            Toast.makeText(MainActivity.this, valueOf(stateMediator.getData()), Toast.LENGTH_SHORT).show();
+            appUtils.showSnack(binding.conLayNewsHomeRoot, valueOf(stateMediator.getData()), "OK", null);
         }
 
         if (HttpURLConnection.HTTP_BAD_REQUEST == response.code()) {
@@ -174,7 +184,7 @@ public final class MainActivity extends AppCompatActivity {
         }
 
         if (HttpURLConnection.HTTP_INTERNAL_ERROR == response.code()) {
-            Toast.makeText(this, "Something is wrong. Try again!", Toast.LENGTH_SHORT).show();
+            appUtils.showSnack(binding.conLayNewsHomeRoot, "Something is wrong. Try again!", "OK", null);
         }
     }
 
@@ -184,7 +194,7 @@ public final class MainActivity extends AppCompatActivity {
             binding.tvNothing.setText("Nothing to show :(");
             hideLoading();
             binding.tvNoInternet.setVisibility(View.GONE);
-            Toast.makeText(this, valueOf(stateMediator.getMessage()), Toast.LENGTH_LONG).show();
+            appUtils.showSnack(binding.conLayNewsHomeRoot, valueOf(stateMediator.getMessage()), "OK", null);
         });
     }
 
@@ -193,16 +203,17 @@ public final class MainActivity extends AppCompatActivity {
             binding.tvNothing.setVisibility(View.GONE);
             hideLoading();
             binding.tvNoInternet.setVisibility(View.GONE);
-            Toast.makeText(this, valueOf(stateMediator.getMessage()), Toast.LENGTH_LONG).show();
+            appUtils.showSnack(binding.conLayNewsHomeRoot, valueOf(stateMediator.getMessage()), "OK", null);
             Log.d(TAG, "liveDataObserver: error: " + stateMediator.getMessage());
         });
     }
 
     private void showLoading() {
-        binding.swipeRefreshLayout.setRefreshing(true);
+        binding.shimmerLoading.shimmerRoot.setVisibility(View.VISIBLE);
     }
 
     private void hideLoading() {
+        binding.shimmerLoading.shimmerRoot.setVisibility(View.GONE);
         binding.swipeRefreshLayout.setRefreshing(false);
     }
 

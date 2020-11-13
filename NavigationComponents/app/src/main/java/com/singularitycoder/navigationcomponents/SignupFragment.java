@@ -100,6 +100,12 @@ public final class SignupFragment extends Fragment {
         signupViewStateViewModel.setSkillList(skillList);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void restoreGenderViewState() {
         signupViewStateViewModel.getGender().observe(getViewLifecycleOwner(), string -> {
             for (byte i = 0; i < binding.chipGroupGender.getChildCount(); i++) {

@@ -5,7 +5,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.os.Build;
+import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -18,9 +24,18 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.google.android.material.snackbar.Snackbar;
 import com.singularitycoder.retrofitresponseobject.R;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.Callable;
+
 public final class AppUtils extends AppCompatActivity {
+
+    @NonNull
+    private static final String TAG = "AppUtils";
 
     @Nullable
     private static AppUtils _instance;
@@ -34,8 +49,8 @@ public final class AppUtils extends AppCompatActivity {
         return _instance;
     }
 
-    public final boolean hasInternet(Context context) {
-        final ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public final boolean hasInternet(Activity activity) {
+        final ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert cm != null;
         return cm.getActiveNetworkInfo() != null;
     }
@@ -64,5 +79,97 @@ public final class AppUtils extends AppCompatActivity {
         Glide.with(context).load(imgUrl)
                 .apply(requestOptions)
                 .into(imageView);
+    }
+
+    public final void showSnack(
+            @NonNull final View view,
+            @NonNull final String message,
+            @NonNull final String actionButtonText,
+            @NonNull final Callable<Void> voidFunction) {
+        Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
+                .setAction(actionButtonText, v -> {
+                    try {
+                        voidFunction.call();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                })
+                .show();
+    }
+
+    public final void networkStateListener(
+            @NonNull final Activity activity,
+            @NonNull final Callable<Void> onlineWifiFunction,
+            @NonNull final Callable<Void> onlineMobileFunction,
+            @NonNull final Callable<Void> offlineFunction) {
+
+        final ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        final ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onAvailable(Network network) {
+                if (hasActiveInternetConnection(activity)) {
+                    if(networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                        runOnUiThread(() -> {
+                            try {
+                                onlineWifiFunction.call();
+                            } catch (Exception ignored) {
+                            }
+                        });
+                    }
+
+                    if(networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                        runOnUiThread(() -> {
+                            try {
+                                onlineMobileFunction.call();
+                            } catch (Exception ignored) {
+                            }
+                        });
+                    }
+                } else {
+                    runOnUiThread(() -> {
+                        try {
+                            offlineFunction.call();
+                        } catch (Exception ignored) {
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onLost(Network network) {
+                runOnUiThread(() -> {
+                    try {
+                        offlineFunction.call();
+                    } catch (Exception ignored) {
+                    }
+                });
+            }
+        };
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            connectivityManager.registerDefaultNetworkCallback(networkCallback);
+        } else {
+            final NetworkRequest request = new NetworkRequest.Builder().addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET).build();
+            connectivityManager.registerNetworkCallback(request, networkCallback);
+        }
+    }
+
+    private boolean hasActiveInternetConnection(@NonNull final Activity activity) {
+        if (!hasInternet(activity)) return false;
+
+        try {
+            final URL url = new URL("http://clients3.google.com/generate_204");
+            final HttpURLConnection connection = (HttpURLConnection) (url).openConnection();
+            connection.setRequestProperty("User-Agent", "Android");
+            connection.setRequestProperty("Connection", "close");
+            connection.setConnectTimeout(5000);
+            connection.connect();
+            return (connection.getResponseCode() == 204 && connection.getContentLength() == 0);
+        } catch (IOException e) {
+            Log.e(TAG, "Error checking internet connection", e);
+        }
+
+        return false;
     }
 }
