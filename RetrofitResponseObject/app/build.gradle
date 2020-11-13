@@ -79,5 +79,8 @@ android {
 
         // Leak Canary - shows memory leaks
         debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
+
+        // Lottie
+        implementation 'com.airbnb.android:lottie:3.0.0'
     }
 }

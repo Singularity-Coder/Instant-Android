@@ -49,8 +49,8 @@ public final class AppUtils extends AppCompatActivity {
         return _instance;
     }
 
-    public final boolean hasInternet(Activity activity) {
-        final ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public final boolean hasInternet(Context context) {
+        final ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert cm != null;
         return cm.getActiveNetworkInfo() != null;
     }
@@ -85,7 +85,7 @@ public final class AppUtils extends AppCompatActivity {
             @NonNull final View view,
             @NonNull final String message,
             @NonNull final String actionButtonText,
-            @NonNull final Callable<Void> voidFunction) {
+            @Nullable final Callable<Void> voidFunction) {
         Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
                 .setAction(actionButtonText, v -> {
                     try {
@@ -98,38 +98,39 @@ public final class AppUtils extends AppCompatActivity {
     }
 
     public final void networkStateListener(
-            @NonNull final Activity activity,
-            @NonNull final Callable<Void> onlineWifiFunction,
-            @NonNull final Callable<Void> onlineMobileFunction,
-            @NonNull final Callable<Void> offlineFunction) {
+            @NonNull final Context context,
+            @Nullable final Callable<Void> onlineWifiFunction,
+            @Nullable final Callable<Void> onlineMobileFunction,
+            @Nullable final Callable<Void> offlineFunction) {
 
-        final ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         final ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(Network network) {
-                if (hasActiveInternetConnection(activity)) {
-                    if(networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-                        runOnUiThread(() -> {
-                            try {
-                                onlineWifiFunction.call();
-                            } catch (Exception ignored) {
-                            }
-                        });
-                    }
-
-                    if(networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
-                        runOnUiThread(() -> {
-                            try {
-                                onlineMobileFunction.call();
-                            } catch (Exception ignored) {
-                            }
-                        });
-                    }
-                } else {
+                if (!hasActiveInternetConnection(context)) {
                     runOnUiThread(() -> {
                         try {
                             offlineFunction.call();
+                        } catch (Exception ignored) {
+                        }
+                    });
+                    return;
+                }
+
+                if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                    runOnUiThread(() -> {
+                        try {
+                            onlineWifiFunction.call();
+                        } catch (Exception ignored) {
+                        }
+                    });
+                }
+
+                if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                    runOnUiThread(() -> {
+                        try {
+                            onlineMobileFunction.call();
                         } catch (Exception ignored) {
                         }
                     });
@@ -155,8 +156,9 @@ public final class AppUtils extends AppCompatActivity {
         }
     }
 
-    private boolean hasActiveInternetConnection(@NonNull final Activity activity) {
-        if (!hasInternet(activity)) return false;
+    // Referred https://stackoverflow.com/
+    private boolean hasActiveInternetConnection(@NonNull final Context context) {
+        if (!hasInternet(context)) return false;
 
         try {
             final URL url = new URL("http://clients3.google.com/generate_204");
@@ -165,7 +167,7 @@ public final class AppUtils extends AppCompatActivity {
             connection.setRequestProperty("Connection", "close");
             connection.setConnectTimeout(5000);
             connection.connect();
-            return (connection.getResponseCode() == 204 && connection.getContentLength() == 0);
+            return (connection.getResponseCode() == HttpURLConnection.HTTP_NO_CONTENT && connection.getContentLength() == 0);
         } catch (IOException e) {
             Log.e(TAG, "Error checking internet connection", e);
         }

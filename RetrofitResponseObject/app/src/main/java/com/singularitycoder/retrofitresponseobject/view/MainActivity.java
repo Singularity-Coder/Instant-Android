@@ -1,15 +1,8 @@
 package com.singularitycoder.retrofitresponseobject.view;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.net.NetworkRequest;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -36,10 +29,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import retrofit2.Response;
 
@@ -62,7 +53,6 @@ public final class MainActivity extends AppCompatActivity {
     @Nullable
     private ActivityMainBinding binding;
 
-    // todo placeholder image for no data or empty list
     // todo navigation components with safe args
     // todo night mode
 
@@ -113,7 +103,6 @@ public final class MainActivity extends AppCompatActivity {
     private Void showOfflineState() {
         binding.tvNoInternet.setVisibility(View.VISIBLE);
         hideLoading();
-        newsList.clear();
         return null;
     }
 
@@ -149,7 +138,8 @@ public final class MainActivity extends AppCompatActivity {
     private void showNewsListSuccessState(StateMediator<Object, UiState, String, String> stateMediator) {
         newsList.clear();
         hideLoading();
-        binding.tvNoInternet.setVisibility(View.GONE);
+        binding.tvNothing.setVisibility(View.GONE);
+        binding.lottieViewNothing.setVisibility(View.GONE);
 
         final Response<NewsItem.NewsResponse> response = (Response<NewsItem.NewsResponse>) stateMediator.getData();
 
@@ -160,6 +150,13 @@ public final class MainActivity extends AppCompatActivity {
             newsList.addAll(newsArticles);
             newsAdapter.notifyDataSetChanged();
             appUtils.showSnack(binding.conLayNewsHomeRoot, valueOf(stateMediator.getData()), "OK", null);
+
+            if (0 == newsList.size()) {
+                binding.tvNothing.setVisibility(View.VISIBLE);
+                binding.lottieViewNothing.setVisibility(View.VISIBLE);
+                binding.lottieViewNothing.setAnimation(R.raw.nothing);
+                binding.lottieViewNothing.playAnimation();
+            }
         }
 
         if (HttpURLConnection.HTTP_BAD_REQUEST == response.code()) {
