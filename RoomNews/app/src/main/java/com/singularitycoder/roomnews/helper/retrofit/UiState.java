@@ -1,4 +1,4 @@
-package com.singularitycoder.roomnews.helper;
+package com.singularitycoder.roomnews.helper.retrofit;
 
 public enum UiState {
     LOADING,

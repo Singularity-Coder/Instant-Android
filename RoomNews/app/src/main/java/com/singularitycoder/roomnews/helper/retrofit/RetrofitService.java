@@ -1,9 +1,10 @@
-package com.singularitycoder.roomnews.helper;
+package com.singularitycoder.roomnews.helper.retrofit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.singularitycoder.roomnews.helper.AppConstants;
 
 import java.util.concurrent.TimeUnit;
 

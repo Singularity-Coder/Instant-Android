@@ -10,8 +10,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.singularitycoder.roomnews.helper.AppConstants;
-import com.singularitycoder.roomnews.helper.StateMediator;
-import com.singularitycoder.roomnews.helper.UiState;
+import com.singularitycoder.roomnews.helper.retrofit.StateMediator;
+import com.singularitycoder.roomnews.helper.retrofit.UiState;
 import com.singularitycoder.roomnews.model.NewsItem;
 import com.singularitycoder.roomnews.repository.NewsRepository;
 

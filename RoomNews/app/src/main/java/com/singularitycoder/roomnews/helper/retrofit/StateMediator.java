@@ -1,4 +1,4 @@
-package com.singularitycoder.roomnews.helper;
+package com.singularitycoder.roomnews.helper.retrofit;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

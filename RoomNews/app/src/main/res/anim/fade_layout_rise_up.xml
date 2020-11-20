@@ -2,6 +2,4 @@
 <layoutAnimation xmlns:android="http://schemas.android.com/apk/res/android"
     android:animation="@anim/fade_item_rise_up"
     android:animationOrder="normal"
-    android:delay="15%">
-
-</layoutAnimation>
+    android:delay="15%" />

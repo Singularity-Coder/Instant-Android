@@ -22,8 +22,8 @@ import com.singularitycoder.roomnews.adapter.NewsAdapter;
 import com.singularitycoder.roomnews.databinding.FragmentHomeBinding;
 import com.singularitycoder.roomnews.helper.AppConstants;
 import com.singularitycoder.roomnews.helper.AppUtils;
-import com.singularitycoder.roomnews.helper.StateMediator;
-import com.singularitycoder.roomnews.helper.UiState;
+import com.singularitycoder.roomnews.helper.retrofit.StateMediator;
+import com.singularitycoder.roomnews.helper.retrofit.UiState;
 import com.singularitycoder.roomnews.model.NewsItem;
 import com.singularitycoder.roomnews.viewmodel.NewsViewModel;
 

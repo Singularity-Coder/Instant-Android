@@ -8,10 +8,10 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
 import com.singularitycoder.roomnews.dao.NewsDao;
-import com.singularitycoder.roomnews.helper.ApiEndPoints;
+import com.singularitycoder.roomnews.helper.retrofit.ApiEndPoints;
 import com.singularitycoder.roomnews.helper.AppConstants;
-import com.singularitycoder.roomnews.helper.NewsRoomDatabase;
-import com.singularitycoder.roomnews.helper.RetrofitService;
+import com.singularitycoder.roomnews.helper.room.NewsRoomDatabase;
+import com.singularitycoder.roomnews.helper.retrofit.RetrofitService;
 import com.singularitycoder.roomnews.model.NewsItem;
 
 import java.util.List;

@@ -8,7 +8,7 @@ import androidx.room.TypeConverters;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.singularitycoder.roomnews.helper.NewsArticleConverter;
+import com.singularitycoder.roomnews.helper.room.NewsArticleConverter;
 
 import java.util.Collections;
 import java.util.List;
