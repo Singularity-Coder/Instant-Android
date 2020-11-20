@@ -22,6 +22,7 @@ import com.singularitycoder.roomnews.adapter.NewsAdapter;
 import com.singularitycoder.roomnews.databinding.FragmentHomeBinding;
 import com.singularitycoder.roomnews.helper.AppConstants;
 import com.singularitycoder.roomnews.helper.AppUtils;
+import com.singularitycoder.roomnews.helper.NetworkStateListenerBuilder;
 import com.singularitycoder.roomnews.helper.retrofit.StateMediator;
 import com.singularitycoder.roomnews.helper.retrofit.UiState;
 import com.singularitycoder.roomnews.model.NewsItem;
@@ -80,7 +81,7 @@ public final class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getNewsFromApi();
+        getNewsFromApiFromBuilder();
     }
 
     @Override
@@ -112,6 +113,15 @@ public final class HomeFragment extends Fragment {
 
     private void getNewsFromApi() {
         appUtils.networkStateListener(getContext(), () -> showOnlineState(), () -> showOnlineState(), () -> showOfflineState());
+    }
+
+    private void getNewsFromApiFromBuilder() {
+        // This is just a builder pattern implementation of the networkStateListener() method. Its a lot easier to read and understand.
+        new NetworkStateListenerBuilder(getContext())
+                .setOnlineMobileFunction(() -> showOnlineState())
+                .setOnlineWifiFunction(() -> showOnlineState())
+                .setOfflineFunction(() -> showOfflineState())
+                .build();
     }
 
     private Void showOnlineState() {

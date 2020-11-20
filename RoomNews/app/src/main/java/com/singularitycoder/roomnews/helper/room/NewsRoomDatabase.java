@@ -27,7 +27,7 @@ public abstract class NewsRoomDatabase extends RoomDatabase {
 
     @Nullable
     public abstract NewsDao newsDao();
-    
+
     @NonNull
     public static synchronized NewsRoomDatabase getInstance(Context context) {
         if (null == _instance) {
