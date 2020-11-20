@@ -1,0 +1,105 @@
+plugins {
+    id 'com.android.application'
+}
+apply plugin: "androidx.navigation.safeargs"
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.singularitycoder.roomnews"
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding true
+        dataBinding true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+
+    // Retrofit 2
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+
+    // Retrofit RxJava
+    implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
+
+    // Retrofit Interceptor
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
+
+    // GSON Converter
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+
+    // Swipe Refresh Layout
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+    // Recycler View
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+    // Material Components
+    implementation 'com.google.android.material:material:1.2.1'
+
+    // ViewModel and LiveData
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
+
+    // RxJava
+    implementation "io.reactivex.rxjava2:rxjava:2.2.18"
+
+    // RxAndroid
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    // Facebook Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
+    // Leak Canary - shows memory leaks
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.5'
+
+    // Lottie
+    implementation 'com.airbnb.android:lottie:3.0.0'
+
+    // Navigation Components
+    implementation "androidx.navigation:navigation-fragment:2.3.1"
+    implementation "androidx.navigation:navigation-ui:2.3.1"
+
+    // Room Database
+    implementation "androidx.room:room-runtime:2.2.5"
+    annotationProcessor "androidx.room:room-compiler:2.2.5"
+
+    // Room Testing
+    androidTestImplementation 'androidx.room:room-testing:2.2.5'
+
+    // Room Debug
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
+}
+
+dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+}

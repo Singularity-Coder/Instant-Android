@@ -4,15 +4,16 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.singularitycoder.retrofitresponseobject.model.NewsItem;
 import com.singularitycoder.retrofitresponseobject.R;
 import com.singularitycoder.retrofitresponseobject.databinding.ListItemNewsBinding;
 import com.singularitycoder.retrofitresponseobject.helper.AppUtils;
+import com.singularitycoder.retrofitresponseobject.model.NewsItem;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,7 +52,13 @@ public final class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             newsViewHolder.binding.tvPublishedAt.setText("Published at: " + newsArticle.getPublishedAt());
             newsViewHolder.binding.tvSource.setText("Source: " + newsArticle.getSource().getName());
             appUtils.glideImage(context, newsArticle.getUrlToImage(), newsViewHolder.binding.ivHeaderImage);
+            setAnimation(newsViewHolder);
         }
+    }
+
+    private void setAnimation(NewsViewHolder newsViewHolder) {
+        newsViewHolder.binding.ivHeaderImage.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_transition));
+        newsViewHolder.binding.cardDetails.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_scale));
     }
 
     @Override

@@ -4,7 +4,7 @@
     android:id="@+id/shimmer_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:visibility="gone">
+    android:background="@android:color/transparent">
 
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_view_container"
@@ -26,8 +26,6 @@
             <include layout="@layout/item_shimmer_content" />
 
             <include layout="@layout/item_shimmer_content" />
-
         </LinearLayout>
-
     </com.facebook.shimmer.ShimmerFrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
