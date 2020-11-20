@@ -162,7 +162,7 @@ public final class AppUtils extends AppCompatActivity {
         }
     }
 
-    // Referred https://stackoverflow.com/
+    // Referred https://stackoverflow.com/ for this method
     private boolean hasActiveInternetConnection(@NonNull final Context context) {
         if (!hasInternet(context)) return false;
 
