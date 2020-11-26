@@ -11,11 +11,13 @@ import android.view.animation.LayoutAnimationController;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.test.espresso.IdlingResource;
 
 import com.singularitycoder.roomnews.R;
 import com.singularitycoder.roomnews.adapter.NewsAdapter;
@@ -23,6 +25,7 @@ import com.singularitycoder.roomnews.databinding.FragmentHomeBinding;
 import com.singularitycoder.roomnews.helper.AppConstants;
 import com.singularitycoder.roomnews.helper.AppUtils;
 import com.singularitycoder.roomnews.helper.NetworkStateListenerBuilder;
+import com.singularitycoder.roomnews.helper.espresso.ApiIdlingResource;
 import com.singularitycoder.roomnews.helper.retrofit.StateMediator;
 import com.singularitycoder.roomnews.helper.retrofit.UiState;
 import com.singularitycoder.roomnews.model.NewsItem;
@@ -57,6 +60,9 @@ public final class HomeFragment extends Fragment {
 
     @Nullable
     private NewsViewModel newsViewModel;
+
+    @Nullable
+    private ApiIdlingResource idlingResource;
 
     @Nullable
     private FragmentHomeBinding binding;
@@ -128,7 +134,7 @@ public final class HomeFragment extends Fragment {
         binding.tvNoInternet.setVisibility(View.GONE);
         final String country = "in";
         final String category = "technology";
-        newsViewModel.getNewsFromRepository(country, category).observe(getViewLifecycleOwner(), observeLiveData());
+        newsViewModel.getNewsFromRepository(country, category, idlingResource).observe(getViewLifecycleOwner(), observeLiveData());
         return null;
     }
 
@@ -287,5 +293,19 @@ public final class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    // Only called from test, creates and returns a new WaitingStateResource
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getWaitingState() {
+        if (null == idlingResource) idlingResource = new ApiIdlingResource();
+        return idlingResource;
+    }
+
+    @VisibleForTesting
+    public void showSuccessToast(StateMediator<Object, UiState, String, String> stateMediator) {
+        appUtils.showSnack(binding.conLayNewsHomeRoot, valueOf(stateMediator.getMessage()), "OK", null);
+
     }
 }

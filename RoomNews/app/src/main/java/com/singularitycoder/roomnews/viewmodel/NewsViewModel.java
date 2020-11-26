@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.singularitycoder.roomnews.helper.AppConstants;
+import com.singularitycoder.roomnews.helper.espresso.ApiIdlingResource;
 import com.singularitycoder.roomnews.helper.retrofit.StateMediator;
 import com.singularitycoder.roomnews.helper.retrofit.UiState;
 import com.singularitycoder.roomnews.model.NewsItem;
@@ -85,7 +86,10 @@ public final class NewsViewModel extends AndroidViewModel {
     @NonNull
     public final LiveData<StateMediator<Object, UiState, String, String>> getNewsFromRepository(
             @Nullable final String country,
-            @NonNull final String category) throws IllegalArgumentException {
+            @NonNull final String category,
+            @Nullable final ApiIdlingResource idlingResource) throws IllegalArgumentException {
+
+        if (null != idlingResource) idlingResource.setIdleState(false);
 
         final StateMediator<Object, UiState, String, String> stateMediator = new StateMediator<>();
         final MutableLiveData<StateMediator<Object, UiState, String, String>> mutableLiveData = new MutableLiveData<>();
@@ -104,6 +108,7 @@ public final class NewsViewModel extends AndroidViewModel {
                                 if (null != o) {
                                     stateMediator.set(o, UiState.SUCCESS, "Got Data!", AppConstants.KEY_GET_NEWS_LIST_API_SUCCESS_STATE);
                                     mutableLiveData.postValue(stateMediator);
+                                    if (null != idlingResource) idlingResource.setIdleState(true);
                                 }
                             }
 
@@ -111,6 +116,7 @@ public final class NewsViewModel extends AndroidViewModel {
                             public void onError(Throwable e) {
                                 stateMediator.set(null, UiState.ERROR, e.getMessage(), null);
                                 mutableLiveData.postValue(stateMediator);
+                                if (null != idlingResource) idlingResource.setIdleState(true);
                             }
                         });
         compositeDisposable.add(disposableSingleObserver);
