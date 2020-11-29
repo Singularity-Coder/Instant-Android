@@ -1,6 +1,7 @@
 package com.singularitycoder.roomnews.adapter;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +21,24 @@ import java.util.List;
 
 public final class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private boolean isDark = false;
+
     @NonNull
     private final AppUtils appUtils = AppUtils.getInstance();
 
     @NonNull
+    private final Context context;
+
+    @NonNull
     private List<NewsItem.NewsArticle> newsList = Collections.emptyList();
 
-    @Nullable
-    private Context context;
-
-    public NewsAdapter(List<NewsItem.NewsArticle> newsList, Context context) {
+    public NewsAdapter(
+            @NonNull final List<NewsItem.NewsArticle> newsList,
+            @NonNull final Context context,
+            final boolean isDark) {
         this.newsList = newsList;
         this.context = context;
+        this.isDark = isDark;
     }
 
     @NonNull
@@ -81,6 +88,11 @@ public final class NewsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             binding = ListItemNewsBinding.bind(itemView);
             itemView.setOnClickListener(v -> {
             });
+            if (isDark) setDarkTheme();
+        }
+
+        private void setDarkTheme() {
+            binding.cardDetails.setBackgroundTintList(ColorStateList.valueOf(context.getResources().getColor(R.color.black)));
         }
     }
 }

@@ -85,7 +85,7 @@ public final class NewsViewModel extends AndroidViewModel {
 
     @NonNull
     public final LiveData<StateMediator<Object, UiState, String, String>> getNewsFromRepository(
-            @Nullable final String country,
+            @NonNull final String country,
             @NonNull final String category,
             @Nullable final ApiIdlingResource idlingResource) throws IllegalArgumentException {
 

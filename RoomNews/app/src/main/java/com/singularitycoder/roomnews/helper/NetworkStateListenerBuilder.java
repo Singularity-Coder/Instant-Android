@@ -18,7 +18,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.Callable;
 
-public class NetworkStateListenerBuilder extends AppCompatActivity {
+public final class NetworkStateListenerBuilder extends AppCompatActivity {
 
     private static final String TAG = "NetworkStateListenerBui";
     private final AppUtils appUtils = AppUtils.getInstance();

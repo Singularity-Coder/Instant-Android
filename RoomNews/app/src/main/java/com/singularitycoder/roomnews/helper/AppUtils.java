@@ -45,6 +45,11 @@ public final class AppUtils extends AppCompatActivity {
         return _instance;
     }
 
+    private void setFullScreenActivity() {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
     public final boolean hasInternet(Context context) {
         final ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         assert cm != null;

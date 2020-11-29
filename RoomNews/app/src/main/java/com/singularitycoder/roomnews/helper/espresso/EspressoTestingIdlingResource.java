@@ -3,7 +3,7 @@ package com.singularitycoder.roomnews.helper.espresso;
 import androidx.test.espresso.IdlingResource;
 import androidx.test.espresso.idling.CountingIdlingResource;
 
-public class EspressoTestingIdlingResource {
+public final class EspressoTestingIdlingResource {
     private static final String RESOURCE = "GLOBAL";
 
     private static CountingIdlingResource mCountingIdlingResource = new CountingIdlingResource(RESOURCE);

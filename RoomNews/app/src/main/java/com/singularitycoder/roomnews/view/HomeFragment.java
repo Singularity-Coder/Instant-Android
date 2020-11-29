@@ -23,6 +23,7 @@ import com.singularitycoder.roomnews.R;
 import com.singularitycoder.roomnews.adapter.NewsAdapter;
 import com.singularitycoder.roomnews.databinding.FragmentHomeBinding;
 import com.singularitycoder.roomnews.helper.AppConstants;
+import com.singularitycoder.roomnews.helper.AppSharedPreference;
 import com.singularitycoder.roomnews.helper.AppUtils;
 import com.singularitycoder.roomnews.helper.NetworkStateListenerBuilder;
 import com.singularitycoder.roomnews.helper.espresso.ApiIdlingResource;
@@ -46,6 +47,8 @@ import static java.lang.String.valueOf;
 
 public final class HomeFragment extends Fragment {
 
+    private boolean isDark = false;
+
     @NonNull
     private final String TAG = "MainActivity";
 
@@ -63,6 +66,9 @@ public final class HomeFragment extends Fragment {
 
     @Nullable
     private ApiIdlingResource idlingResource;
+
+    @Nullable
+    private AppSharedPreference appSharedPreference;
 
     @Nullable
     private FragmentHomeBinding binding;
@@ -99,12 +105,14 @@ public final class HomeFragment extends Fragment {
 
     private void initialise() {
         newsViewModel = new ViewModelProvider(this).get(NewsViewModel.class);
+        appSharedPreference = AppSharedPreference.getInstance(getContext());
+        isDark = appSharedPreference.getDarkState();
     }
 
     private void setUpRecyclerView() {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.recyclerNews.setLayoutManager(layoutManager);
-        newsAdapter = new NewsAdapter(newsList, getContext());
+        newsAdapter = new NewsAdapter(newsList, getContext(), isDark);
         binding.recyclerNews.setAdapter(newsAdapter);
         binding.recyclerNews.setItemAnimator(new DefaultItemAnimator());
     }

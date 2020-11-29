@@ -5,7 +5,7 @@ import androidx.test.espresso.IdlingResource;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ApiIdlingResource implements IdlingResource {
+public final class ApiIdlingResource implements IdlingResource {
 
     @Nullable
     private volatile ResourceCallback callback;
