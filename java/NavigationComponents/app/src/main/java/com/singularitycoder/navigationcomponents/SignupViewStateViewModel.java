@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
 
-public class SignupViewStateViewModel extends ViewModel {
+public final class SignupViewStateViewModel extends ViewModel {
 
     private MutableLiveData<String> name = new MutableLiveData<>();
     private MutableLiveData<String> email = new MutableLiveData<>();

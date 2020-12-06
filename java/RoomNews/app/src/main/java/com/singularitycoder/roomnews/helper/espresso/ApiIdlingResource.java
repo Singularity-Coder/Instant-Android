@@ -3,6 +3,8 @@ package com.singularitycoder.roomnews.helper.espresso;
 import androidx.annotation.Nullable;
 import androidx.test.espresso.IdlingResource;
 
+import com.bumptech.glide.request.ResourceCallback;
+
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public final class ApiIdlingResource implements IdlingResource {

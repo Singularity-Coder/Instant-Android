@@ -17,6 +17,35 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
+    // APK splitting - https://medium.com/better-programming/when-using-realm-for-android-makes-your-app-heavy-93c56c0d1c98
+    splits {
+        abi {
+            // Enable APK splitting wrt architecture
+            enable true
+
+            // Reset the architectures for which you need to build the APKs for
+            reset()
+
+            // Include the architectures for which Gradle is building APKs
+            include 'x86', 'x86_64', 'armeabi-v7a', 'arm64-v8a'
+
+            // Set this to false if you don't want an APK that has native code for all architectures
+            universalApk false
+        }
+    }
+    // Assign codes to each architecture
+    project.ext.versionCodes = ['x86': 0, 'x86_64': 1, 'armeabi-v7a': 2, 'arm64-v8a': 3]
+    // Add the architecture-specific codes above to base version code, i.e. the version code specified in the defaultConfig{} block
+    // Example: 2000 is the base version code -> 2000 (x86), 2001 (x86_64), 2002 (armeabi-v7a) & 2003 (arm64-v8a) would be the version codes for the generated APK files
+    android.applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.versionCodeOverride = project.ext.versionCodes.get(output.getFilter(com.android.build.OutputFile.ABI), 0) * 1 + android.defaultConfig.versionCode
+        }
+    }
+
+
+
     buildTypes {
         release {
             minifyEnabled false
@@ -36,10 +65,9 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
+
+    // Constraint Layout
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.13.1'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
@@ -98,6 +126,35 @@ dependencies {
 
     // Room Debug
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.3'
+
+    // Local Unit Testing
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+
+    // Mockito for Local Unit Testing
+    implementation 'org.mockito:mockito-core:2.19.0'
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+
+    // Mockito for Instrumentation/Android Testing
+    implementation 'org.mockito:mockito-android:2.19.0'
+
+    // Instrumentation/Android Testing
+    androidTestImplementation 'androidx.test:rules:1.3.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.annotation:annotation:1.1.0'
+    androidTestImplementation 'com.google.firebase:firebase-appindexing:19.1.0'
+
+    // Espresso for Instrumentation/Android UI Testing
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // Espresso Testing Recycler
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
+    implementation 'androidx.test.espresso:espresso-idling-resource:3.3.0'
+
+    // UI Automator Tests
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 }
 
 dependencies {
