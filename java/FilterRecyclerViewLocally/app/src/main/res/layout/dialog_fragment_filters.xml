@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sort Alphabetically"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_event_filter_dialog_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_event_filter_dialog_event_type_setter" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_alphabetic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="16dp"
+            android:outlineAmbientShadowColor="@color/colorAccent"
+            android:outlineSpotShadowColor="@color/colorAccent">
+
+            <RadioButton
+                android:id="@+id/radio_a_to_z"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="A to Z"
+                android:textColor="@android:color/black" />
+
+            <RadioButton
+                android:id="@+id/radio_z_to_a"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Z to A"
+                android:textColor="@android:color/black" />
+
+            <RadioButton
+                android:id="@+id/radio_alphabetic_none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="None"
+                android:textColor="@android:color/black" />
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sort by Price Range"
+            app:layout_constraintStart_toStartOf="@+id/tv_event_filter_dialog_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_event_filter_dialog_event_type_setter" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_price_range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="16dp"
+            android:outlineAmbientShadowColor="@color/colorAccent"
+            android:outlineSpotShadowColor="@color/colorAccent">
+
+            <RadioButton
+                android:id="@+id/radio_low_to_high"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="Low to High"
+                android:textColor="@android:color/black" />
+
+            <RadioButton
+                android:id="@+id/radio_high_to_low"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="High to Low"
+                android:textColor="@android:color/black" />
+
+            <RadioButton
+                android:id="@+id/radio_price_range_none"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="None"
+                android:textColor="@android:color/black" />
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/darker_gray" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Proximity (Meters)"
+            app:layout_constraintStart_toStartOf="@+id/tv_event_filter_dialog_title"
+            app:layout_constraintTop_toBottomOf="@+id/radiogroup_event_filter_dialog_cost" />
+
+        <TextView
+            android:id="@+id/tv_seekbar_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="0"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_event_filter_dialog_proximity"
+            app:layout_constraintEnd_toEndOf="@+id/tv_event_filter_dialog_reset"
+            app:layout_constraintTop_toTopOf="@+id/tv_event_filter_dialog_proximity" />
+
+        <SeekBar
+            android:id="@+id/seekbar_proximity"
+            style="@style/Widget.AppCompat.SeekBar.Discrete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:progress="0"
+            app:layout_constraintEnd_toEndOf="@+id/tv_event_filter_dialog_reset"
+            app:layout_constraintStart_toStartOf="@+id/tv_event_filter_dialog_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_event_filter_dialog_proximity" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Categories"
+            app:layout_constraintStart_toStartOf="@+id/tv_event_filter_dialog_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_event_filter_dummy_setter" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:drawable/edit_text"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <Spinner
+                android:id="@+id/spinner_category"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_category"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableEnd="@android:drawable/arrow_down_float"
+                android:drawableTint="@color/colorAccent"
+                android:gravity="center_vertical"
+                android:text="All"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@android:color/black"
+                android:visibility="visible" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_placeholder_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Price"
+            app:layout_constraintStart_toStartOf="@+id/tv_event_filter_dialog_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_event_filter_dialog_college_setter" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_price"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:drawable/edit_text"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <Spinner
+                android:id="@+id/spinner_price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableEnd="@android:drawable/arrow_down_float"
+                android:drawableTint="@color/colorAccent"
+                android:gravity="center_vertical"
+                android:text="All Prices"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@android:color/black"
+                android:visibility="visible" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Date" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:background="@android:drawable/edit_text"
+            android:drawableEnd="@android:drawable/arrow_down_float"
+            android:drawablePadding="16dp"
+            android:drawableTint="@color/colorAccent"
+            android:gravity="center_vertical"
+            android:hint="Set Date"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Time" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:drawable/edit_text"
+            android:drawableEnd="@android:drawable/arrow_down_float"
+            android:drawablePadding="16dp"
+            android:drawableTint="@color/colorAccent"
+            android:gravity="center_vertical"
+            android:hint="Set Time"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+</ScrollView>

@@ -101,6 +101,7 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/ShoworHidePassword
 https://github.com/Singularity-Coder/Blog/tree/master/java/Pagination  
 https://github.com/Singularity-Coder/Blog/tree/master/java/NotificationGenerator  
 https://github.com/Singularity-Coder/Blog/tree/master/java/TextToSpeechToTextApp  
+https://github.com/Singularity-Coder/Blog/tree/master/java/FilterRecyclerViewLocally  
 
 ## Machine Learning
 https://github.com/Singularity-Coder/Blog/tree/master/java/GoogVizAPI  
@@ -109,9 +110,9 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/GoogVizAPI
 https://github.com/Singularity-Coder/Blog/tree/master/java/OfflineJSON2
 
 ## Location Services
-https://github.com/Singularity-Coder/Blog/tree/master/java/PlacePicker
-https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLatLong
-https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLocationUpdates
+https://github.com/Singularity-Coder/Blog/tree/master/java/PlacePicker  
+https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLatLong  
+https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLocationUpdates  
 
 ## Reactive Programming
 https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews  
@@ -120,6 +121,7 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews
 ## Testing
 #### Espresso Testing
 https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
+https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON  
 #### Unit Testing
 
 ## CI/CD
