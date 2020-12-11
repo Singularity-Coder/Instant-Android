@@ -110,6 +110,8 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/OfflineJSON2
 
 ## Location Services
 https://github.com/Singularity-Coder/Blog/tree/master/java/PlacePicker
+https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLatLong
+https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLocationUpdates
 
 ## Reactive Programming
 https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews  
