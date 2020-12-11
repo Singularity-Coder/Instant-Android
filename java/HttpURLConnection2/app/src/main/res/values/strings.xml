@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">HttpURLConnection2</string>
+    <string name="restaurant_image">Restaurant Image</string>
+    <string name="not_available">Not Available</string>
+    <string name="rating_text_default">0.0</string>
+    <string name="total_user_ratings_not_available">Total User Ratings: Not Available</string>
+    <string name="address_not_available">Address: Not Available</string>
+    <string name="no_internet">No Internet</string>
+    <string name="nothing_to_show">Nothing to show :(</string>
+</resources>

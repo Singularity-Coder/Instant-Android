@@ -83,7 +83,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:4.7.2'
 
     // GSON Converter
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     // Swipe Refresh Layout
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
@@ -114,8 +114,8 @@ dependencies {
     implementation 'com.airbnb.android:lottie:3.0.0'
 
     // Navigation Components
-    implementation "androidx.navigation:navigation-fragment:2.3.1"
-    implementation "androidx.navigation:navigation-ui:2.3.1"
+    implementation "androidx.navigation:navigation-fragment:2.3.2"
+    implementation "androidx.navigation:navigation-ui:2.3.2"
 
     // Room Database
     implementation "androidx.room:room-runtime:2.2.5"
@@ -133,7 +133,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
 
     // Mockito for Local Unit Testing
-    implementation 'org.mockito:mockito-core:2.19.0'
+    implementation 'org.mockito:mockito-core:3.3.3'
     testImplementation 'androidx.arch.core:core-testing:2.1.0'
 
     // Mockito for Instrumentation/Android Testing
