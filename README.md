@@ -115,6 +115,12 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/PlacePicker
 https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews  
 https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews   
 
+## Testing
+#### Espresso Testing
+https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
+#### Unit Testing
+
+## CI/CD
 ## Android Games
 ## Android Performance Tools
 ## Android App Ads
