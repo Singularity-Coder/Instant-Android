@@ -11,10 +11,20 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/VIPERArchi1
 https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitResponseObject  
 https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON  
 https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitGETwithGSON  
+https://github.com/Singularity-Coder/Blog/tree/master/java/POSTRetrofitting  
+https://github.com/Singularity-Coder/Blog/tree/master/java/Retrofitting
 #### HttpUrlConnection
 https://github.com/Singularity-Coder/Blog/tree/master/java/HttpURLConnection2  
 
 ## Android Data Storage
+https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews
+https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming
+https://github.com/Singularity-Coder/Blog/tree/master/java/SQLiteR1
+
+## App & View Communication
+https://github.com/Singularity-Coder/Blog/tree/master/java/SharedViewModel2  
+https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication  
+https://github.com/Singularity-Coder/Blog/tree/master/java/ReceiveDataFromOtherApps
 
 ## Firebase
 #### Cloud Messaging
@@ -41,6 +51,10 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/DateTimePickers
 https://github.com/Singularity-Coder/Blog/tree/master/java/FrescoImageView  
 https://github.com/Singularity-Coder/Blog/tree/master/java/LottieAnimationsTutorial    
 https://github.com/Singularity-Coder/Blog/tree/master/java/MutliViewList  
+https://github.com/Singularity-Coder/Blog/tree/master/java/NavigationDrawer2  
+https://github.com/Singularity-Coder/Blog/tree/master/java/RecyclerViewCustomHeader  
+https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews  
+https://github.com/Singularity-Coder/Blog/tree/master/java/ShimaShimaShima  
 
 ## Multi-Threading & Background Processing
 https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidBackgroundProcessing  
@@ -52,6 +66,8 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/BoundbyData
 #### Paging
 #### Work Manager
 #### Room
+https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews
+https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming
 
 ## Navigation Components
 https://github.com/Singularity-Coder/Blog/tree/master/java/NavigationComponents  
@@ -74,16 +90,36 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/MVCArchitecture
 #### VIPER
 https://github.com/Singularity-Coder/Blog/tree/master/java/VIPERArchi1  
 
-## Camera
+## Utilities
+#### Camera
 https://github.com/Singularity-Coder/Blog/tree/master/java/CameraXTest  
 https://github.com/Singularity-Coder/Blog/tree/master/java/CustCam  
+https://github.com/Singularity-Coder/Blog/tree/master/java/QRCodeScanner  
+#### Other Utilities
+https://github.com/Singularity-Coder/Blog/tree/master/java/RecordScreenLikeCrazy  
+https://github.com/Singularity-Coder/Blog/tree/master/java/ShareImageText  
+https://github.com/Singularity-Coder/Blog/tree/master/java/ShoworHidePassword  
+https://github.com/Singularity-Coder/Blog/tree/master/java/Pagination  
+https://github.com/Singularity-Coder/Blog/tree/master/java/NotificationGenerator  
+https://github.com/Singularity-Coder/Blog/tree/master/java/TextToSpeechToTextApp  
 
 ## Machine Learning
 https://github.com/Singularity-Coder/Blog/tree/master/java/GoogVizAPI  
+
+## JSON Parsing
+https://github.com/Singularity-Coder/Blog/tree/master/java/OfflineJSON2
+
+## Location Services
+https://github.com/Singularity-Coder/Blog/tree/master/java/PlacePicker
+
+## Reactive Programming
+https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews
+https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews  
 
 ## Android Games
 ## Android Performance Tools
 ## Android App Ads
 ## Backend API Development
+https://github.com/Singularity-Coder/Blog/tree/master/java/PHPMySQLConnection
 ## Payment Integration
-## JSON Parsing
+
