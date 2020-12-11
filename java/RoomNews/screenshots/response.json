@@ -1,0 +1,266 @@
+{
+    "status": "ok",
+    "totalResults": 70,
+    "articles": [
+        {
+            "source": {
+                "id": null,
+                "name": "Kotaku"
+            },
+            "author": "Ethan Gach",
+            "title": "Cyberpunk 2077 Is Looking Rough On PS4 And Xbox One At The Moment - Kotaku",
+            "description": "I’ve spent an hour playing Cyberpunk 2077 on Xbox One, and it hasn’t been pretty. Sometimes it’s been straight up ugly. Based on screenshots and footage other people are sharing online, I’m not alone.",
+            "url": "https://kotaku.com/cyberpunk-2077-is-looking-rough-on-ps4-and-xbox-one-at-1845848627",
+            "urlToImage": "https://i.kinja-img.com/gawker-media/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/vei6ghf5mdjhsl67ec2n.png",
+            "publishedAt": "2020-12-10T07:15:00Z",
+            "content": "Ive spent an hour playing Cyberpunk 2077 on Xbox One, and it hasnt been pretty. Sometimes its been straight up ugly. Based on screenshots and footage other people are sharing online, Im not alone.\r\nC… [+4014 chars]"
+        },
+        {
+            "source": {
+                "id": "engadget",
+                "name": "Engadget"
+            },
+            "author": "",
+            "title": "Samsung launches a 110-inch version of its MicroLED 'Wall' TV - Engadget",
+            "description": "Samsung has launched a 110-inch MicroLED TV, and it’s now up for pre-sale in Korea.  The tech giant has been showcasing massive displays that use MicroLED technology over the past two years.  It unveiled a 146-inch TV called The Wall at CES 2018, and it showe…",
+            "url": "https://www.engadget.com/samsungs-microled-tv-presale-korea-043149097.html",
+            "urlToImage": "https://o.aolcdn.com/images/dims?resize=1200%2C630&crop=1200%2C630%2C0%2C0&quality=95&image_uri=https%3A%2F%2Fs.yimg.com%2Fos%2Fcreatr-uploaded-images%2F2020-12%2Faf6d1550-3a92-11eb-bbff-10cf7849a282&client=amp-blogside-v2&signature=aa370bb79e68bfd6e639712393863e6fc2283c88",
+            "publishedAt": "2020-12-10T05:17:48Z",
+            "content": "Samsung has launched a 110-inch MicroLED TV, and it’s now up for pre-sale in Korea. The tech giant has been showcasing massive displays that use MicroLED technology over the past two years. It unveil… [+788 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Benzinga"
+            },
+            "author": "Shivdeep Dhaliwal",
+            "title": "Apple Working On Self-Driving Vehicle Similar To Tesla With TSMC: Report - Benzinga",
+            "description": "Apple Inc (NASDAQ: AAPL) is working with its supplier Taiwan Semiconductor Manufacturing Company Ltd. (NYSE: TSM) on a chip for an autonomous vehicle, ...",
+            "url": "https://www.benzinga.com/news/20/12/18726576/apple-working-on-self-driving-vehicle-similar-to-tesla-with-tsmc-report",
+            "urlToImage": "https://cdn.benzinga.com/files/imagecache/og_image_social_share_1200x630/images/story/2012/andy-wang-nfw2a9jgbsw-unsplash.jpg",
+            "publishedAt": "2020-12-10T04:13:16Z",
+            "content": "Apple Inc (NASDAQ: AAPL) is working with its supplier Taiwan Semiconductor Manufacturing Company Ltd. (NYSE: TSM) on a chip for an autonomous vehicle, Apple Insider reported Wednesday.\r\nWhat Happened… [+1788 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "YouTube"
+            },
+            "author": null,
+            "title": "How well does Cyberpunk 2077 run on Google Stadia? - 9to5Google",
+            "description": "Just how well does Stadia handle Cyberpunk 2077?Check out Stadia Source's video here: https://youtu.be/ncRYeZZa7AUSubscribe ► http://bit.ly/9to5G | Read full...",
+            "url": "https://www.youtube.com/watch?v=WTu2GHeUCfE",
+            "urlToImage": "https://i.ytimg.com/vi/WTu2GHeUCfE/maxresdefault.jpg",
+            "publishedAt": "2020-12-10T02:32:20Z",
+            "content": null
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "YouTube"
+            },
+            "author": null,
+            "title": "Halo Infinite's New Look Is Awesome Preparing for Fall Release - IGN Daily Fix - IGN",
+            "description": "In today's Daily Fix, you'll have to wait until Fall of next year to play Halo Infinite. Bummer. But, there's some good news: the look of the game looks to h...",
+            "url": "https://www.youtube.com/watch?v=qTwoTysXoM8",
+            "urlToImage": "https://i.ytimg.com/vi/qTwoTysXoM8/maxresdefault.jpg",
+            "publishedAt": "2020-12-10T00:45:57Z",
+            "content": null
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "CNET"
+            },
+            "author": "Stephen Shankland",
+            "title": "Here comes the Google Chrome change that worries ad blocker creators - CNET",
+            "description": "Google says it's addressed concerns some Chrome extension developers had with its Manifest v3 technology.",
+            "url": "https://www.cnet.com/news/here-comes-the-google-chrome-change-that-worries-ad-blocker-creators/",
+            "urlToImage": "https://cnet3.cbsistatic.com/img/eAZtyQZ7KnRYV0hH92VZpgp3Wu4=/1200x630/2016/08/09/e8c36ecd-1c5d-403d-865b-fbcbc746eee4/chrome-lapel-pin-4sts.jpg",
+            "publishedAt": "2020-12-10T00:34:00Z",
+            "content": "Manifest v3 will arrive with Chrome 88 in mid-January,   \r\nStephen Shankland/CNET\r\nWith the next version of Chrome, Google is moving ahead with a plan to improve privacy and security by reining in so… [+4636 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "9to5Mac"
+            },
+            "author": null,
+            "title": "Apple to ban X-Mode tracking SDK from the App Store, developers given two weeks to comply - 9to5Mac",
+            "description": "Apple and Google are both cracking down on applications that integrate the X-Mode Social tracking software. As reported by The Wall Street Journal, Apple has informed developers that they have two weeks to remove X-Mode’s trackers from their applications. The…",
+            "url": "https://9to5mac.com/2020/12/09/app-store-x-mode-tracking-apple/",
+            "urlToImage": "https://i1.wp.com/9to5mac.com/wp-content/uploads/sites/6/2020/01/App-Store.jpg?resize=1200%2C628&quality=82&strip=all&ssl=1",
+            "publishedAt": "2020-12-10T00:33:00Z",
+            "content": "Apple and Google are both cracking down on applications that integrate the X-Mode Social tracking software. As reported by The Wall Street Journal, Apple has informed developers that they have two we… [+2594 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "VentureBeat"
+            },
+            "author": "Jeff Grubb",
+            "title": "Cyberpunk 2077 is a game about following the yellow line - VentureBeat",
+            "description": "Cyberpunk 2077 puts players on deterministic paths without much opportunity for deviation. And that's a weakness in an otherwise fun game.",
+            "url": "https://venturebeat.com/2020/12/09/cyberpunk-2077-is-a-game-about-following-the-yellow-line/",
+            "urlToImage": "https://venturebeat.com/wp-content/uploads/2020/02/cyberpunk-2077.jpg?w=1200&strip=all",
+            "publishedAt": "2020-12-10T00:04:00Z",
+            "content": "Cyberpunk 2077 is out for PC, Xbox One, PlayStation 4, and Stadia this week, and that means youll finally get a chance to explore its big-budget, vast open world. But when you do, you may find that t… [+1388 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "YouTube"
+            },
+            "author": null,
+            "title": "Spider-Man: Miles Morales - 15 Minutes of Ray Tracing 60fps Gameplay (Performance RT Mode) - IGN",
+            "description": "Alongside all of the previous graphics modes available in the PlayStation 5 version of Spider-Man: Miles Morales, Insomniac just added a new one officially c...",
+            "url": "https://www.youtube.com/watch?v=_mRPc1pXv0A",
+            "urlToImage": "https://i.ytimg.com/vi/_mRPc1pXv0A/maxresdefault.jpg",
+            "publishedAt": "2020-12-10T00:00:22Z",
+            "content": null
+        },
+        {
+            "source": {
+                "id": "techradar",
+                "name": "TechRadar"
+            },
+            "author": "David Lumb",
+            "title": "Samsung Galaxy S21 price leak suggests you won’t pay more than the S20 phones - TechRadar",
+            "description": "The Samsung S21 may not get a price jump",
+            "url": "https://www.techradar.com/news/samsung-galaxy-s21-price-leak-suggests-you-wont-pay-more-than-the-s20-phones",
+            "urlToImage": "https://cdn.mos.cms.futurecdn.net/2SZhKoKWdAkLqj5WKVtWhU-1200-80.jpg",
+            "publishedAt": "2020-12-09T23:20:00Z",
+            "content": "We still have a lot to learn about the upcoming Samsung Galaxy S21 line of phones, including how much theyll cost. But a new leak suggests theyll cost the same as the Samsung Galaxy S20 series at lea… [+1626 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Android Police"
+            },
+            "author": null,
+            "title": "Fire TV gets its biggest update ever, with an emphasis on content discovery and personalization - Android Police",
+            "description": "Amazon announced a bunch of new hardware back in September, but the company also teased a brand-new Fire TV experience. Now the update appears to be",
+            "url": "https://www.androidpolice.com/2020/12/09/fire-tv-gets-its-biggest-update-ever-with-an-emphasis-on-content-discovery-and-personalization/",
+            "urlToImage": "https://www.androidpolice.com/wp-content/uploads/2020/12/09/image-2020-12-09-01-45-50.png",
+            "publishedAt": "2020-12-09T22:58:00Z",
+            "content": "Amazon announced a bunch of new hardware back in September, but the company also teased a brand-new Fire TV experience. Now the update appears to be rolling out to select Fire TV devices, and it prom… [+1487 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Rock Paper Shotgun"
+            },
+            "author": null,
+            "title": "The Game Awards will include announcements for games you can play immediately - Rock Paper Shotgun",
+            "description": "The Game Awards Festival sale has begun with sales and demos already and more playable games will be announced during the show itself.",
+            "url": "https://www.rockpapershotgun.com/2020/12/09/the-game-awards-will-include-announcements-for-games-you-can-play-immediately/",
+            "urlToImage": "https://assets.rockpapershotgun.com/images/2020/11/the-game-awards-2020.jpg/RPSS/thumbnail/1920x1080/format/jpg/quality/75",
+            "publishedAt": "2020-12-09T22:48:00Z",
+            "content": "Winterly trophy-slinging event The Game Awards, like Geoff Keighley’s E3 replacement event over the summer, is once again a full on digital festival. Mostly that means you can buy games on sale and p… [+1982 chars]"
+        },
+        {
+            "source": {
+                "id": "engadget",
+                "name": "Engadget"
+            },
+            "author": "",
+            "title": "'Destiny 2' enables SMS verification on PC to curb cheating - Engadget",
+            "description": "Starting today, if you want to take part in the game’s Trials of Osiris, Competitive Crucible and Iron Banner player versus player modes as a F2P user, you’ll need to verify your account before you can jump into any of them for the first time.",
+            "url": "https://www.engadget.com/destiny-2-sms-verification-f2p-pc-222819844.html",
+            "urlToImage": "https://o.aolcdn.com/images/dims?resize=1200%2C630&crop=1200%2C630%2C0%2C0&quality=95&image_uri=https%3A%2F%2Fs.yimg.com%2Fos%2Fcreatr-uploaded-images%2F2020-12%2F56a15f20-3a6b-11eb-afef-5eb208a0c8a1&client=amp-blogside-v2&signature=d9014274ee311374b1f2532da0158ff1db444d52",
+            "publishedAt": "2020-12-09T22:39:39Z",
+            "content": "In an attempt to curb cheating on the PC version of Destiny 2, Bungie is making SMS verification mandatory for free-to-play players. Starting today, if you want to take part in the game’s Trials of O… [+1071 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "CNET"
+            },
+            "author": "Dave Johnson",
+            "title": "Prime member? Then get an Amazon Echo Dot for $15 right now - CNET",
+            "description": "Woot has everyone's favorite puck-shaped smart speaker on sale for 63% off in your choice of color.",
+            "url": "https://www.cnet.com/news/prime-member-then-get-an-amazon-echo-dot-for-15-right-now/",
+            "urlToImage": "https://cnet3.cbsistatic.com/img/owxZH6CnB3xG48UATlWbIeDqxyU=/1200x630/2019/10/24/cc2befef-debf-46ad-a935-3b99ba529325/echo-dot-3rd-gen-charcoal.jpg",
+            "publishedAt": "2020-12-09T22:15:00Z",
+            "content": "Amazon\r\nAmazon's Echo speakers are on the same trajectory as TVs. Back in the 1950s, it was virtually unthinkable that you'd ever own more than one. By the '90s, it was common to have a TV in nearly … [+1780 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Chrome Unboxed"
+            },
+            "author": "https://chromeunboxed.com/author/gabe/",
+            "title": "The 8GB/128GB Lenovo Chromebook Flex 5 is officially available - Chrome Unboxed",
+            "description": "A couple of weeks ago, we were tipped on the arrival of an upgraded version of the Lenovo Chromebook Flex 5, and today, that device is officially available. While we love the original Flex 5 with its Core i3 CPU and an impressive $409 price tag, we firmly bel…",
+            "url": "https://chromeunboxed.com/the-8gb-128gb-lenovo-chromebook-flex-5-is-officially-available/",
+            "urlToImage": "https://chromeunboxed.com/wp-content/uploads/2020/05/lenovoFlex5ChromebookCore-i5-8gb-128gb-NVMe.jpg",
+            "publishedAt": "2020-12-09T22:11:04Z",
+            "content": "A couple of weeks ago, we were tipped on the arrival of an upgraded version of the Lenovo Chromebook Flex 5, and today, that device is officially available. While we love the original Flex 5 with its… [+1385 chars]"
+        },
+        {
+            "source": {
+                "id": "the-verge",
+                "name": "The Verge"
+            },
+            "author": "Adi Robertson",
+            "title": "Adobe just released the last Flash update ever - The Verge",
+            "description": "Adobe has released the final scheduled update for Flash Player, the web plugin it’s retiring at the end of December. Its player will block content starting in January 2021.",
+            "url": "https://www.theverge.com/2020/12/9/22166160/adobe-last-flash-player-update-support-ending-december",
+            "urlToImage": "https://cdn.vox-cdn.com/thumbor/b95g91kJh5drjy9_jGi7_JMJAiM=/0x66:600x380/fit-in/1200x630/cdn.vox-cdn.com/assets/787094/adobe-flash-logo.jpg",
+            "publishedAt": "2020-12-09T21:25:01Z",
+            "content": "Flash Player will block playback starting on January 12th\r\nAdobe has released the final scheduled update to its Flash Player plugin, weeks before Flashs official retirement. As noted on Adobes site, … [+1544 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Android Police"
+            },
+            "author": null,
+            "title": "Google wants to crowdsource data for medial research with its new Health Studies app - Android Police",
+            "description": "Google makes a lot of experimental apps, but the company's latest one couldn't have landed at a more opportune time. The Google Health Studies app allows",
+            "url": "https://www.androidpolice.com/2020/12/09/google-wants-to-crowdsource-data-for-medial-research-with-its-new-health-studies-app/",
+            "urlToImage": "https://www.androidpolice.com/wp-content/uploads/2020/12/09/GoogleHealthStudiesHero-01.png",
+            "publishedAt": "2020-12-09T21:08:00Z",
+            "content": "Google makes a lot of experimental apps, but the company's latest one couldn't have landed at a more opportune time. The Google Health Studies app allows users to sign up and participate in research … [+1217 chars]"
+        },
+        {
+            "source": {
+                "id": null,
+                "name": "Pokemon GO Hub"
+            },
+            "author": null,
+            "title": "Pokémon GO + The Game Awards 2020 Event - Pokemon GO Hub",
+            "description": "A special event celebrating The Game Awards is taking place in Pokémon GO from December 10, 2020, at 4:00 p.m. to Friday, December 11, 2020, at 4:00 p.m. During the Game Awards themed event, Trainers will earn more Stardust from catching Pokémon, Frustration …",
+            "url": "https://pokemongohub.net/post/event/the-game-awards-2020-event/",
+            "urlToImage": "https://pokemongohub.net/wp-content/uploads/2020/12/Game-Awards.jpg",
+            "publishedAt": "2020-12-09T21:03:00Z",
+            "content": "A special event celebrating The Game Awards is taking place in Pokémon GO from December 10, 2020, at 4:00 p.m. to Friday, December 11, 2020, at 4:00 p.m.\r\nDuring the Game Awards themed event, Trainer… [+976 chars]"
+        },
+        {
+            "source": {
+                "id": "bloomberg",
+                "name": "Bloomberg"
+            },
+            "author": null,
+            "title": "China Is Nintendo’s Secret Weapon in War With PlayStation, Xbox - Bloomberg",
+            "description": null,
+            "url": "https://www.bloomberg.com/tosv2.html?vid=&uuid=fc3dd600-3ab3-11eb-8d29-254e096b8d10&url=L25ld3MvYXJ0aWNsZXMvMjAyMC0xMi0wOS9jaGluYS1pcy1uaW50ZW5kby1zLXNlY3JldC13ZWFwb24taW4td2FyLXdpdGgtcGxheXN0YXRpb24teGJveA==",
+            "urlToImage": null,
+            "publishedAt": "2020-12-09T21:00:00Z",
+            "content": "To continue, please click the box below to let us know you're not a robot."
+        },
+        {
+            "source": {
+                "id": "ars-technica",
+                "name": "Ars Technica"
+            },
+            "author": "Eric Berger",
+            "title": "Watch live: SpaceX is fueling its Starship for a high-altitude flight [Updated] - Ars Technica",
+            "description": "The weather in South Texas is again rather nice.",
+            "url": "https://arstechnica.com/science/2020/12/starship-will-again-attempt-a-high-altitude-flight-on-wednesday/",
+            "urlToImage": "https://cdn.arstechnica.net/wp-content/uploads/2020/12/Starship-SN8-Dec-9-2020-0927-760x380.jpg",
+            "publishedAt": "2020-12-09T20:10:00Z",
+            "content": "824 with 238 posters participating\r\n<ul><li>\r\n The Sun glints around the lower fin of Starship SN8 on Dec. 9, 2020. \r\n</li><li>\r\n</li><li>\r\n Golden hour transitions to blue hour as Starship SN8 detan… [+2600 chars]"
+        }
+    ]
+}
