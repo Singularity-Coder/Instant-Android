@@ -7,7 +7,6 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworking
 https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworkingGSON  
 https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworkingPOST  
 #### Retrofit
-https://github.com/Singularity-Coder/Blog/tree/master/java/VIPERArchi1  
 https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitResponseObject  
 https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON  
 https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitGETwithGSON  
@@ -17,9 +16,9 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/Retrofitting
 https://github.com/Singularity-Coder/Blog/tree/master/java/HttpURLConnection2  
 
 ## Android Data Storage
-https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews
-https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming
-https://github.com/Singularity-Coder/Blog/tree/master/java/SQLiteR1
+https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
+https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming  
+https://github.com/Singularity-Coder/Blog/tree/master/java/SQLiteR1  
 
 ## App & View Communication
 https://github.com/Singularity-Coder/Blog/tree/master/java/SharedViewModel2  
@@ -66,8 +65,8 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/BoundbyData
 #### Paging
 #### Work Manager
 #### Room
-https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews
-https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming
+https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
+https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming  
 
 ## Navigation Components
 https://github.com/Singularity-Coder/Blog/tree/master/java/NavigationComponents  
@@ -113,13 +112,13 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/OfflineJSON2
 https://github.com/Singularity-Coder/Blog/tree/master/java/PlacePicker
 
 ## Reactive Programming
-https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews
-https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews  
+https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews  
+https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews   
 
 ## Android Games
 ## Android Performance Tools
 ## Android App Ads
 ## Backend API Development
-https://github.com/Singularity-Coder/Blog/tree/master/java/PHPMySQLConnection
+https://github.com/Singularity-Coder/Blog/tree/master/java/PHPMySQLConnection  
 ## Payment Integration
 
