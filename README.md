@@ -2,11 +2,11 @@
 Code of singularitycode.com blog posts!
 
 ## Android Networking
-### Volley
+#### Volley
 https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworking  
 https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworkingGSON  
 https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworkingPOST  
-### Retrofit
+#### Retrofit
 https://github.com/Singularity-Coder/Blog/tree/master/java/VIPERArchi1  
 https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitResponseObject  
 https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON  
@@ -15,11 +15,15 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitGETwithGSON
 ## Android Data Storage
 
 ## Firebase
-Cloud Messaging - https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseCloudMessaging2
-Email Auth - https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseEmailAuth
-Google Auth - https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseGoogleAuth
-Storage - https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseStorage
-Firestore - https://github.com/Singularity-Coder/Blog/tree/master/java/FirestoreGroceryList
+#### Cloud Messaging
+https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseCloudMessaging2
+#### Authentication
+https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseEmailAuth
+https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseGoogleAuth
+#### Storage
+https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseStorage
+#### Firestore
+https://github.com/Singularity-Coder/Blog/tree/master/java/FirestoreGroceryList
 
 ## Social Integration
 https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseGoogleAuth
