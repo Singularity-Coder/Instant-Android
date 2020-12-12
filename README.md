@@ -56,6 +56,8 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews
 https://github.com/Singularity-Coder/Blog/tree/master/java/ShimaShimaShima  
 https://github.com/Singularity-Coder/Blog/tree/master/java/TabLayout  
 https://github.com/Singularity-Coder/Blog/tree/master/java/ParallaxTabs  
+https://github.com/Singularity-Coder/Blog/tree/master/java/LayoutParams  
+https://github.com/Singularity-Coder/Blog/tree/master/java/OnClickListsners4Styles  
 
 ## Multi-Threading & Background Processing
 https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidBackgroundProcessing  
@@ -117,6 +119,7 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/LocalJSON
 https://github.com/Singularity-Coder/Blog/tree/master/java/PlacePicker  
 https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLatLong  
 https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLocationUpdates  
+https://github.com/Singularity-Coder/Android-Examples/tree/master/java/Geofencing  
 
 ## Reactive Programming
 https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews  

@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Geofencing</string>
+    <string name="google_map_key">Put your Google Map Key here!</string>
+</resources>

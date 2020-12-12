@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "OnClickListsners 4 Styles"
