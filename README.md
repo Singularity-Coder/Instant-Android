@@ -108,6 +108,7 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/GoogVizAPI
 
 ## JSON Parsing
 https://github.com/Singularity-Coder/Blog/tree/master/java/OfflineJSON2
+https://github.com/Singularity-Coder/Blog/tree/master/java/LocalJSON
 
 ## Location Services
 https://github.com/Singularity-Coder/Blog/tree/master/java/PlacePicker  
