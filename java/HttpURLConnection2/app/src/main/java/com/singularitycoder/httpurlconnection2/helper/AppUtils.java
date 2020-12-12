@@ -22,6 +22,8 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.Callable;
@@ -93,6 +95,28 @@ public final class AppUtils extends AppCompatActivity {
             }
             final Bitmap finalBitmap = bitmap;
             runOnUiThread(() -> imageView.setImageBitmap(finalBitmap));
+        });
+    }
+
+    public final void loadImage2(
+            @NonNull final String imageUrl,
+            @NonNull final ImageView imageView) {
+        AsyncTask.execute(() -> {
+            Bitmap bitmapImage = null;
+            try {
+                final URL url = new URL(imageUrl);
+                final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                final InputStream inputStream = connection.getInputStream();
+                final BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                bitmapImage = BitmapFactory.decodeStream(inputStream, null, options);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            final Bitmap finalBitmapImage = bitmapImage;
+            runOnUiThread(() -> imageView.setImageBitmap(finalBitmapImage));
         });
     }
 }
