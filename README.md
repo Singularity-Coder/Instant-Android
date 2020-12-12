@@ -54,6 +54,8 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/NavigationDrawer2
 https://github.com/Singularity-Coder/Blog/tree/master/java/RecyclerViewCustomHeader  
 https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews  
 https://github.com/Singularity-Coder/Blog/tree/master/java/ShimaShimaShima  
+https://github.com/Singularity-Coder/Blog/tree/master/java/TabLayout  
+https://github.com/Singularity-Coder/Blog/tree/master/java/ParallaxTabs  
 
 ## Multi-Threading & Background Processing
 https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidBackgroundProcessing  
@@ -102,6 +104,7 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/Pagination
 https://github.com/Singularity-Coder/Blog/tree/master/java/NotificationGenerator  
 https://github.com/Singularity-Coder/Blog/tree/master/java/TextToSpeechToTextApp  
 https://github.com/Singularity-Coder/Blog/tree/master/java/FilterRecyclerViewLocally  
+https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidSearch  
 
 ## Machine Learning
 https://github.com/Singularity-Coder/Blog/tree/master/java/GoogVizAPI  
