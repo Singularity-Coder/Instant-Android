@@ -10,9 +10,9 @@ A list of android samples on different topics!
 ![alt text](https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/7.jpg)
 ![alt text](https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/8.jpg)
 ![alt text](https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/9.jpg)
-![alt text](https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/10.png)
+![alt text](https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/10.jpg)
 ![alt text](https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/11.jpg)
-![alt text](https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/12.jpg)
+![alt text](https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/12.png)
 
 
 ## Android Networking
