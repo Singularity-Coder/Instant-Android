@@ -1,6 +1,17 @@
 # Blog
 Code of singularitycode.com blog posts!
 
+https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/1.jpg
+https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/2.jpg
+https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/3.jpg
+https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/4.jpg
+https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/5.jpg
+https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/6.jpg
+https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/7.jpg
+https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/8.jpg
+https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/9.jpg
+https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/10.png
+
 ## Android Networking
 #### Volley
 https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworking  
