@@ -230,14 +230,14 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/PHPMySQLConnection
 
 
 ## Architecture Patterns in Android
-#### MVVM
+#### MVVM Architecture (Model View ViewModel)
 https://github.com/Singularity-Coder/Blog/tree/master/java/MVVMArchitecture  
-#### MVP
+#### MVP Architecture (Model View Presenter)
 https://github.com/Singularity-Coder/Blog/tree/master/java/MVPArchitecture  
-#### MVC
+#### MVC Architecture (Model View Controller)
 https://github.com/Singularity-Coder/Blog/tree/master/java/MVCArchitecture  
-#### VIPER
+#### VIPER Architecture (View Interactor Presenter Entity Router)
 https://github.com/Singularity-Coder/Blog/tree/master/java/VIPERArchi1  
-#### MVI
-#### Clean
+#### MVI Architecture (Model View Intent)
+#### Clean Architecture
 
