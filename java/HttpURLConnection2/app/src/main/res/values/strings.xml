@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HttpURLConnection2</string>
+    <string name="app_name">HttpURLConnection</string>
     <string name="restaurant_image">Restaurant Image</string>
     <string name="not_available">Not Available</string>
     <string name="rating_text_default">0.0</string>
