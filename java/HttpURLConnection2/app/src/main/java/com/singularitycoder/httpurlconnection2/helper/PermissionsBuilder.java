@@ -8,6 +8,7 @@ import android.provider.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -88,8 +89,8 @@ public final class PermissionsBuilder {
                 }).check();
     }
 
-    private void showSettingsDialog(Context context) {
-        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
+    private void showSettingsDialog(@NonNull final Context context) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Give Permissions!");
         builder.setMessage("We need you to grant the permissions for the features to work!");
         builder.setPositiveButton("OK", (dialog, which) -> {
@@ -101,8 +102,8 @@ public final class PermissionsBuilder {
     }
 
     // Open device app settings to allow user to enable permissions
-    private void openSettings(Context context) {
-        Intent intent = new Intent();
+    private void openSettings(@NonNull final Context context) {
+        final Intent intent = new Intent();
         intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.fromParts("package", BuildConfig.APPLICATION_ID, null));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

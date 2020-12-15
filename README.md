@@ -108,17 +108,6 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/ForegroundService
 #### Content Providers
 
 
-## Android Architectures
-#### MVVM
-https://github.com/Singularity-Coder/Blog/tree/master/java/MVVMArchitecture  
-#### MVP
-https://github.com/Singularity-Coder/Blog/tree/master/java/MVPArchitecture  
-#### MVC
-https://github.com/Singularity-Coder/Blog/tree/master/java/MVCArchitecture  
-#### VIPER
-https://github.com/Singularity-Coder/Blog/tree/master/java/VIPERArchi1  
-
-
 ## Utilities
 #### Camera
 https://github.com/Singularity-Coder/Blog/tree/master/java/CameraXTest  
@@ -140,8 +129,8 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/GoogVizAPI
 
 
 ## JSON Parsing
-https://github.com/Singularity-Coder/Blog/tree/master/java/OfflineJSON2
-https://github.com/Singularity-Coder/Blog/tree/master/java/LocalJSON
+https://github.com/Singularity-Coder/Blog/tree/master/java/OfflineJSON2  
+https://github.com/Singularity-Coder/Blog/tree/master/java/LocalJSON  
 
 
 ## Location Services
@@ -151,9 +140,29 @@ https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLocati
 https://github.com/Singularity-Coder/Android-Examples/tree/master/java/Geofencing  
 
 
-## Reactive Programming
+## Programming Paradigms in Android
+#### Reactive Programming
 https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews  
 https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews   
+#### Functional Programming
+#### Object-oriented Programming
+#### Declarative Programming
+#### Imperative Programming
+#### Procedural Programming
+#### Logic Programming
+#### Modular Programming
+#### Structured Programming
+#### Generic Programming
+#### Event-driven Programming
+#### Aspect-oriented Programming
+#### Prototype based Programming
+#### Data-driven Programming
+#### Function-level Programming
+#### Array Programming
+#### Dataflow Programming
+#### Role-oriented Programming
+#### Agent-oriented Programming
+#### Stack oriented Programming
 
 
 ## Testing
@@ -170,4 +179,65 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON
 ## Backend API Development
 https://github.com/Singularity-Coder/Blog/tree/master/java/PHPMySQLConnection  
 ## Payment Integration
+
+
+## SOLID Principles in Android
+#### Sigle Responsibility
+#### Open/Closed
+#### Liskov Substitution
+#### Interface Segregation
+#### Dependency Injection
+
+
+## Design Principles in Android
+#### Loose coupling
+#### Prefer Composition over Inheritance
+#### Program to an Interface, not an implementation
+#### Encapsulate what varies
+#### Encapsulation
+#### Abstraction
+#### Polymorphism
+#### Inheritance
+
+
+## Design Patterns in Android
+### Creational Patterns
+#### Abstract Factory Pattern
+#### Builder Pattern
+#### Factory Method Pattern
+#### Prototype Pattern
+#### Singleton Pattern
+### Structural Patterns
+#### Adapter Pattern
+#### Bridge Pattern
+#### Composite Pattern
+#### Decorator Pattern
+#### Facade Pattern
+#### Flyweight Pattern
+#### Proxy Pattern
+### Behavioural Patterns
+#### Chain of Responsibility Pattern
+#### Command Pattern
+#### Interpreter Pattern
+#### Iterator Pattern
+#### Mediator Pattern
+#### Memento Pattern
+#### Observer Pattern
+#### State Pattern
+#### Strategy Pattern
+#### Template Pattern
+#### Visitor Pattern
+
+
+## Architecture Patterns in Android
+#### MVVM
+https://github.com/Singularity-Coder/Blog/tree/master/java/MVVMArchitecture  
+#### MVP
+https://github.com/Singularity-Coder/Blog/tree/master/java/MVPArchitecture  
+#### MVC
+https://github.com/Singularity-Coder/Blog/tree/master/java/MVCArchitecture  
+#### VIPER
+https://github.com/Singularity-Coder/Blog/tree/master/java/VIPERArchi1  
+#### MVI
+#### Clean
 
