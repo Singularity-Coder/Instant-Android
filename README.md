@@ -77,7 +77,8 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/ShimaShimaShima
 https://github.com/Singularity-Coder/Blog/tree/master/java/TabLayout  
 https://github.com/Singularity-Coder/Blog/tree/master/java/ParallaxTabs  
 https://github.com/Singularity-Coder/Blog/tree/master/java/LayoutParams  
-https://github.com/Singularity-Coder/Blog/tree/master/java/OnClickListsners4Styles  
+https://github.com/Singularity-Coder/Blog/tree/master/java/OnClickListsners4Styles 
+(Kotlin) https://github.com/Singularity-Coder/Blog/tree/master/kotlin/KotlinRecyclerView  
 
 
 ## Multi-Threading & Background Processing
