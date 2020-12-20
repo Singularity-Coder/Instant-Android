@@ -64,6 +64,7 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseCloudMessagin
 
 
 ## User Interface & User Experience
+Shape Drawables, Fav Gradients, 9 patch images, material components, custom view implementations, animations, canvas drawings, etc.
 https://github.com/Singularity-Coder/Blog/tree/master/java/ActionBarMenus  
 https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidAlertDialogs    
 https://github.com/Singularity-Coder/Blog/tree/master/java/DateTimePickers  
