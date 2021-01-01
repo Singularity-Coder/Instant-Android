@@ -6,15 +6,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class UsersAdapter(private val userList: ArrayList<User>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class UsersAdapter(private val userList: List<User>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_layout, parent, false)
-        return UserViewHolder(view)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_layout, parent, false)
+        return UserViewHolder(itemView = view)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as UserViewHolder).bindItems(userList[position])
+        (holder as UserViewHolder).bindItems(user = userList[position])
     }
 
     override fun getItemCount(): Int {
