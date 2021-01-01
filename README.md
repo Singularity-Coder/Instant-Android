@@ -26,6 +26,7 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON
 https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitGETwithGSON  
 https://github.com/Singularity-Coder/Blog/tree/master/java/POSTRetrofitting  
 https://github.com/Singularity-Coder/Blog/tree/master/java/Retrofitting
+(Kotlin) https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinRetrofit1  
 #### HttpUrlConnection
 https://github.com/Singularity-Coder/Blog/tree/master/java/HttpURLConnection2  
 
