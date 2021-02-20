@@ -8,15 +8,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-
-class ApiService {
+object ApiService {
 
     fun getApiEndPoints(): ApiEndPoints {
         return getRetrofit()!!.create(ApiEndPoints::class.java)
     }
 
     @Synchronized
-    fun getRetrofit(): Retrofit? {
+    private fun getRetrofit(): Retrofit? {
         return Retrofit.Builder()
             .client(getHttpClientBuilder().build())
             .baseUrl(AppConstants.BASE_URL)

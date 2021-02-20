@@ -7,9 +7,6 @@ import retrofit2.http.Query
 
 interface ApiEndPoints {
 
-    @GET("/repositories")
-    fun getAllRepositories(): Call<RepoResponse>
-
     @GET("/search/repositories")
     fun searchAllRepositories(
             @Query("q") query: String,

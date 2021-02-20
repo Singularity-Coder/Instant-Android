@@ -30,7 +30,7 @@ class RepoAdapter(private val repoList: List<Item>, private val context: Context
             binding.tvUserName.text = repo.owner.login.orEmpty()
             binding.tvRepoName.text = repo.name.orEmpty()
             binding.tvRepoDescription.text = repo.description.orEmpty()
-            AppUtils().glideImage(
+            AppUtils.glideImage(
                 context = context,
                 imgUrl = repo.owner.avatarUrl,
                 imageView = binding.ivUserImage

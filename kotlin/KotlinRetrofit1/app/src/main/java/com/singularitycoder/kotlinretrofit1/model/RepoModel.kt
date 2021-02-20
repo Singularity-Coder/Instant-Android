@@ -1,29 +1,28 @@
 package com.singularitycoder.kotlinretrofit1.model
 
-import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class RepoResponse(
     @SerializedName("items")
-    @Expose
-    val itemsList: List<Item>,
+    val itemsList: List<Item> = ArrayList(),
 )
 
 data class Item(
-    val name: String?,
-    val owner: Owner,
-    val description: String?,
+    @SerializedName("name")
+    val name: String? = "",
+    @SerializedName("owner")
+    val owner: Owner = Owner(),
+    @SerializedName("description")
+    val description: String? = "",
 )
 
 data class Owner(
-    val login: String?,
+    @SerializedName("login")
+    val login: String? = "",
     @SerializedName("avatar_url")
-    @Expose
-    val avatarUrl: String?,
+    val avatarUrl: String? = "",
 )
 
-data class Error(
-    val code: Int,
-    val status: String,
-    val message: String,
+data class RepoError(
+    val message: String? = "",
 )
