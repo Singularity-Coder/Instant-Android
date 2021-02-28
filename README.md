@@ -16,6 +16,7 @@ A list of android samples on different topics!
 
 ## Jetpack Compose
 (Kotlin) https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose1  
+(Kotlin) https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose2  
 
 ## Android Networking
 #### Volley
