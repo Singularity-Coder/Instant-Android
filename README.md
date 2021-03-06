@@ -15,141 +15,158 @@ A list of android samples on different topics!
 ![alt text](https://github.com/Singularity-Coder/Android-Examples/blob/master/showcase/12.png)
 
 ## Jetpack Compose
-(Kotlin) https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose1  
-(Kotlin) https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose2  
+* (Kotlin) Basic ImageView and TextView in Jetpack Compose. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose1)
+* (Kotlin) Creating a list with custom view holder with material theming. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose2)
 
 ## Android Networking
 #### Volley
-https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworking  
-https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworkingGSON  
-https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworkingPOST  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworking  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworkingGSON  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworkingPOST  
 #### Retrofit
-https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitResponseObject  
-https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON  
-https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitGETwithGSON  
-https://github.com/Singularity-Coder/Blog/tree/master/java/POSTRetrofitting  
-https://github.com/Singularity-Coder/Blog/tree/master/java/Retrofitting  
-(Kotlin) https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinRetrofit1  
-(Kotlin) https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinRetrofit2  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitResponseObject  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitGETwithGSON  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/POSTRetrofitting  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/Retrofitting  
+* (Kotlin) https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinRetrofit1  
+* (Kotlin) https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinRetrofit2  
 #### HttpUrlConnection
-https://github.com/Singularity-Coder/Blog/tree/master/java/HttpURLConnection2  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/HttpURLConnection2  
 
 
 ## Android Data Storage
-https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
-https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming  
-https://github.com/Singularity-Coder/Blog/tree/master/java/SQLiteR1  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/SQLiteR1  
 
 
 ## App & View Communication
-https://github.com/Singularity-Coder/Blog/tree/master/java/SharedViewModel2  
-https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication  
-https://github.com/Singularity-Coder/Blog/tree/master/java/ReceiveDataFromOtherApps
+* https://github.com/Singularity-Coder/Blog/tree/master/java/SharedViewModel2  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/ReceiveDataFromOtherApps
 
 
 ## Firebase
 #### Cloud Messaging
-https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseCloudMessaging2  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseCloudMessaging2  
 #### Authentication
-https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseEmailAuth  
-https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseGoogleAuth  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseEmailAuth  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseGoogleAuth  
 #### Storage
-https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseStorage  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseStorage  
 #### Firestore
-https://github.com/Singularity-Coder/Blog/tree/master/java/FirestoreGroceryList  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/FirestoreGroceryList  
 
 
 ## Social Integration
-https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseGoogleAuth  
-https://github.com/Singularity-Coder/Blog/tree/master/java/GoogleAuth  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseGoogleAuth  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/GoogleAuth  
 
 
 ## Real-Time App Messaging
-https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseCloudMessaging2  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseCloudMessaging2  
 
 
 ## User Interface & User Experience
 Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI components, animations, transitions, canvas drawings, color palletes, custom styles, image scaling and transformation techniques, etc.  
-https://github.com/Singularity-Coder/Blog/tree/master/java/ActionBarMenus  
-https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidAlertDialogs    
-https://github.com/Singularity-Coder/Blog/tree/master/java/DateTimePickers  
-https://github.com/Singularity-Coder/Blog/tree/master/java/FrescoImageView  
-https://github.com/Singularity-Coder/Blog/tree/master/java/LottieAnimationsTutorial    
-https://github.com/Singularity-Coder/Blog/tree/master/java/MutliViewList  
-https://github.com/Singularity-Coder/Blog/tree/master/java/NavigationDrawer2  
-https://github.com/Singularity-Coder/Blog/tree/master/java/RecyclerViewCustomHeader  
-https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews  
-https://github.com/Singularity-Coder/Blog/tree/master/java/ShimaShimaShima  
-https://github.com/Singularity-Coder/Blog/tree/master/java/TabLayout  
-https://github.com/Singularity-Coder/Blog/tree/master/java/ParallaxTabs  
-https://github.com/Singularity-Coder/Blog/tree/master/java/LayoutParams  
-https://github.com/Singularity-Coder/Blog/tree/master/java/OnClickListsners4Styles  
-(Kotlin) https://github.com/Singularity-Coder/Blog/tree/master/kotlin/KotlinRecyclerView  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/ActionBarMenus  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidAlertDialogs    
+* https://github.com/Singularity-Coder/Blog/tree/master/java/DateTimePickers  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/FrescoImageView  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/LottieAnimationsTutorial    
+* https://github.com/Singularity-Coder/Blog/tree/master/java/MutliViewList  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/NavigationDrawer2  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RecyclerViewCustomHeader  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/ShimaShimaShima  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/TabLayout  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/ParallaxTabs  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/LayoutParams  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/OnClickListsners4Styles  
+* (Kotlin) https://github.com/Singularity-Coder/Blog/tree/master/kotlin/KotlinRecyclerView  
 
 
 ## Multi-Threading & Background Processing
-https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidBackgroundProcessing  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidBackgroundProcessing  
 
 
 ## Architecture Components
 #### Data Binding & View Binding
-https://github.com/Singularity-Coder/Blog/tree/master/java/BoundbyData  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/BoundbyData  
 #### View Model & Live Data
 #### Paging
 #### Work Manager
 #### Room
-https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
-https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming  
 
 
 ## Navigation Components
-https://github.com/Singularity-Coder/Blog/tree/master/java/NavigationComponents  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/NavigationComponents  
 
 
 ## Application Components
 #### Activities & Fragments
-https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication  
 #### Services
-https://github.com/Singularity-Coder/Blog/tree/master/java/ForegroundService  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/ForegroundService  
 #### Broadcast Receivers
 #### Content Providers
 
 
 ## Utilities
 #### Camera
-https://github.com/Singularity-Coder/Blog/tree/master/java/CameraXTest  
-https://github.com/Singularity-Coder/Blog/tree/master/java/CustCam  
-https://github.com/Singularity-Coder/Blog/tree/master/java/QRCodeScanner  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/CameraXTest  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/CustCam  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/QRCodeScanner  
 #### Other Utilities
-https://github.com/Singularity-Coder/Blog/tree/master/java/RecordScreenLikeCrazy  
-https://github.com/Singularity-Coder/Blog/tree/master/java/ShareImageText  
-https://github.com/Singularity-Coder/Blog/tree/master/java/ShoworHidePassword  
-https://github.com/Singularity-Coder/Blog/tree/master/java/Pagination  
-https://github.com/Singularity-Coder/Blog/tree/master/java/NotificationGenerator  
-https://github.com/Singularity-Coder/Blog/tree/master/java/TextToSpeechToTextApp  
-https://github.com/Singularity-Coder/Blog/tree/master/java/FilterRecyclerViewLocally  
-https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidSearch  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RecordScreenLikeCrazy  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/ShareImageText  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/ShoworHidePassword  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/Pagination  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/NotificationGenerator  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/TextToSpeechToTextApp  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/FilterRecyclerViewLocally  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidSearch  
 
 
 ## Machine Learning
-https://github.com/Singularity-Coder/Blog/tree/master/java/GoogVizAPI  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/GoogVizAPI  
 
 
 ## JSON Parsing
-https://github.com/Singularity-Coder/Blog/tree/master/java/OfflineJSON2  
-https://github.com/Singularity-Coder/Blog/tree/master/java/LocalJSON  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/OfflineJSON2  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/LocalJSON  
 
 
 ## Location Services
-https://github.com/Singularity-Coder/Blog/tree/master/java/PlacePicker  
-https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLatLong  
-https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLocationUpdates  
-https://github.com/Singularity-Coder/Android-Examples/tree/master/java/Geofencing  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/PlacePicker  
+* https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLatLong  
+* https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLocationUpdates  
+* https://github.com/Singularity-Coder/Android-Examples/tree/master/java/Geofencing  
 
 
 ## Protocol Buffers
 * (Kotlin) Construct a basic object using Protobuf. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/Protobuf1)  
 * (Kotlin) Deserialise data coming from an API with Protobuf. (Work in Progress) [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/Protobuf2)  
+
+
+## Testing
+#### Espresso Testing
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON  
+#### Unit Testing
+
+
+## CI/CD
+## Android Games
+## Android Performance Tools
+## Android App Ads
+## Payment Integration
+## Other
+* https://github.com/Singularity-Coder/Blog/tree/master/java/PHPMySQLConnection  
+
 
 ## Programming Paradigms in Android
 #### Reactive Programming
@@ -176,22 +193,6 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews
 #### Stack oriented Programming
 
 
-## Testing
-#### Espresso Testing
-https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
-https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON  
-#### Unit Testing
-
-
-## CI/CD
-## Android Games
-## Android Performance Tools
-## Android App Ads
-## Backend API Development
-https://github.com/Singularity-Coder/Blog/tree/master/java/PHPMySQLConnection  
-## Payment Integration
-
-
 ## SOLID Principles in Android
 #### Sigle Responsibility
 #### Open/Closed
@@ -212,43 +213,39 @@ https://github.com/Singularity-Coder/Blog/tree/master/java/PHPMySQLConnection
 
 
 ## Design Patterns in Android
-### Creational Patterns
-#### Abstract Factory Pattern
-#### Builder Pattern
-#### Factory Method Pattern
-#### Prototype Pattern
-#### Singleton Pattern
-### Structural Patterns
-#### Adapter Pattern
-#### Bridge Pattern
-#### Composite Pattern
-#### Decorator Pattern
-#### Facade Pattern
-#### Flyweight Pattern
-#### Proxy Pattern
-### Behavioural Patterns
-#### Chain of Responsibility Pattern
-#### Command Pattern
-#### Interpreter Pattern
-#### Iterator Pattern
-#### Mediator Pattern
-#### Memento Pattern
-#### Observer Pattern
-#### State Pattern
-#### Strategy Pattern
-#### Template Pattern
-#### Visitor Pattern
+#### Creational Patterns
+* Abstract Factory Pattern
+* Builder Pattern
+* Factory Method Pattern
+* Prototype Pattern
+* Singleton Pattern
+#### Structural Patterns
+* Adapter Pattern
+* Bridge Pattern
+* Composite Pattern
+* Decorator Pattern
+* Facade Pattern
+* Flyweight Pattern
+* Proxy Pattern
+#### Behavioural Patterns
+* Chain of Responsibility Pattern
+* Command Pattern
+* Interpreter Pattern
+* Iterator Pattern
+* Mediator Pattern
+* Memento Pattern
+* Observer Pattern
+* State Pattern
+* Strategy Pattern
+* Template Pattern
+* Visitor Pattern
 
 
 ## Architecture Patterns in Android
-#### MVVM Architecture (Model View ViewModel)
-https://github.com/Singularity-Coder/Blog/tree/master/java/MVVMArchitecture  
-#### MVP Architecture (Model View Presenter)
-https://github.com/Singularity-Coder/Blog/tree/master/java/MVPArchitecture  
-#### MVC Architecture (Model View Controller)
-https://github.com/Singularity-Coder/Blog/tree/master/java/MVCArchitecture  
-#### VIPER Architecture (View Interactor Presenter Entity Router)
-https://github.com/Singularity-Coder/Blog/tree/master/java/VIPERArchi1  
-#### MVI Architecture (Model View Intent)
-#### Clean Architecture
+* MVVM Architecture (Model View ViewModel) [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/MVVMArchitecture)
+* MVP Architecture (Model View Presenter) [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/MVPArchitecture)
+* MVC Architecture (Model View Controller) [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/MVCArchitecture)
+* VIPER Architecture (View Interactor Presenter Entity Router) [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/VIPERArchi1)
+* MVI Architecture (Model View Intent)
+* Clean Architecture
 
