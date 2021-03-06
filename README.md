@@ -148,7 +148,8 @@ https://github.com/Singularity-Coder/Android-Examples/tree/master/java/Geofencin
 
 
 ## Protocol Buffers
-Constructing a basic object using Protobuf. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/Protobuf1)  
+* (Kotlin) Construct a basic object using Protobuf. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/Protobuf1)  
+* (Kotlin) Deserialise data coming from an API with Protobuf. (Work in Progress) [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/Protobuf2)  
 
 ## Programming Paradigms in Android
 #### Reactive Programming

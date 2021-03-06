@@ -1,0 +1,72 @@
+// Protobuf Version
+syntax = "proto3";
+
+// Can Save
+package tutorial;
+
+// Generate the package name of the class after compilation - The folder name
+option java_package = "com.singularitycoder.protobuf2";
+// Generate the class name of the class "PhoneBookProtos" after compilation - The file that must be in the folder
+option java_outer_classname = "GithubUserProtos";
+
+// All fields are optional by default in proto 3. The "required" keyword in proto2 means that a value must be set (not null) is no longer valid in proto3. Those were like annotations or modifiers.
+message User {
+  // Every field has a data type and a field number which is not assigning a value. It is necessary for calculating the Tag when encoding.
+  string login = 1;
+  int32 id = 2;
+  string avatar_url = 3;
+  string html_url = 4;
+}
+
+// Entry point
+message GithubUsers {
+  // "repeated" keyword stores duplicated data (such as collections)
+  repeated User users = 1;
+}
+
+// Generated Proto files
+// app > build > generated > source > proto > debug > javalite > com.singularitycoder.protobuf2 > GithubUserProtos
+
+// Sample Json Structure
+//[
+//  {
+//      "login": "mojombo",
+//      "id": 1,
+//      "node_id": "MDQ6VXNlcjE=",
+//      "avatar_url": "https://avatars.githubusercontent.com/u/1?v=4",
+//      "gravatar_id": "",
+//      "url": "https://api.github.com/users/mojombo",
+//      "html_url": "https://github.com/mojombo",
+//      "followers_url": "https://api.github.com/users/mojombo/followers",
+//      "following_url": "https://api.github.com/users/mojombo/following{/other_user}",
+//      "gists_url": "https://api.github.com/users/mojombo/gists{/gist_id}",
+//      "starred_url": "https://api.github.com/users/mojombo/starred{/owner}{/repo}",
+//      "subscriptions_url": "https://api.github.com/users/mojombo/subscriptions",
+//      "organizations_url": "https://api.github.com/users/mojombo/orgs",
+//      "repos_url": "https://api.github.com/users/mojombo/repos",
+//      "events_url": "https://api.github.com/users/mojombo/events{/privacy}",
+//      "received_events_url": "https://api.github.com/users/mojombo/received_events",
+//      "type": "User",
+//      "site_admin": false
+//      },
+//  {
+//      "login": "defunkt",
+//      "id": 2,
+//      "node_id": "MDQ6VXNlcjI=",
+//      "avatar_url": "https://avatars.githubusercontent.com/u/2?v=4",
+//      "gravatar_id": "",
+//      "url": "https://api.github.com/users/defunkt",
+//      "html_url": "https://github.com/defunkt",
+//      "followers_url": "https://api.github.com/users/defunkt/followers",
+//      "following_url": "https://api.github.com/users/defunkt/following{/other_user}",
+//      "gists_url": "https://api.github.com/users/defunkt/gists{/gist_id}",
+//      "starred_url": "https://api.github.com/users/defunkt/starred{/owner}{/repo}",
+//      "subscriptions_url": "https://api.github.com/users/defunkt/subscriptions",
+//      "organizations_url": "https://api.github.com/users/defunkt/orgs",
+//      "repos_url": "https://api.github.com/users/defunkt/repos",
+//      "events_url": "https://api.github.com/users/defunkt/events{/privacy}",
+//      "received_events_url": "https://api.github.com/users/defunkt/received_events",
+//      "type": "User",
+//      "site_admin": false
+//      }
+//]
