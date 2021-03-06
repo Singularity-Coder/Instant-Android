@@ -1,0 +1,72 @@
+// Protobuf Version
+syntax = "proto3";
+
+// Can Save
+package tutorial;
+
+// Generate the package name of the class after compilation - The folder name
+option java_package = "com.singularitycoder.protobuf1";
+// Generate the class name of the class "PhoneBookProtos" after compilation - The file that must be in the folder
+option java_outer_classname = "AddressBookProtos";
+
+// All fields are optional by default in proto 3. The "required" keyword in proto2 means that a value must be set (not null) is no longer valid in proto3. Those were like annotations or modifiers.
+message Person {
+  // Every field has a data type and a field number which is not assigning a value. It is necessary for calculating the Tag when encoding.
+  string name = 1;
+  int32 id = 2;
+  string email = 3;
+
+  // Enumeration class "PhoneType" compiles into Person's internal enumeration class in Java environment
+  enum PhoneType {
+    MOBILE = 0;
+    HOME = 1;
+    WORK = 2;
+  }
+
+  // Class PhoneNumber compiles into Person's internal class in Java environment
+  message PhoneNumber {
+    string number = 1;
+    PhoneType type = 2;
+  }
+
+  // "repeated" keyword stores duplicated data (such as collections)
+  repeated PhoneNumber phones = 4;
+}
+
+// Entry point
+message AddressBook {
+  // "repeated" keyword stores duplicated data (such as collections)
+  repeated Person people = 1;
+}
+
+// Generated Proto files
+// app > build > generated > source > proto > debug > javalite > com.singularitycoder.protobuf1 > AddressBookProtos
+
+// Sample Json Structure
+// {
+//  "addressbook": [
+//    {
+//      "person": {
+//        "id": 1,
+//        "name": "Singularity Coder",
+//        "email": "hithesh@singularitycoder.com"
+//      }
+//    },
+//    {
+//      "phones": [
+//        {
+//          "phone": {
+//            "number": "+9999999999",
+//            "type": "HOME"
+//          }
+//        },
+//        {
+//          "phone": {
+//            "number": "+0000000000",
+//            "type": "MOBILE"
+//          }
+//        }
+//      ]
+//    }
+//  ]
+//}

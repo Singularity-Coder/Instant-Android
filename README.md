@@ -147,6 +147,9 @@ https://github.com/Singularity-Coder/Android-Examples/tree/master/java/GetLocati
 https://github.com/Singularity-Coder/Android-Examples/tree/master/java/Geofencing  
 
 
+## Protocol Buffers
+Constructing a basic object using Protobuf. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/Protobuf1)  
+
 ## Programming Paradigms in Android
 #### Reactive Programming
 https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews  

@@ -18,6 +18,7 @@ import com.singularitycoder.jetpackcompose2.ui.MainActivity.Companion.defaultRec
 import com.singularitycoder.jetpackcompose2.ui.MainActivity.Companion.recipe
 import com.singularitycoder.jetpackcompose2.ui.theme.JetpackCompose2Theme
 
+// https://www.raywenderlich.com/7032631-jetpack-compose-tutorial-for-android-getting-started
 class MainActivity : AppCompatActivity() {
     companion object {
         val recipe: Recipe = Recipe(imageResource = R.drawable.header, title = "Random Recipie", ingredients = listOf("Potato", "Cheese", "Cake", "Fruits", "Spinach", "Salt"))
