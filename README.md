@@ -18,6 +18,31 @@ A list of android samples on different topics!
 * (Kotlin) Basic ImageView and TextView in Jetpack Compose. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose1)
 * (Kotlin) Creating a list with custom view holder with material theming. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose2)
 
+
+## Application Components
+#### Activities & Fragments
+* https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication  
+#### Services
+* https://github.com/Singularity-Coder/Blog/tree/master/java/ForegroundService  
+#### Broadcast Receivers
+#### Content Providers
+
+
+## Architecture Components
+#### Data Binding & View Binding
+* https://github.com/Singularity-Coder/Blog/tree/master/java/BoundbyData  
+#### View Model & Live Data
+#### Paging
+#### Work Manager
+#### Room
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming  
+
+
+## Navigation Components
+* https://github.com/Singularity-Coder/Blog/tree/master/java/NavigationComponents  
+
+
 ## Android Networking
 #### Volley
 * https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworking  
@@ -91,30 +116,6 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 * https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidBackgroundProcessing  
 
 
-## Architecture Components
-#### Data Binding & View Binding
-* https://github.com/Singularity-Coder/Blog/tree/master/java/BoundbyData  
-#### View Model & Live Data
-#### Paging
-#### Work Manager
-#### Room
-* https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
-* https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming  
-
-
-## Navigation Components
-* https://github.com/Singularity-Coder/Blog/tree/master/java/NavigationComponents  
-
-
-## Application Components
-#### Activities & Fragments
-* https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication  
-#### Services
-* https://github.com/Singularity-Coder/Blog/tree/master/java/ForegroundService  
-#### Broadcast Receivers
-#### Content Providers
-
-
 ## Utilities
 #### Camera
 * https://github.com/Singularity-Coder/Blog/tree/master/java/CameraXTest  
@@ -152,6 +153,10 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 * (Kotlin) Deserialise data coming from an API with Protobuf. (Work in Progress) [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/Protobuf2)  
 
 
+## Java Native Interface (JNI)
+* (Kotlin) Fetching strings from native code to Kotlin code using JNI. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JavaNativeInterface1)  
+
+
 ## Testing
 #### Espresso Testing
 * https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
@@ -170,8 +175,8 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 
 ## Programming Paradigms in Android
 #### Reactive Programming
-https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews  
-https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews   
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews  
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews   
 #### Functional Programming
 #### Object-oriented Programming
 #### Declarative Programming

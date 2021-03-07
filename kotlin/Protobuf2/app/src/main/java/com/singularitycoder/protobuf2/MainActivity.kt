@@ -100,6 +100,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getUsersFromHttpUrlConnection() {
         try {
+//            val jsonStr = URL("https://api.github.com/users").readText()
             val url = URL("https://api.github.com/users")
             val connection = (url.openConnection() as HttpURLConnection).apply {
                 requestMethod = "GET"
