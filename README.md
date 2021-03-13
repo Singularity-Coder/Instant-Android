@@ -23,7 +23,7 @@ A list of android samples on different topics!
 #### Activities & Fragments
 * Fragment to Fragment communication through interfaces. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication)  
 #### Services
-* (Kotlin) Simple Foreground Service.
+* (Kotlin) Simple Foreground Service. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/SimpleForegroundService)
 * (Kotlin) Start foreground service and stop it on device reboot.
 * Foreground Service to control music playback. (Work in Progress) [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/ForegroundService)  
 #### Broadcast Receivers
