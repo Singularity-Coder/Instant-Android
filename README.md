@@ -21,10 +21,13 @@ A list of android samples on different topics!
 
 ## Application Components
 #### Activities & Fragments
-* https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication  
+* Fragment to Fragment communication through interfaces. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication)  
 #### Services
-* https://github.com/Singularity-Coder/Blog/tree/master/java/ForegroundService  
+* (Kotlin) Simple Foreground Service.
+* (Kotlin) Start foreground service and stop it on device reboot.
+* Foreground Service to control music playback. (Work in Progress) [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/ForegroundService)  
 #### Broadcast Receivers
+* (Kotlin) Send Broadcast on device reboot. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/RebootBroadcast)
 #### Content Providers
 
 

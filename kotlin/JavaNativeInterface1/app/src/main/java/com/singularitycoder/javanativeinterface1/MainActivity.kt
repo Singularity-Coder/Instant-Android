@@ -12,6 +12,8 @@ import com.singularitycoder.javanativeinterface1.databinding.ActivityMainBinding
 // LLDB: It is used by Android Studio to debug the native code present in your project.
 // NDK: Native Development Kit(NDK) is used to code in C and C++ i.e. native languages for Android.
 // CMake: It is an open-source system that manages the build process in an operating system and a compiler-independent manner.
+
+// Use APK Split or APK Bundle to reduce APK size
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -54,4 +56,9 @@ class MainActivity : AppCompatActivity() {
 
     // returning string array
     private external fun stringArrayFromJNI(): Array<String?>?
+
+    external fun add(x: Int, y: Int): Int
+    external fun sub(x: Int, y: Int): Int
+    external fun multiply(x: Int, y: Int): Int
+    external fun divide(x: Int, y: Int): Int
 }
