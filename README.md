@@ -28,6 +28,8 @@ A list of android samples on different topics!
 * Foreground Service to control music playback. (Work in Progress) [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/ForegroundService)  
 #### Broadcast Receivers
 * (Kotlin) Send Broadcast on device reboot. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/RebootBroadcast)
+* (Kotlin) Send Local Broadcast from a JobIntentService. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/LocalBroadcastKotlin)
+* Send Local Broadcast from a JobIntentService. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/java/LocalBroadcastJava)
 #### Content Providers
 
 
