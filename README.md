@@ -42,6 +42,12 @@ A list of android samples on different topics!
 * https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming  
 
 
+## App & View Communication
+* Sharing data between Fragments through Shared ViewModel. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/SharedViewModel2)
+* Sharing data between Fragments through Interfaces. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication)  
+* Receive data from other Apps through Intent Filters. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/ReceiveDataFromOtherApps)
+
+
 ## Navigation Components
 * https://github.com/Singularity-Coder/Blog/tree/master/java/NavigationComponents  
 
@@ -52,15 +58,15 @@ A list of android samples on different topics!
 * https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworkingGSON  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworkingPOST  
 #### Retrofit
+* (Kotlin) Simple API call using Retrofit Library with GSON converter - Part 1. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinRetrofit1)  
+* (Kotlin) Simple API call using Retrofit Library with GSON converter - Part 2. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinRetrofit2)  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitResponseObject  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitGETwithGSON  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/POSTRetrofitting  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/Retrofitting  
-* (Kotlin) https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinRetrofit1  
-* (Kotlin) https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinRetrofit2  
 #### HttpUrlConnection
-* https://github.com/Singularity-Coder/Blog/tree/master/java/HttpURLConnection2  
+* Fetch list of restaurants from Zomato API using HttpUrlConnection. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/HttpURLConnection2)  
 
 
 ## Android Data Storage
@@ -69,22 +75,16 @@ A list of android samples on different topics!
 * https://github.com/Singularity-Coder/Blog/tree/master/java/SQLiteR1  
 
 
-## App & View Communication
-* https://github.com/Singularity-Coder/Blog/tree/master/java/SharedViewModel2  
-* https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication  
-* https://github.com/Singularity-Coder/Blog/tree/master/java/ReceiveDataFromOtherApps
-
-
 ## Firebase
 #### Cloud Messaging
-* https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseCloudMessaging2  
+* Firebase Cloud Messaging (FCM) example. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseCloudMessaging2)  
 #### Authentication
-* https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseEmailAuth  
-* https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseGoogleAuth  
+* Login using Firebase Email Authentication. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseEmailAuth)  
+* Login using Firebase Google Authentication. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseGoogleAuth)  
 #### Storage
-* https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseStorage  
+* Store and retrieve files using Firebase Storage. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseStorage)  
 #### Firestore
-* https://github.com/Singularity-Coder/Blog/tree/master/java/FirestoreGroceryList  
+* Create a Grocery List App by performing CRUD operations. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/FirestoreGroceryList)  
 
 
 ## Social Integration
@@ -167,6 +167,11 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 #### Unit Testing
 
 
+## RxJava
+* https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews  
+* Perform click events using Jake Wharton's RxBinding Library. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews)  
+
+## Gradle
 ## CI/CD
 ## Android Games
 ## Android Performance Tools
@@ -177,9 +182,7 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 
 
 ## Programming Paradigms in Android
-#### Reactive Programming
-* https://github.com/Singularity-Coder/Blog/tree/master/java/RxJavaNews  
-* https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews   
+#### Reactive Programming 
 #### Functional Programming
 #### Object-oriented Programming
 #### Declarative Programming
