@@ -229,7 +229,7 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 ## Design Patterns in Android
 #### Creational Patterns
 * Abstract Factory Pattern
-* Builder Pattern
+* Builder Pattern [Kotlin Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinBuilderPattern1)
 * Factory Method Pattern
 * Prototype Pattern
 * Singleton Pattern
