@@ -32,6 +32,7 @@ A list of android samples on different topics!
 * (Kotlin) Send Local Broadcast from a JobIntentService. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/LocalBroadcastKotlin)
 * Send Local Broadcast from a JobIntentService. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/java/LocalBroadcastJava)
 #### Content Providers
+* (Kotlin) Read SMS through content resolvers. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/ReadSMS)
 
 
 ## Architecture Components
