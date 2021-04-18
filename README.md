@@ -77,6 +77,7 @@ A list of android samples on different topics!
 * https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/SQLiteR1  
+* (Kotlin) Realm No-SQL local database. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/RealmDB1)
 
 
 ## Firebase
