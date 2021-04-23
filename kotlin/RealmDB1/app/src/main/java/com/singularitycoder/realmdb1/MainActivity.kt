@@ -9,6 +9,13 @@ import com.singularitycoder.realmdb1.databinding.ItemUserBinding
 import io.realm.Realm
 import io.realm.RealmResults
 
+// https://stackoverflow.com/questions/34348329/delete-all-realm-objects-during-runtime
+// https://stackoverflow.com/questions/47219257/realm-vs-room-in-android
+// https://stackoverflow.com/questions/35813731/realm-android-how-can-i-convert-realmresults-to-array-of-objects
+// https://budioktaviyans.medium.com/android-realm-migration-schema-4fcef6c61e82
+// https://medium.com/anycode/android-automatic-migration-of-realm-schema-version-6d6e862ea8ff
+// https://stackoverflow.com/questions/31229226/realm-auto-increament-field-example
+// https://stackoverflow.com/questions/40174920/how-to-set-primary-key-auto-increment-in-realm-android
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -40,6 +47,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun createUser() {
         try {
+            val maxId = realm.where(User::class.java).max("id")
+            val nextId = if (maxId == 0) 1 else maxId?.toInt() ?: 0 + 1
+            val nextId2 = realm.where(User::class.java).max("id")?.toInt()?.plus(1) ?: 0
             val user = User().apply {
                 id = binding.etId.editText?.text.toString().toInt()
                 name = binding.etName.editText?.text.toString()
@@ -96,6 +106,7 @@ class MainActivity : AppCompatActivity() {
             }
             realm.executeTransaction { realm -> realm.copyToRealmOrUpdate(user) }
             clearFields()
+            readAllUsers()
             Log.d("MainActivity", "User Updated")
         } catch (e: Exception) {
             Log.e("MainActivity", e.message.toString())
@@ -108,6 +119,7 @@ class MainActivity : AppCompatActivity() {
             val user = realm.where(User::class.java).equalTo("id", id).findFirst()
             realm.executeTransaction { user?.deleteFromRealm() }
             clearFields()
+            readAllUsers()
             Log.d("MainActivity", "User Deleted")
         } catch (e: Exception) {
             Log.e("MainActivity", e.message.toString())
@@ -117,6 +129,7 @@ class MainActivity : AppCompatActivity() {
     private fun deleteAllUser() {
         try {
             val users: RealmResults<User> = realm.where(User::class.java).findAll()
+//            realm.executeTransactionAsync { users.deleteAllFromRealm() }
             realm.executeTransaction { users.deleteAllFromRealm() }
             binding.llAllUsers.removeAllViews()
             Log.d("MainActivity", "User Read")
