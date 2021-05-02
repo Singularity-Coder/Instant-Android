@@ -22,6 +22,7 @@ A list of android samples on different topics!
 ## Application Components
 #### Activities & Fragments
 * Fragment to Fragment communication through interfaces. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/InterfaceFragmentCommunication)  
+* (Kotlin) Activity and Fragment Lifecycles. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinActivityLifecycle)
 #### Services
 * (Kotlin) Simple Foreground Service. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/SimpleForegroundService)
 * (Kotlin) Start foreground service and stop it on device reboot.

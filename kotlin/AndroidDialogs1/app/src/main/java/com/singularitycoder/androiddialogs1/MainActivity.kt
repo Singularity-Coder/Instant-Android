@@ -29,14 +29,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpClickListeners() {
-        binding.btnInfoDialog.setOnClickListener { showInfoDialog() }
-        binding.btnDecisionDialog.setOnClickListener { showDecisionDialog() }
-        binding.btnProgrammaticViewDialog.setOnClickListener { showProgrammaticViewDialog() }
-        binding.btnCustomViewDialog.setOnClickListener { showCustomViewDialog() }
-        binding.btnCustomLayoutDialog.setOnClickListener { showCustomLayoutDialog() }
-        binding.btnListSelectionDialog.setOnClickListener { showListSelectionDialog() }
-        binding.btnSingleChoiceDialog.setOnClickListener { showSingleChoiceListDialog() }
-        binding.btnMultiChoiceDialog.setOnClickListener { showMultiChoiceListDialog() }
+        binding.apply {
+            btnInfoDialog.setOnClickListener { showInfoDialog() }
+            btnDecisionDialog.setOnClickListener { showDecisionDialog() }
+            btnProgrammaticViewDialog.setOnClickListener { showProgrammaticViewDialog() }
+            btnCustomViewDialog.setOnClickListener { showCustomViewDialog() }
+            btnCustomLayoutDialog.setOnClickListener { showCustomLayoutDialog() }
+            btnListSelectionDialog.setOnClickListener { showListSelectionDialog() }
+            btnSingleChoiceDialog.setOnClickListener { showSingleChoiceListDialog() }
+            btnMultiChoiceDialog.setOnClickListener { showMultiChoiceListDialog() }
+        }
     }
 
     private fun showMultiChoiceListDialog() {
