@@ -118,6 +118,7 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 * https://github.com/Singularity-Coder/Blog/tree/master/java/LayoutParams  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/OnClickListsners4Styles  
 * (Kotlin) https://github.com/Singularity-Coder/Blog/tree/master/kotlin/KotlinRecyclerView  
+* (Kotlin) https://github.com/Singularity-Coder/Blog/tree/master/kotlin/AndroidDialogs1  
 
 
 ## Multi-Threading & Background Processing
