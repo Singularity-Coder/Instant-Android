@@ -54,9 +54,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDfMultiChoiceListDialog() {
         // Bug: If u add message then u wont see list
-        val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
         val fragmentTransaction = supportFragmentManager.beginTransaction().apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
             if (null != previousFragment) remove(previousFragment)
             addToBackStack(null)
         }
@@ -71,9 +71,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDfSingleChoiceListDialog() {
         // Bug: If u add message then u wont see list
-        val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
         val fragmentTransaction = supportFragmentManager.beginTransaction().apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
             if (null != previousFragment) remove(previousFragment)
             addToBackStack(null)
         }
@@ -88,9 +88,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDfListSelectionDialog() {
         // Bug: If u add message then u wont see list
-        val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
         val fragmentTransaction = supportFragmentManager.beginTransaction().apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
             if (null != previousFragment) remove(previousFragment)
             addToBackStack(null)
         }
@@ -103,9 +103,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showDfCustomLayoutDialog() {
-        val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
         val fragmentTransaction = supportFragmentManager.beginTransaction().apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
             if (null != previousFragment) remove(previousFragment)
             addToBackStack(null)
         }
@@ -124,9 +124,9 @@ class MainActivity : AppCompatActivity() {
             etPassword.hint = "Type Password"
         }
 
-        val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
         val fragmentTransaction = supportFragmentManager.beginTransaction().apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
             if (null != previousFragment) remove(previousFragment)
             addToBackStack(null)
         }
@@ -171,9 +171,9 @@ class MainActivity : AppCompatActivity() {
             addView(etPassword)
         }
 
-        val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
         val fragmentTransaction = supportFragmentManager.beginTransaction().apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
             if (null != previousFragment) remove(previousFragment)
             addToBackStack(null)
         }
@@ -192,9 +192,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showDfDecisionDialog() {
-        val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
         val fragmentTransaction = supportFragmentManager.beginTransaction().apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
             if (null != previousFragment) remove(previousFragment)
             addToBackStack(null)
         }
@@ -212,9 +212,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showDfInfoDialog() {
-        val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
         val fragmentTransaction = supportFragmentManager.beginTransaction().apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
             if (null != previousFragment) remove(previousFragment)
             addToBackStack(null)
         }
@@ -227,7 +227,6 @@ class MainActivity : AppCompatActivity() {
             positiveAction = { binding.tvResult.text = "I read it!" }
         ).show(fragmentTransaction, TAG_CUSTOM_DIALOG_FRAGMENT)
     }
-
 
     private fun showMultiChoiceListDialog() {
         // Bug: If u add message then u wont see list

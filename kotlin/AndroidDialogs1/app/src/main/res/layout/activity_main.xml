@@ -98,6 +98,7 @@
             android:id="@+id/btn_df_info_dialog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:backgroundTint="@color/purple_500"
             android:text="DF Info Dialog"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
