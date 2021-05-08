@@ -42,21 +42,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showMultiChoiceListDialog() {
+        // Bug: If u add message then u wont see list
         showMultiPurposeDialog(
             context = this,
             title = "Select Options",
             multiSelectArray = DEFAULT_ARRAY,
             positiveBtnText = "DONE",
+            negativeBtnText = "CANCEL",
             positiveAction = { it: List<Any>? -> binding.tvResult.text = "${it} got selected!" }
         )
     }
 
     private fun showSingleChoiceListDialog() {
+        // Bug: If u add message then u wont see list
         showMultiPurposeDialog(
             context = this,
             title = "Select an option",
             singleSelectArray = DEFAULT_ARRAY,
             positiveBtnText = "DONE",
+            negativeBtnText = "CANCEL",
             positiveAction = { it: List<Any>? -> binding.tvResult.text = "${it?.get(0)} got selected!" },
         )
     }
@@ -91,13 +95,13 @@ class MainActivity : AppCompatActivity() {
 
         showMultiPurposeDialog(
             context = this,
-            icon = android.R.drawable.ic_dialog_info,
+            icon = R.drawable.ic_baseline_info_24,
             view = loginBinding.root,
             title = "Login",
             message = "Please login to access content!",
             positiveBtnText = "Login",
             negativeBtnText = "Cancel",
-            neutralButtonText = "Forgot Password",
+            neutralBtnText = "Forgot Password",
             positiveAction = { binding.tvResult.text = "Logged In successfully with name ${loginBinding.etEmail.editText?.text.toString()} and email ${loginBinding.etPassword.editText?.text.toString()}" },
             negativeAction = { binding.tvResult.text = "Ignored Login!" },
             neutralAction = { binding.tvResult.text = "Forgot Password!" }
@@ -133,13 +137,13 @@ class MainActivity : AppCompatActivity() {
 
         showMultiPurposeDialog(
             context = this,
-            icon = android.R.drawable.ic_dialog_info,
+            icon = R.drawable.ic_baseline_info_24,
             view = linearLayout,
             title = "Login",
             message = "Please login to access content!",
             positiveBtnText = "Login",
             negativeBtnText = "Cancel",
-            neutralButtonText = "Forgot Password",
+            neutralBtnText = "Forgot Password",
             positiveAction = { binding.tvResult.text = "Logged In successfully with name ${etEmail.text.toString()} and email ${etPassword.text.toString()}" },
             negativeAction = { binding.tvResult.text = "Ignored Login!" },
             neutralAction = { binding.tvResult.text = "Forgot Password!" }
@@ -150,7 +154,7 @@ class MainActivity : AppCompatActivity() {
         showMultiPurposeDialog(
             context = this,
             isCancelable = true,
-            icon = android.R.drawable.ic_dialog_info,
+            icon = R.drawable.ic_baseline_info_24,
             title = "Info",
             message = "Basic Info Dialog!",
             positiveBtnText = "OK",
@@ -161,12 +165,12 @@ class MainActivity : AppCompatActivity() {
     private fun showDecisionDialog() {
         showMultiPurposeDialog(
             context = this,
-            icon = android.R.drawable.ic_dialog_info,
+            icon = R.drawable.ic_baseline_info_24,
             title = "Decisions",
             message = "Basic Decision Dialog!",
             positiveBtnText = "Decision 1",
             negativeBtnText = "Decision 2",
-            neutralButtonText = "Decision 3",
+            neutralBtnText = "Decision 3",
             positiveAction = { binding.tvResult.text = "Decision 1 Clicked" },
             negativeAction = { binding.tvResult.text = "Decision 2 Clicked" },
             neutralAction = { binding.tvResult.text = "Decision 3 Clicked" }
@@ -187,7 +191,7 @@ class MainActivity : AppCompatActivity() {
         itemAction: ((selectedItem: String) -> Unit)? = null,
         positiveBtnText: String? = "NA",
         negativeBtnText: String? = "NA",
-        neutralButtonText: String? = "NA",
+        neutralBtnText: String? = "NA",
         positiveAction: ((selectedList: List<Any>?) -> Unit)? = null,
         negativeAction: (() -> Unit)? = null,
         neutralAction: (() -> Unit)? = null
@@ -199,24 +203,20 @@ class MainActivity : AppCompatActivity() {
             if ("NA" != message) setMessage(message)
             if ("NA" != positiveBtnText) setPositiveButton(positiveBtnText) { dialog, id -> if (null == positiveAction) dialog.cancel() else positiveAction.invoke(list) }
             if ("NA" != negativeBtnText) setNegativeButton(negativeBtnText) { dialog, id -> if (null == negativeAction) dialog.cancel() else negativeAction.invoke() }
-            if ("NA" != neutralButtonText) setNeutralButton(neutralButtonText) { dialog, id -> if (null == neutralAction) dialog.cancel() else neutralAction.invoke() }
+            if ("NA" != neutralBtnText) setNeutralButton(neutralBtnText) { dialog, id -> if (null == neutralAction) dialog.cancel() else neutralAction.invoke() }
             if (null != icon) setIcon(icon)
             if (null != view) setView(view)
             if (null != layout) setView(layout)
             if (null != listItemsArray) setItems(listItemsArray) { dialog, which ->
-                for (i in listItemsArray.indices) {
-                    if (which == i) itemAction?.invoke(listItemsArray?.get(i))
-                }
+                itemAction?.invoke(listItemsArray?.get(which))
             }
             if (null != singleSelectArray) setSingleChoiceItems(singleSelectArray, 0 /* default checked item in list */) { dialog, which ->
-                for (i in singleSelectArray.indices) {
-                    if (which == i) list.add(singleSelectArray?.get(i))
-                }
+                list.clear()
+                list.add(singleSelectArray?.get(which))
             }
             if (null != multiSelectArray) setMultiChoiceItems(multiSelectArray, null) { dialog, which, isChecked ->
-                for (i in multiSelectArray.indices) {
-                    if (which == i) list.add(multiSelectArray?.get(i))
-                }
+                if (isChecked) list.add(multiSelectArray?.get(which))
+                else list.remove(multiSelectArray?.get(which))
             }
             show()
         }
