@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             btnMultiChoiceDialog.setOnClickListener { showMultiChoiceListDialog() }
 
             btnDfInfoDialog.setOnClickListener { showDfInfoDialog() }
-            btnDfDecisionDialog.setOnClickListener { showDialogFragmentDecisionDialog() }
+            btnDfDecisionDialog.setOnClickListener { showDfDecisionDialog() }
             btnDfProgrammaticViewDialog.setOnClickListener { showDfProgrammaticViewDialog() }
             btnDfCustomViewDialog.setOnClickListener { showDfCustomViewDialog() }
             btnDfCustomLayoutDialog.setOnClickListener { showDfCustomLayoutDialog() }
@@ -191,7 +191,7 @@ class MainActivity : AppCompatActivity() {
         ).show(fragmentTransaction, TAG_CUSTOM_DIALOG_FRAGMENT)
     }
 
-    private fun showDialogFragmentDecisionDialog() {
+    private fun showDfDecisionDialog() {
         val previousFragment = supportFragmentManager.findFragmentByTag(TAG_CUSTOM_DIALOG_FRAGMENT)
         val fragmentTransaction = supportFragmentManager.beginTransaction().apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
