@@ -75,9 +75,10 @@ A list of android samples on different topics!
 
 
 ## Android Data Storage
-* https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
-* https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming  
-* https://github.com/Singularity-Coder/Blog/tree/master/java/SQLiteR1  
+* A simple Room ORM example without any views. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/SimpleRoomDB)  
+* Storing newsapi.org news API info into SQLite through Room ORM and Retrofit. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews)  
+* A simple todo list app using Room ORM. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/Rooming)  
+* Todo list app using raw SQLite. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/SQLiteR1)  
 * (Kotlin) Realm No-SQL local database. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/RealmDB1)
 
 

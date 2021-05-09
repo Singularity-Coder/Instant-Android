@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_create_todo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Todo"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_create_multiple_todos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Craete Multiple Todos"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_read_todo_by_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Read Todo By Id"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_read_all_todos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Read All Todos"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_read_all_completed_todos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Read All Completed Todos"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_update_todo_by_object"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Update Todo By Object"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_update_all_todos_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update All Todos State"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_update_all_completed_todo_names"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update All Completed Todo Names"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_delete_todo_by_object"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Delete Todo By Object"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_delete_all_todos_by_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete All Todos By State"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_delete_all_todos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete All Todos"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+</LinearLayout>
