@@ -1,0 +1,7 @@
+
+t	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(êÚôñùÿÿÿÿ
+t
+java:S1128
+"YRemove this unused import 'com.singularitycoder.abstractfactory1.MainActivity.loanTypes'.(Ê§Ý„ÿÿÿÿÿ
+A
+java:S1172"+Remove this unused method parameter "bank".(®·Ó–

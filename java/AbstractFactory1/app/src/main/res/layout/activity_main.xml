@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".MainActivity">
+
+    <AutoCompleteTextView
+        android:id="@+id/et_bank_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Bank Name"
+        android:inputType="textCapWords" />
+
+    <AutoCompleteTextView
+        android:id="@+id/et_loan_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Loan Name"
+        android:inputType="textCapWords" />
+
+    <EditText
+        android:id="@+id/et_interest_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Interest Rate"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/et_loan_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Loan Amount"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/et_loan_payment_duration"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Loan Payment Duration (Years)"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/btn_calculate_loan_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Calculate Loan Payment" />
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="LOAN"
+        android:textAlignment="center" />
+</LinearLayout>

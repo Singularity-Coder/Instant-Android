@@ -1,0 +1,21 @@
+
+Q
+java:S1444"/Make this "public static bankTypes" field final(¼“à›ıÿÿÿÿ8¾€á–/
+Q
+java:S1444"/Make this "public static loanTypes" field final(ÒªÓşşÿÿÿÿ8¶±€á–/
+O
+java:S1444"2Make this "public static factoryTypes" field final(×Úõ8·±€á–/
+w
+java:S1104"UMake bankTypes a static final constant or non-public and provide accessors if needed.(¼“à›ıÿÿÿÿ8Ä€á–/
+w
+java:S1104"UMake loanTypes a static final constant or non-public and provide accessors if needed.(ÒªÓşşÿÿÿÿ8Á±€á–/
+u
+java:S1104"XMake factoryTypes a static final constant or non-public and provide accessors if needed.(×Úõ8Á±€á–/
+l
+java:S1450 "VRemove the "binding" field and declare it as a local variable in the relevant methods.(¶ÃÊ
+?
+java:S2386"Make this member "protected".(¼“à›ıÿÿÿÿ8È€á–/
+?
+java:S2386"Make this member "protected".(ÒªÓşşÿÿÿÿ8Ç±€á–/
+:
+java:S2386"Make this member "protected".(×Úõ8Ç±€á–/
