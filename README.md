@@ -233,11 +233,11 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 
 ## Design Patterns in Android
 #### Creational Patterns
-* Abstract Factory Pattern [Link 1](https://github.com/Singularity-Coder/Blog/tree/master/java/AbstractFactory1)
-* Builder Pattern [Kotlin Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinBuilderPattern1)
-* Factory Method Pattern [Link 1](https://github.com/Singularity-Coder/Blog/tree/master/java/FactoryPattern1)  [Link 2](https://github.com/Singularity-Coder/Blog/tree/master/java/FactoryMethod2)
+* Abstract Factory Pattern [Link1](https://github.com/Singularity-Coder/Blog/tree/master/java/AbstractFactory1)
+* Builder Pattern [KotlinLink1](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/KotlinBuilderPattern1)
+* Factory Method Pattern [Link1](https://github.com/Singularity-Coder/Blog/tree/master/java/FactoryPattern1)  [Link 2](https://github.com/Singularity-Coder/Blog/tree/master/java/FactoryMethod2)
 * Prototype Pattern
-* Singleton Pattern
+* Singleton Pattern [Link1](https://github.com/Singularity-Coder/Blog/tree/master/java/SingletonPattern1)  
 #### Structural Patterns
 * Adapter Pattern
 * Bridge Pattern
