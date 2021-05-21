@@ -1,0 +1,11 @@
+
+I
+java:S1128	".Remove this unused import 'android.view.View'.(Ø½­äþÿÿÿÿ
+R
+java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úýÿÿÿÿ8‚÷¤ÿ˜/
+P
+java:S1128"3Remove this unused import 'java.io.BufferedReader'.(€é²Å8‚÷¤ÿ˜/
+G
+java:S1128"1Remove this unused import 'android.app.Activity'.(‡ÊÍÆ
+S
+java:S1128"6Remove this unused import 'java.io.InputStreamReader'.(ãˆÎÉ8ƒ÷¤ÿ˜/
