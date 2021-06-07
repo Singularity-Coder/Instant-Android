@@ -28,7 +28,7 @@ A list of android samples on different topics!
 * (Kotlin) Start foreground service and stop it on device reboot.
 * Foreground Service to control music playback. (Work in Progress) [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/ForegroundService)  
 #### Broadcast Receivers
-* (Kotlin) Listen to all system broadcasts. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/SystemBroadcasts)
+* (Kotlin) Listen to all system broadcasts. [Link](https://github.com/Singularity-Coder/Who-Is-Broadcasting)
 * (Kotlin) Send Broadcast on device reboot. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/RebootBroadcast)
 * (Kotlin) Send Local Broadcast from a JobIntentService. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/LocalBroadcastKotlin)
 * Send Local Broadcast from a JobIntentService. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/java/LocalBroadcastJava)
@@ -120,7 +120,7 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 * https://github.com/Singularity-Coder/Blog/tree/master/java/LayoutParams  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/OnClickListsners4Styles  
 * (Kotlin) https://github.com/Singularity-Coder/Blog/tree/master/kotlin/KotlinRecyclerView  
-* (Kotlin) https://github.com/Singularity-Coder/Blog/tree/master/kotlin/AndroidDialogs1  
+* (Kotlin) https://github.com/Singularity-Coder/Android-Dialogs  
 
 
 ## Multi-Threading & Background Processing
