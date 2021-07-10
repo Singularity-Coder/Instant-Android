@@ -1,0 +1,87 @@
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="true"
+    android:clipToPadding="true"
+    android:orientation="vertical"
+    app:cardCornerRadius="0dp"
+    app:cardElevation="0dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:id="@+id/iv_user_image"
+            android:layout_width="@dimen/dim_64"
+            android:layout_height="@dimen/dim_64"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/user_image"
+            android:scaleType="centerCrop"
+            android:src="@color/purple_100"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim_16"
+            app:cardBackgroundColor="@color/purple_100"
+            app:cardCornerRadius="@dimen/dim_4"
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_image"
+            app:layout_constraintTop_toTopOf="@+id/iv_user_image">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name"
+                android:paddingStart="6dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="6dp"
+                android:paddingBottom="2dp"
+                android:textAllCaps="true"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Overline"
+                android:textColor="@color/purple_700" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_repo_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dim_16"
+            android:layout_marginEnd="@dimen/dim_16"
+            android:ellipsize="end"
+            android:hint="@string/repo_name"
+            android:maxLines="2"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textColor="@android:color/black"
+            android:textColorHint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_user_image"
+            app:layout_constraintTop_toBottomOf="@+id/card_user_name" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_repo_description"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="@dimen/dim_16"
+            android:ellipsize="end"
+            android:hint="@string/repo_description"
+            android:maxLines="2"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+            android:textColor="@android:color/darker_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_repo_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_repo_name" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

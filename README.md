@@ -82,6 +82,10 @@ A list of android samples on different topics!
 * (Kotlin) Realm No-SQL local database. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/RealmDB1)
 
 
+## Dependency Injection
+* DI using Dagger Hilt, Retrofit, Room,etc. (Under Construction) [Link](https://github.com/Singularity-Coder/Blog/tree/master/kotlin/DaggerHilt1)  
+
+
 ## Firebase
 #### Cloud Messaging
 * Firebase Cloud Messaging (FCM) example. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/FirebaseCloudMessaging2)  

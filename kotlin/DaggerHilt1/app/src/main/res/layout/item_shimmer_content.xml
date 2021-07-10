@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:clipChildren="true"
+    android:clipToPadding="true"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dim_16"
+    android:paddingTop="@dimen/dim_16"
+    android:paddingEnd="@dimen/dim_16">
+
+    <ImageView
+        android:id="@+id/iv_user_image"
+        android:layout_width="@dimen/dim_64"
+        android:layout_height="@dimen/dim_64"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/user_image"
+        android:scaleType="centerCrop"
+        android:src="@color/shimmer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/tv_user_name"
+        android:layout_width="100dp"
+        android:layout_height="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/shimmer"
+        app:layout_constraintStart_toEndOf="@+id/iv_user_image"
+        app:layout_constraintTop_toTopOf="@+id/iv_user_image" />
+
+    <View
+        android:id="@+id/tv_repo_name"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dim_16"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/dim_64"
+        android:background="@color/shimmer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_user_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
+
+    <View
+        android:id="@+id/tv_repo_description"
+        android:layout_width="0dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="@dimen/dim_16"
+        android:layout_marginEnd="112dp"
+        android:background="@color/shimmer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tv_user_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_repo_name" />
+</androidx.constraintlayout.widget.ConstraintLayout>
