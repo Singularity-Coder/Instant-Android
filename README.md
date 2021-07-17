@@ -145,6 +145,7 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 * https://github.com/Singularity-Coder/Blog/tree/master/java/TextToSpeechToTextApp  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/FilterRecyclerViewLocally  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/AndroidSearch  
+* Perform recurring tasks with Timer, Handler, Observable Timer & Interval, etc.  [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/RecurringTasks1)
 
 
 ## Machine Learning

@@ -1,0 +1,2 @@
+rootProject.name = "RecurringTasks1"
+include ':app'
