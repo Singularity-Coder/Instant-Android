@@ -83,7 +83,7 @@ A list of android samples on different topics!
 
 
 ## Dependency Injection
-* DI using Dagger Hilt, Retrofit, Room,etc. (Under Construction) [Link](https://github.com/Singularity-Coder/Blog/tree/master/kotlin/DaggerHilt1)  
+* (Kotlin) DI using Dagger Hilt, Retrofit, Room,etc. (Under Construction) [Link](https://github.com/Singularity-Coder/Blog/tree/master/kotlin/DaggerHilt1)  
 
 
 ## Firebase
@@ -125,6 +125,8 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 * https://github.com/Singularity-Coder/Blog/tree/master/java/OnClickListsners4Styles  
 * (Kotlin) https://github.com/Singularity-Coder/Blog/tree/master/kotlin/KotlinRecyclerView  
 * (Kotlin) https://github.com/Singularity-Coder/Android-Dialogs  
+* (Kotlin) Modal Bottom Sheet [Link](https://github.com/Singularity-Coder/Blog/tree/master/kotlin/BottomSheetDialogFragment)
+* (Kotlin) Persistent Bottom Sheet [Link](https://github.com/Singularity-Coder/Blog/tree/master/kotlin/BottomSheet)  
 
 
 ## Multi-Threading & Background Processing

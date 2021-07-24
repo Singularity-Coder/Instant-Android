@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/purple_50"
+    android:clickable="true"
+    android:drawableStart="@drawable/ic_baseline_music_note_24"
+    android:drawablePadding="16dp"
+    android:drawableTint="@color/purple_500"
+    android:paddingStart="16dp"
+    android:paddingLeft="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    android:text="Item"
+    android:textColor="@color/purple_500" />
