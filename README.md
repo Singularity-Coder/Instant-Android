@@ -17,6 +17,7 @@ A list of android samples on different topics!
 ## Jetpack Compose
 * (Kotlin) Basic ImageView and TextView in Jetpack Compose. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose1)
 * (Kotlin) Creating a list with custom view holder with material theming. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose2)
+* (Kotlin) Creating a chat list and maintaining local view states using remember and mutableState. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/Composable1)
 
 
 ## Application Components
