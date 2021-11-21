@@ -18,6 +18,7 @@ A list of android samples on different topics!
 * (Kotlin) Basic ImageView and TextView in Jetpack Compose. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose1)
 * (Kotlin) Creating a list with custom view holder with material theming. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JetpackCompose2)
 * (Kotlin) Creating a chat list and maintaining local view states using remember and mutableState. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/Composable1)
+* (Kotlin) Compose permissions and Android Permissions. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/SelfPermissions) 
 
 
 ## Application Components
@@ -188,6 +189,8 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 * Perform click events using Jake Wharton's RxBinding Library. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/RxBindingViews)  
 
 ## Gradle
+* (Kotlin) BuildType and Build Flavors [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/BuildStuff)  
+
 ## CI/CD
 ## Android Games
 ## Android Performance Tools
