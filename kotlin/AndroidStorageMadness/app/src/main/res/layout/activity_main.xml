@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btn_select_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Image" />
+
+    <Button
+        android:id="@+id/btn_select_pdf"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select PDF" />
+
+    <Button
+        android:id="@+id/btn_take_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Take Image" />
+
+    <ImageView
+        android:id="@+id/iv_result_image"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@color/purple_200" />
+
+    <ImageView
+        android:id="@+id/iv_result_pdf"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/black"
+        android:src="@android:drawable/picture_frame" />
+</LinearLayout>
