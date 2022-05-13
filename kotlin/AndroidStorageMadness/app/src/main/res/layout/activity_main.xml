@@ -56,18 +56,29 @@
                 android:layout_height="16dp" />
 
             <Button
-                android:id="@+id/btn_select_image"
+                android:id="@+id/btnSelectImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Select Image"
                 android:textAllCaps="false" />
 
             <Button
-                android:id="@+id/btn_select_pdf"
+                android:id="@+id/btnSelectVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Video"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnSelectPdf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Select PDF"
                 android:textAllCaps="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
 
             <Button
                 android:id="@+id/btnTakePhoto"

@@ -29,14 +29,6 @@ import java.io.File
 // PDF Picker
 // View PDF Offline
 
-// Image Picker
-// Take Photo
-// View Image Offline
-
-// Video Picker
-// Take Video
-// View Video Offline
-
 // View PDF Online
 // View Image Online
 // View Video Online
@@ -150,6 +142,19 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private val videoSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
+        if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
+        val data = it.data ?: return@registerForActivityResult
+        val file = readFileFromExternalDbAndWriteFileToInternalDb(data.data ?: Uri.EMPTY) ?: return@registerForActivityResult
+
+        println("originalVideoUri: ${data.data}")
+
+        showFile(
+            type = FileType.VIDEO.value,
+            path = file.absolutePath
+        )
+    }
+
     private val pdfSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
         if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
         val data = it.data ?: return@registerForActivityResult
@@ -255,6 +260,14 @@ class MainActivity : AppCompatActivity() {
                 if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
                 imageSelectionResult.launch(intent)
             }
+            btnSelectVideo.setOnClickListener {
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    type = MimeType.VIDEO_ALL.value
+                }
+                if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
+                videoSelectionResult.launch(intent)
+            }
             btnSelectPdf.setOnClickListener {
                 val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
                     addCategory(Intent.CATEGORY_OPENABLE)
@@ -263,6 +276,9 @@ class MainActivity : AppCompatActivity() {
                 if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
                 pdfSelectionResult.launch(intent)
             }
+        }
+
+        binding.apply {
             btnTakePhoto.setOnClickListener {
                 if (!isCameraPresentOnDevice()) return@setOnClickListener
                 // https://developer.android.com/reference/android/provider/MediaStore#ACTION_IMAGE_CAPTURE
