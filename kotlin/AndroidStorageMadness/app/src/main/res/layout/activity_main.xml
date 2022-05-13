@@ -1,40 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="24dp"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_select_image"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select Image" />
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btn_select_pdf"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select PDF" />
+        <LinearLayout
+            android:id="@+id/llFileStuff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-    <Button
-        android:id="@+id/btn_take_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Take Image" />
+            <Button
+                android:id="@+id/btnSelectAnyFilesManageStorage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Any File - Manage Storage"
+                android:textAllCaps="false" />
 
-    <ImageView
-        android:id="@+id/iv_result_image"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:src="@color/purple_200" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
 
-    <ImageView
-        android:id="@+id/iv_result_pdf"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/black"
-        android:src="@android:drawable/picture_frame" />
-</LinearLayout>
+            <Button
+                android:id="@+id/btnSelectImageExtStorage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Image - Ext Storage"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnSelectVideoExtStorage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Video - Ext Storage"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnSelectPdfExtStorage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Pdf - Ext Storage"
+                android:textAllCaps="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <Button
+                android:id="@+id/btn_select_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Image"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_select_pdf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select PDF"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnTakePhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Take Photo"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnTakeVideo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Take Video"
+                android:textAllCaps="false" />
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,45 +1,63 @@
 package com.example.androidstoragemadness
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.ContentUris
 import android.content.Context
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.os.storage.StorageManager
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.webkit.MimeTypeMap
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.content.getSystemService
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
+import java.util.*
+import kotlin.math.min
 
-// CREATE, READ, UPDATE, DELETE, COPY, MOVE, RENAME, ENCRYPT, ZIP, COMPRESS file or directory
+const val FILE_PROVIDER_AUTHORITY = BuildConfig.APPLICATION_ID + ".fileprovider"
 
-fun createFile() {
-    val file = File("new_file.txt")
+val allowedImageFormats = arrayOf(
+    MimeType.IMAGE_JPG.value,
+    MimeType.IMAGE_JPEG.value,
+    MimeType.IMAGE_JPG.value
+)
 
-    // u need write permission for this
-    file.createNewFile()
-    println("File path: ${file.absolutePath}")
-}
+val allowedVideoFormats = arrayOf(
+    MimeType.VIDEO_MP4.value,
+    MimeType.VIDEO_MOV.value,
+    MimeType.VIDEO_WMV.value,
+    MimeType.VIDEO_AVI.value,
+    MimeType.VIDEO_MKV.value,
+)
 
 // https://stackoverflow.com/questions/60360368/android-11-r-file-path-access
 fun Context.makeFileCopyInCacheDir(contentUri: Uri): String? {
     try {
         val filePathColumn = arrayOf(
-            //Base File
+            // Base File
             MediaStore.Files.FileColumns._ID,
             MediaStore.Files.FileColumns.TITLE,
             MediaStore.Files.FileColumns.DATA,
             MediaStore.Files.FileColumns.SIZE,
             MediaStore.Files.FileColumns.DATE_ADDED,
             MediaStore.Files.FileColumns.DISPLAY_NAME,
-            //Normal File
+            // Normal File
             MediaStore.MediaColumns.DATA,
             MediaStore.MediaColumns.MIME_TYPE,
             MediaStore.MediaColumns.DISPLAY_NAME
         )
-        //val contentUri = FileProvider.getUriForFile(context, "${BuildConfig.APPLICATION_ID}.provider", File(mediaUrl))
+        // val contentUri = FileProvider.getUriForFile(context, "${BuildConfig.APPLICATION_ID}.provider", File(mediaUrl))
         val returnCursor = contentUri.let { contentResolver.query(it, filePathColumn, null, null, null) }
         if (returnCursor != null) {
             returnCursor.moveToFirst()
@@ -52,8 +70,8 @@ fun Context.makeFileCopyInCacheDir(contentUri: Uri): String? {
             val maxBufferSize = 1 * 1024 * 1024
             val bytesAvailable = inputStream!!.available()
 
-            //int bufferSize = 1024;
-            val bufferSize = Math.min(bytesAvailable, maxBufferSize)
+            // int bufferSize = 1024;
+            val bufferSize = min(bytesAvailable, maxBufferSize)
             val buffers = ByteArray(bufferSize)
             while (inputStream.read(buffers).also { read = it } != -1) {
                 outputStream.write(buffers, 0, read)
@@ -67,28 +85,152 @@ fun Context.makeFileCopyInCacheDir(contentUri: Uri): String? {
     } catch (ex: Exception) {
         println("Exception: ${ex.message}")
     }
-    return contentUri.let { RealPathUtil.getRealPathFromURI(this, it).toString() }
+    return getFilePathFromUriApi19AndAbove(contentUri).toString()
+}
+
+/**
+ * Get a file path from a Uri. This will get the the path for Storage Access
+ * Framework Documents, as well as the _data field for the MediaStore and
+ * other file-based ContentProviders.
+ * @author paulburke - https://gist.github.com/tatocaster/32aad15f6e0c50311626
+ */
+@SuppressLint("NewApi")
+private fun Context.getFilePathFromUriApi19AndAbove(fileUri: Uri): String? {
+    // DocumentProvider
+    when {
+        DocumentsContract.isDocumentUri(this, fileUri) -> {
+            // ExternalStorageProvider
+            when (fileUri.authority) {
+                UriAuthority.EXTERNAL_STORAGE_DOC.value -> {
+                    val docId = DocumentsContract.getDocumentId(fileUri)
+                    val split = docId.split(":").toTypedArray()
+                    val type = split[0]
+                    if ("primary".equals(type, ignoreCase = true)) {
+                        return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
+                    }
+                    // TODO handle non-primary volumes
+                }
+                UriAuthority.DOWNLOADS_DOC.value -> {
+                    val id = DocumentsContract.getDocumentId(fileUri)
+                    val contentUri: Uri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"),
+                        java.lang.Long.valueOf(id)
+                    )
+                    return getFilePathFromUri(uri = contentUri, selection = null, selectionArgs = null)
+                }
+                UriAuthority.MEDIA_DOC.value -> {
+                    val docId = DocumentsContract.getDocumentId(fileUri)
+                    val split = docId.split(":").toTypedArray()
+                    val type = split[0]
+                    val contentUri = when (type) {
+                        "image" -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                        "video" -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                        "audio" -> MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                        else -> Uri.EMPTY
+                    }
+                    val selection = "_id=?"
+                    val selectionArgs = arrayOf(split[1])
+                    return getFilePathFromUri(uri = contentUri, selection = selection, selectionArgs = selectionArgs)
+                }
+            }
+        }
+        "content".equals(fileUri.scheme, ignoreCase = true) -> {
+            // Return the remote address
+            return when (fileUri.authority) {
+                UriAuthority.GOOGLE_PHOTOS.value -> fileUri.lastPathSegment
+                else -> getFilePathFromUri(uri = fileUri, selection = null, selectionArgs = null)
+            }
+        }
+        "file".equals(fileUri.scheme, ignoreCase = true) -> return fileUri.path
+    }
+    return null
+}
+
+/**
+ * Get the value of the data column for this Uri. This is useful for
+ * MediaStore Uris, and other file-based ContentProviders.
+ *
+ * @param uri           The Uri to query.
+ * @param selection     (Optional) Filter used in the query.
+ * @param selectionArgs (Optional) Selection arguments used in the query.
+ * @return The value of the _data column, which is typically a file path.
+ */
+fun Context.getFilePathFromUri(
+    uri: Uri,
+    selection: String? = null,
+    selectionArgs: Array<String>? = null
+): String? {
+    // Get Column Data
+    if (uri == Uri.EMPTY) return null
+    var cursor: Cursor? = null
+    val column = "_data"
+    val projection = arrayOf(column)
+    try {
+        cursor = contentResolver.query(
+            uri,
+            projection,
+            selection,
+            selectionArgs,
+            null
+        )
+        if (cursor != null && cursor.moveToFirst()) {
+            val columnIndex: Int = cursor.getColumnIndexOrThrow(column)
+            return cursor.getString(columnIndex)
+        }
+    } finally {
+        cursor?.close()
+        println("Cursor closed after  ")
+    }
+    return null
+}
+
+/**
+ * Check whether the image is whatsapp image
+ * @return true if whatsapp image, else false
+ */
+fun isWhatsappImage(uriAuthority: String): Boolean {
+    return UriAuthority.WHATSAPP.value == uriAuthority
+}
+
+fun createFile() {
+    val file = File("new_file.txt")
+
+    // u need write permission for this
+    file.createNewFile()
+    println("File path: ${file.absolutePath}")
 }
 
 // https://stackoverflow.com/questions/7769806/convert-bitmap-to-file
 fun Bitmap.toFile(fileName: String, context: Context): File {
-    //create a file to write bitmap data
+    // create a file to write bitmap data
     val file = File(context.filesDir, fileName)
     file.createNewFile()
 
-    //Convert bitmap to byte array
+    // Convert bitmap to byte array
     val bitmap: Bitmap = this
     val bos = ByteArrayOutputStream()
     bitmap.compress(Bitmap.CompressFormat.PNG, 100 /*ignored for PNG*/, bos)
     val bitmapdata: ByteArray = bos.toByteArray()
 
-    //write the bytes in file
+    // write the bytes in file
     val fos = FileOutputStream(file)
     fos.write(bitmapdata)
     fos.flush()
     fos.close()
 
     return file
+}
+
+fun getFileName(path: String): String {
+    val uriParts = path.split(File.separator.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+    if (uriParts.isEmpty()) return ""
+    return uriParts[uriParts.lastIndex]
+}
+
+fun Context.getFileExtension(uri: Uri?): String? {
+    val contentResolver = contentResolver
+    val mimeType = MimeTypeMap.getSingleton()
+    return mimeType.getExtensionFromMimeType(contentResolver.getType(uri!!))
 }
 
 fun Context.hasCameraPermission(): Boolean {
@@ -106,48 +248,202 @@ val oldStorageAndCameraPermissions = arrayOf(
 
 val cameraPermission = arrayOf(Manifest.permission.CAMERA)
 
-fun getFilePathFromUri(
-    context: Context,
-    uri: Uri?,
-    selection: String?,
-    selectionArgs: Array<String>?
-): String? {
-    var cursor: Cursor? = null
-    val column = "_data"
-    val projection = arrayOf(column)
+// Get path from Uri
+// content resolver instance used for firing a query inside the internal sqlite database that contains all file info from android os
+// projection is the set of columns u want to fetch from sqlite db
+// query returns Cursor instance which is an interface which holds the data returned by the query
+// So cursor holds the data and in this case it holds a single file
+// cursor.moveToFirst() moves the cursor on first row, in this case only 1 row. with the cursor u can get each column data
+// The 2 columns here are OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE
+// filesDir is the internal storage path
+/** Copy file from external to internal storage */
+fun Context.readFileFromExternalDbAndWriteFileToInternalDb(inputFileUri: Uri): File? {
+    // Get file name and size
+    val projection = arrayOf(OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE)
+    val cursor = contentResolver?.query(inputFileUri, projection, null, null, null)?.also {
+        it.moveToFirst() // We are in first row of the table now
+    }
+    val inputFileNamePositionInRow = cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+    val inputFileSizePositionInRow = cursor?.getColumnIndex(OpenableColumns.SIZE)
+    val inputFileName = cursor?.getString(inputFileNamePositionInRow ?: 0)
+    val inputFileSize = cursor?.getLong(inputFileSizePositionInRow ?: 0)
+
+    println(
+        """
+            Input File name: $inputFileName
+            Input File size: $inputFileSize
+        """.trimIndent()
+    )
+
+    // Copy file to internal storage
     try {
-        cursor = uri?.let {
-            context.contentResolver.query(
-                it,
-                projection,
-                selection,
-                selectionArgs,
-                null
-            )
-        }
-        if (cursor != null && cursor.moveToFirst()) {
-            val columnIndex: Int = cursor.getColumnIndexOrThrow(column)
-            return cursor.getString(columnIndex)
-        }
-    } finally {
-        cursor?.close()
-        println("Cursor closed after  ")
+        val outputFile = File(filesDir?.absolutePath + File.separator + inputFileName) // Place where our input file is copied
+        val fileOutputStream = FileOutputStream(outputFile)
+        val fileInputStream = contentResolver?.openInputStream(inputFileUri)
+        fileOutputStream.write(fileInputStream?.readBytes())
+        fileInputStream?.close()
+        fileOutputStream.flush()
+        fileOutputStream.close()
+        return outputFile
+    } catch (e: IOException) {
+        println(e.message)
     }
     return null
 }
 
-
-fun getFileName(path: String): String {
-    val uriParts = path.split(File.separator.toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-    if (uriParts.isEmpty()) return ""
-    return uriParts[uriParts.size - 1]
+/** Checks if a volume containing external storage is available for read and write. */
+fun isExternalStorageWritable(): Boolean {
+    return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
 }
 
-fun getFileSizeInBytes(filePath: String?): Int {
-    filePath ?: return 0
-    val file = File(filePath)
-    if (file.exists()) {
-        return file.length().toInt() // in bytes
+/** Checks if a volume containing external storage is available to at least read. */
+fun isExternalStorageReadable(): Boolean {
+    return Environment.getExternalStorageState() in setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
+}
+
+fun Context.isCameraPresentOnDevice(): Boolean {
+    return packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
+}
+
+/**
+ * One MB = 1024L * 1024L
+ * One GB = 1024L * 1024L * 1024L
+ * One TB = 1024L * 1024L * 1024L * 1024L
+ * */
+@RequiresApi(Build.VERSION_CODES.O)
+fun Context.isRequiredSpaceAvailableOnDeviceStorage(
+    storageType: Int = 0,
+    spaceNeeded: Long = 1024L * 1024L * 15L // App needs 15 MB within storage.
+): Boolean {
+    val internalStorage = filesDir
+    val externalStorage = getExternalFilesDir("") ?: File("")
+    val storageManager = applicationContext.getSystemService<StorageManager>() ?: return false
+    val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(if (storageType == 0) internalStorage else externalStorage)
+    val availableBytes: Long = storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
+    return availableBytes >= spaceNeeded
+}
+
+fun File.sizeInBytes(): Int {
+    if (!this.exists()) return 0
+    return this.length().toInt()
+}
+
+fun File.sizeInMB(): Double {
+    if (!this.exists()) return 0.0
+    return this.sizeInBytes().div(1024.0 * 1024.0)
+}
+
+fun File.extension(): String {
+    if (!this.exists()) return ""
+    return this.absolutePath.substringAfterLast(delimiter = ".").lowercase().trim()
+}
+
+fun File.nameWithExtension(): String {
+    if (!this.exists()) return ""
+    return this.absolutePath.substringAfterLast(delimiter = "/")
+}
+
+fun File.name(): String {
+    if (!this.exists()) return ""
+    return this.nameWithExtension().substringBeforeLast(".")
+}
+
+fun File.customName(prefix: String = "my_file"): String {
+    if (!this.exists()) return ""
+    return prefix.sanitize() + "_" + this.name().sanitize()
+}
+
+fun File?.customPath(directory: String?, fileName: String?): String {
+    var path = this?.absolutePath
+
+    if (directory != null) {
+        path += File.separator + directory
     }
-    return 0
+
+    if (fileName != null) {
+        path += File.separator + fileName
+    }
+
+    return path ?: ""
 }
+
+/** /data/user/0/com.example.androidstoragemadness/files */
+fun Context.getInternalStoragePathOrFile(
+    directory: String? = null,
+    fileName: String? = null
+): File = File(filesDir.customPath(directory, fileName))
+
+/** /storage/emulated/0/Android/data/com.example.androidstoragemadness/files */
+fun Context.getExternalStoragePathOrFile(
+    rootDir: String = "",
+    subDir: String? = null,
+    fileName: String? = null
+): File = File(getExternalFilesDir(rootDir).customPath(subDir, fileName))
+
+/**
+ * The idea is to replace all special characters with underscores
+ * 48 to 57 are ASCII characters of numbers from 0 to 1
+ * 97 to 122 are ASCII characters of lowercase alphabets from a to z
+ * https://www.w3schools.com/charsets/ref_html_ascii.asp
+ * */
+fun String?.sanitize(): String {
+    if (this.isNullOrBlank()) return ""
+    var sanitizedString = ""
+    val range0to9 = '0'.code..'9'.code
+    val rangeLowerCaseAtoZ = 'a'.code..'z'.code
+    this.forEachIndexed { index: Int, char: Char ->
+        if (char.code !in range0to9 && char.code !in rangeLowerCaseAtoZ) {
+            if (sanitizedString.lastOrNull() != '_' && this.lastIndex != index) {
+                sanitizedString += "_"
+            }
+        } else {
+            sanitizedString += char
+        }
+    }
+    return sanitizedString
+}
+
+private enum class UriAuthority(val value: String) {
+    EXTERNAL_STORAGE_DOC("com.android.externalstorage.documents"), // ExternalStorageProvider
+    DOWNLOADS_DOC("com.android.providers.downloads.documents"), // Downloads Provider
+    MEDIA_DOC("com.android.providers.media.documents"), // Media Provider
+    GOOGLE_PHOTOS("com.google.android.apps.photos.content"),
+    WHATSAPP("com.whatsapp.provider.media"),
+    GOOGLE_DRIVE("com.google.android.apps.docs.storage"),
+    GOOGLE_DRIVE_LEGACY("com.google.android.apps.docs.storage.legacy"),
+}
+
+enum class FileType(val value: String) {
+    OTHER(value = "OTHER"),
+    IMAGE(value = "IMAGE"),
+    PDF(value = "PDF"),
+    VIDEO(value = "VIDEO")
+}
+
+// https://www.adobe.com/creativecloud/video/discover/best-video-format.html
+enum class MimeType(val value: String) {
+    ALL("*/*"),
+
+    FILE_ALL("file/*"),
+    FILE_PDF("application/pdf"),
+
+    TEXT_ALL("text/*"),
+    TEXT_PLAIN("text/plain"),
+    TEXT_HTML("text/html"),
+
+    IMAGE_ALL("image/*"),
+    IMAGE_PNG("image/png"),
+    IMAGE_JPG("image/jpg"),
+    IMAGE_JPEG("image/jpeg"),
+
+    VIDEO_ALL("video/*"),
+    VIDEO_MP4("video/mp4"),
+    VIDEO_MOV("video/mov"),
+    VIDEO_WMV("video/wmv"),
+    VIDEO_AVI("video/avi"),
+    VIDEO_MKV("video/mkv"),
+}
+
+val extDir = File(Environment.getExternalStorageDirectory(), "take_photo.jpg")
+val extPublicDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+val dataDir = File(Environment.getDataDirectory(), "take_images")

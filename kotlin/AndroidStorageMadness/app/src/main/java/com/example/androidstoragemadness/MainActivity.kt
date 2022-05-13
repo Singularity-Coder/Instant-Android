@@ -2,27 +2,53 @@ package com.example.androidstoragemadness
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
-import android.webkit.MimeTypeMap
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.example.androidstoragemadness.databinding.ActivityMainBinding
 import java.io.File
 
-// Internal storage
-// External storage
-// Assets
+// MANAGE_EXTERNAL_STORAGE - https://www.youtube.com/watch?v=0313bhp-8uA
+// Google Play Store rejects this if u are not one of these apps - https://support.google.com/googleplay/android-developer/answer/10467955?hl=en#zippy=%2Cpermitted-uses-of-the-all-files-access-permission
+
+// CREATE, READ, UPDATE, DELETE, COPY, MOVE, RENAME, ENCRYPT, ZIP, COMPRESS file or directory
+// CRUD Internal storage
+// CRUD External storage
+// CRUD Assets
+
+// File Picker - All files
+// PDF Picker
+// View PDF Offline
+
+// Image Picker
+// Take Photo
+// View Image Offline
+
+// Video Picker
+// Take Video
+// View Video Offline
+
+// View PDF Online
+// View Image Online
+// View Video Online
+
+// Download PDF
+// Download Image
+// Download Video
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var takenPhotoFile: File
+    private lateinit var takenVideoFile: File
     private lateinit var binding: ActivityMainBinding
 
     private val permissionsResult = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions: Map<String, @JvmSuppressWildcards Boolean>? ->
@@ -30,8 +56,7 @@ class MainActivity : AppCompatActivity() {
             val permission = it.key
             val isGranted = it.value
             when {
-                isGranted -> {
-                }
+                isGranted -> Unit
                 ActivityCompat.shouldShowRequestPermissionRationale(this, permission) -> {
                     // Permission denied but not permanently, tell user why you need it. Ideally provide a button to request it again and another to dismiss
                 }
@@ -42,66 +67,136 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /** Needs READ_EXTERNAL_STORAGE permission */
+    private val externalStorageVideoSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
+        if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
+        val data = it.data ?: return@registerForActivityResult
+        data.clipData ?: return@registerForActivityResult
+        val uriList = ArrayList<Uri>()
+        for (i in 0 until data.clipData!!.itemCount) {
+            val uri = data.clipData!!.getItemAt(i).uri
+            uriList.add(uri)
+        }
+        val thumbnailVideoUri = data.data
+        val originalVideoUri = uriList.first()
+        val file = File(getFilePathFromUri(uri = originalVideoUri) ?: "")
+
+        println(
+            """
+            originalVideoUri: $originalVideoUri
+            thumbnailVideoUri: $thumbnailVideoUri
+        """.trimIndent()
+        )
+
+        showFile(
+            type = FileType.VIDEO.value,
+            path = file.absolutePath
+        )
+    }
+
+    /** Needs READ_EXTERNAL_STORAGE permission */
+    private val externalStorageImageSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
+        if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
+        val data = it.data ?: return@registerForActivityResult
+        data.clipData ?: return@registerForActivityResult
+        val uriList = ArrayList<Uri>()
+        for (i in 0 until data.clipData!!.itemCount) {
+            val uri = data.clipData!!.getItemAt(i).uri
+            uriList.add(uri)
+        }
+        val thumbnailImageUri = data.data
+        val originalImageUri = uriList.first()
+        val file = File(getFilePathFromUri(uri = originalImageUri) ?: "")
+
+        println(
+            """
+            originalImageUri: $originalImageUri
+            thumbnailImageUri: $thumbnailImageUri
+        """.trimIndent()
+        )
+
+        showFile(
+            type = FileType.IMAGE.value,
+            path = file.absolutePath
+        )
+    }
+
+    private val externalStoragePdfSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
+        if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
+        val data = it.data ?: return@registerForActivityResult
+        val uri = data.data ?: Uri.EMPTY
+        contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) // Permission needed if you want to retain access even after reboot
+        val path = makeFileCopyInCacheDir(uri)
+        val file = File(path)
+
+        println("originalPdfUri: ${data.data}")
+
+        showFile(
+            type = FileType.PDF.value,
+            path = file.absolutePath
+        )
+    }
+
     private val imageSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
         if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
         val data = it.data ?: return@registerForActivityResult
-        val uri = if (null != data.clipData) {
-            try {
-                data.clipData?.getItemAt(0)?.uri
-            } catch (e: Exception) {
-                Uri.EMPTY
-            }
-        } else {
-            data.data
-        }
-        val file = File(getFilePathFromUri(this, uri, null, null) ?: "")
-        val fileName = getFileName(file.absolutePath)
-        println(
-            """
-            Uri: ${data.data}
-            SELECT_IMAGE path: ${file.absolutePath}
-        """.trimIndent()
+        val file = readFileFromExternalDbAndWriteFileToInternalDb(data.data ?: Uri.EMPTY) ?: return@registerForActivityResult
+
+        println("originalImageUri: ${data.data}")
+
+        showFile(
+            type = FileType.IMAGE.value,
+            path = file.absolutePath
         )
-        showFile(file = file)
     }
 
     private val pdfSelectionResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
         if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
         val data = it.data ?: return@registerForActivityResult
-        //Permission needed if you want to retain access even after reboot
-        val uri = data.data ?: Uri.EMPTY
-        contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        // Perform operations on the document using its URI.
+        val file = readFileFromExternalDbAndWriteFileToInternalDb(inputFileUri = data.data ?: Uri.EMPTY) ?: return@registerForActivityResult
 
-        val path = makeFileCopyInCacheDir(uri)
-        val file = File(path)
-        println(
-            """
-            Path: ${path.toString()}
-            Uri: ${data.data}
-            SELECT_PDF path: ${file.absolutePath}
-        """.trimIndent()
+        println("originalPdfUri: ${data.data}")
+
+        showFile(
+            type = FileType.PDF.value,
+            path = file.absolutePath
         )
-        showFile(file = file)
     }
 
     private val takePhotoResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
         if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
         val data = it.data ?: return@registerForActivityResult
-        val bitmap = (data.extras?.get("data") as? Bitmap) ?: return@registerForActivityResult
-//        val fileName = "note_pic_${System.currentTimeMillis()}.jpg"
-//        val result = MediaStore.Images.Media.insertImage(contentResolver, bitmap, fileName, null)
-//        val file = File(getFilePathFromUri(this, Uri.parse(result), null, null) ?: "")
-        binding.ivResultImage.setImageBitmap(bitmap)
-        val file = bitmap.toFile(fileName = "note_pic_${System.currentTimeMillis()}.jpg", context = this)
+        val thumbnailBitmap = (data.extras?.get("data") as? Bitmap)
+
         println(
             """
-            Uri: ${data.extras}
-            Uri: ${data.extras?.get("data")}
-            TAKE_PHOTO path: ${file.absolutePath}
+            thumbnailBitmap: ${data.extras?.get("data")}
+            originalImagePath: ${takenPhotoFile.absolutePath}
         """.trimIndent()
         )
-        showFile(file = file)
+
+        showFile(
+            type = FileType.IMAGE.value,
+            path = takenPhotoFile.absolutePath,
+        )
+    }
+
+    private val takeVideoResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
+        if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
+        val data = it.data ?: return@registerForActivityResult
+        val thumbnailBitmap = (data.extras?.get("data") as? Bitmap)
+
+        println(
+            """
+            thumbnailBitmap: ${data.extras?.get("data")}
+            originalVideoPath: ${takenVideoFile.absolutePath}
+        """.trimIndent()
+        )
+
+        showFile(
+            type = FileType.VIDEO.value,
+            path = takenVideoFile.absolutePath,
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,90 +208,104 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpUserActionListeners() {
-        // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-        //     if (!Environment.isExternalStorageManager()) return
-        // }
-
-
-        binding.btnSelectImage.setOnClickListener {
-//            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-//                type = "image/*"
-//                addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-//                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-//            }
-//            imageSelectionResult.launch(intent)
-
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-//                type = "*/*"
-//                val mimetypes = arrayOf("image/png", "image/jpg", "image/jpeg")
-//                putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
+        binding.btnSelectAnyFilesManageStorage.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                if (!Environment.isExternalStorageManager()) {
+                } else {
+                }
             }
-            imageSelectionResult.launch(intent)
-//            imageSelectionResult.launch(Intent.createChooser(intent, "Select Image"))
-
         }
-        binding.btnSelectPdf.setOnClickListener {
-            // https://stackoverflow.com/questions/34664915/no-persistable-permission-grants-found-for-uri
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "application/pdf"
-                addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        binding.apply {
+            btnSelectImageExtStorage.setOnClickListener {
+                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
+                    type = MimeType.IMAGE_ALL.value
+                    putExtra(Intent.EXTRA_MIME_TYPES, allowedImageFormats) // Allow only images in these formats
+                    putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true) // If you dont want multiple selection remove this
+                }
+                if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
+                externalStorageImageSelectionResult.launch(Intent.createChooser(intent, "Select Images"))
             }
-            pdfSelectionResult.launch(intent)
+            btnSelectVideoExtStorage.setOnClickListener {
+                val intent = Intent(Intent.ACTION_PICK, MediaStore.Video.Media.EXTERNAL_CONTENT_URI).apply {
+                    type = MimeType.VIDEO_ALL.value
+                    putExtra(Intent.EXTRA_MIME_TYPES, allowedVideoFormats) // Allow only videos in these formats
+                    putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true) // If you dont want multiple selection remove this
+                }
+                if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
+                externalStorageVideoSelectionResult.launch(Intent.createChooser(intent, "Select Videos"))
+            }
+            btnSelectPdfExtStorage.setOnClickListener {
+                // https://stackoverflow.com/questions/34664915/no-persistable-permission-grants-found-for-uri
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    type = MimeType.FILE_PDF.value
+                }
+                if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
+                externalStoragePdfSelectionResult.launch(Intent.createChooser(intent, "Select Documents"))
+            }
         }
-        binding.btnTakeImage.setOnClickListener {
-            // https://developer.android.com/reference/android/provider/MediaStore#ACTION_IMAGE_CAPTURE
-            // The caller may pass an extra EXTRA_OUTPUT to control where this image will be written. If the EXTRA_OUTPUT is not present, then a small sized image is returned as a Bitmap object in the extra field.
-            // val file = File(Environment.getExternalStorageDirectory(), "take_photo.jpg")
-//            val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
-            val imagePath = File(filesDir, "take_images")
-            val outputFile = File(imagePath, "take_photo.jpg")
-            val imageUri = FileProvider.getUriForFile(
-                this,
-                BuildConfig.APPLICATION_ID + ".fileprovider",
-                outputFile
-            )
-            grantUriPermission(BuildConfig.APPLICATION_ID, imageUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
-                putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(outputFile))
-//                addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
-//                data = imageUri
-//                clipData?.addItem(ClipData.Item(imageUri))
-                addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        binding.apply {
+            btnSelectImage.setOnClickListener {
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    type = MimeType.IMAGE_ALL.value
+                }
+                if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
+                imageSelectionResult.launch(intent)
             }
-            takePhotoResult.launch(intent)
+            btnSelectPdf.setOnClickListener {
+                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                    addCategory(Intent.CATEGORY_OPENABLE)
+                    type = MimeType.FILE_PDF.value
+                }
+                if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
+                pdfSelectionResult.launch(intent)
+            }
+            btnTakePhoto.setOnClickListener {
+                if (!isCameraPresentOnDevice()) return@setOnClickListener
+                // https://developer.android.com/reference/android/provider/MediaStore#ACTION_IMAGE_CAPTURE
+                takenPhotoFile = getInternalStoragePathOrFile(fileName = "camera_photo_${System.currentTimeMillis()}.jpg").also {
+                    if (!it.exists()) it.createNewFile()
+                }
+                /** fileProvider file should be exactly in the "path" attribute that u define in file_paths.xml and declare provider in manifest */
+                val fileProvider = FileProvider.getUriForFile(this@MainActivity, FILE_PROVIDER_AUTHORITY, takenPhotoFile)
+                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
+                    putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
+                }
+                if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
+                takePhotoResult.launch(intent)
+            }
+            btnTakeVideo.setOnClickListener {
+                if (!isCameraPresentOnDevice()) return@setOnClickListener
+                takenVideoFile = getInternalStoragePathOrFile(fileName = "camera_video_${System.currentTimeMillis()}.mp4").also {
+                    if (!it.exists()) it.createNewFile()
+                }
+                /** fileProvider file should be exactly in the "path" attribute that u define in file_paths.xml and declare provider in manifest */
+                val fileProvider = FileProvider.getUriForFile(this@MainActivity, FILE_PROVIDER_AUTHORITY, takenVideoFile)
+                val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE).apply {
+                    putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
+                }
+                if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
+                takeVideoResult.launch(intent)
+            }
         }
     }
 
-    private fun showFile(file: File) {
-        val fileName = getFileName(file.absolutePath)
-        val fileExtension = getFileName(path = file.absolutePath).substringAfterLast(delimiter = ".").lowercase()
-        val fileSizeInBytes = getFileSizeInBytes(file.absolutePath)
-        val fileSizeInMb = fileSizeInBytes.div(1024.0 * 1024.0)
-        val string = "Size in mb: ${String.format("%.2f", fileSizeInMb)}"
-
-        println(
-            """
-            fileName: $fileName
-            fileExtension: $fileExtension
-            fileSizeInBytes: $fileSizeInBytes
-            fileSizeInMb: $fileSizeInMb
-        """.trimIndent()
-        )
-
-        Glide.with(this)
-            .setDefaultRequestOptions(
-                RequestOptions().placeholder(R.color.purple_200).error(android.R.color.holo_red_dark)
-            )
-            .load(file)
-            .into(binding.ivResultImage)
-    }
-
-    fun getFileExtension(uri: Uri?): String? {
-        val contentResolver = contentResolver
-        val mimeType = MimeTypeMap.getSingleton()
-        return mimeType.getExtensionFromMimeType(contentResolver.getType(uri!!))
+    private fun showFile(
+        type: String,
+        path: String,
+        url: String? = null
+    ) {
+        supportFragmentManager.beginTransaction().add(
+            binding.clContainer.id,
+            FileDetailFragment.newInstance(
+                type = type,
+                path = path,
+                url = url
+            ),
+            "FileDetailFragment"
+        ).addToBackStack(null).commit()
     }
 }

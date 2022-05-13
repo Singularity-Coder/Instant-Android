@@ -4,4 +4,7 @@
     <files-path
         name="take_images"
         path="." />
+    <files-path
+        name="take_videos"
+        path="." />
 </paths>
