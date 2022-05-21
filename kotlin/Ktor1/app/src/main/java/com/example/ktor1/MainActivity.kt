@@ -1,17 +1,13 @@
 package com.example.ktor1
 
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ktor1.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import io.ktor.client.call.*
 import io.ktor.client.plugins.*
-import io.ktor.client.statement.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
@@ -43,10 +39,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         binding.btnGetUsers.setOnClickListener {
-            CoroutineScope(IO).launch {
-                getGithubUsers()
-            }
+            CoroutineScope(IO).launch { getGithubUsers() }
+        }
+        binding.btnGetUsersOffline.setOnClickListener {
+            CoroutineScope(IO).launch { getGithubUsersWithOfflineFeature() }
         }
     }
 
@@ -54,6 +52,11 @@ class MainActivity : AppCompatActivity() {
     // 4xx responses - ClientRequestException
     // 5xx responses - ServerResponseException
     private suspend fun getGithubUsers() {
+        if (!this.isOnline()) {
+            withContext(Main) { Snackbar.make(binding.root, "Device is offline", Snackbar.LENGTH_LONG).show() }
+            return
+        }
+
         val httpResponse = try {
             apiService.getGithubUsers(userCount = 135)
         } catch (e: ResponseException) {
@@ -71,59 +74,24 @@ class MainActivity : AppCompatActivity() {
             val errorBody = httpResponse.body<KtorError>()
             println("status code: $statusCode, error: ${errorBody.message}")
         }
-
-        httpResponse onOffline {
-            println("You are offline")
-        }
     }
 
-    private suspend infix fun HttpResponse.onSuccess(doTask: suspend (statusCode: Int) -> Unit): HttpResponse {
-        if (this.status.value in 200..299) {
-            doTask.invoke(this.status.value)
-        }
-        return this
-    }
+    private suspend fun getGithubUsersWithOfflineFeature() {
+        val apiResponse = apiService.getGithubUsers2(userCount = 135)
 
-    private suspend infix fun HttpResponse.onFailure(doTask: suspend (statusCode: Int) -> Unit): HttpResponse {
-        if (this.status.value !in 200..299) {
-            doTask.invoke(this.status.value)
-        }
-        return this
-    }
-
-    private suspend infix fun HttpResponse.onOffline(doTask: suspend () -> Unit): HttpResponse {
-        if (!isOnline()) {
-            doTask.invoke()
-        }
-        return this
-    }
-
-    @RequiresPermission(android.Manifest.permission.ACCESS_NETWORK_STATE)
-    private fun isOnline(): Boolean {
-        val conMan = getSystemService(CONNECTIVITY_SERVICE) as? ConnectivityManager
-
-        @Suppress("DEPRECATION")
-        fun checkOldWay(): Boolean {
-            val oldActiveNet = conMan?.activeNetworkInfo
-            val oldWifi = conMan?.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-            val oldMobile = conMan?.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
-            val oldEthernet = conMan?.getNetworkInfo(ConnectivityManager.TYPE_ETHERNET)
-            val hasOldWifi = null != oldWifi && oldWifi.isConnected
-            val hasOldCellular = null != oldMobile && oldMobile.isConnected
-            val hasOldEthernet = null != oldEthernet && oldEthernet.isConnected
-
-            if (oldActiveNet?.isConnected == false) return false
-            return hasOldWifi || hasOldCellular || hasOldEthernet
+        apiResponse onSuccess { statusCode: Int ->
+            val userList: List<User> = apiResponse.httpResponse?.body() ?: emptyList()
+            withContext(Main) { binding.tvUsers.text = userList.toString() }
+            println("status code: $statusCode, response: ${gson.toJson(userList)}")
         }
 
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val activeNet = conMan?.activeNetwork
-            val netCap = conMan?.getNetworkCapabilities(activeNet)
-            val hasWifi = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ?: false
-            val hasCellular = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ?: false
-            val hasEthernet = netCap?.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) ?: false
+        apiResponse onFailure { statusCode: Int ->
+            val errorBody = apiResponse.httpResponse?.body<KtorError>()
+            println("status code: $statusCode, error: ${errorBody?.message}")
+        }
 
-            hasWifi || hasCellular || hasEthernet
-        } else checkOldWay()
+        apiResponse onOffline {
+            withContext(Main) { Snackbar.make(binding.root, "Device is offline", Snackbar.LENGTH_LONG).show() }
+        }
     }
 }

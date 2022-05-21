@@ -12,7 +12,13 @@
         android:id="@+id/btn_get_users"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get Users"/>
+        android:text="Get Users" />
+
+    <Button
+        android:id="@+id/btn_get_users_offline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Get Users Offline" />
 
     <TextView
         android:id="@+id/tv_users"
