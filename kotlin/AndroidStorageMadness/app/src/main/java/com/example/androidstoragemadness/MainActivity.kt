@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
 import com.example.androidstoragemadness.databinding.ActivityMainBinding
+import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
 // MANAGE_EXTERNAL_STORAGE - https://www.youtube.com/watch?v=0313bhp-8uA
@@ -26,12 +27,10 @@ import java.io.File
 // CRUD Assets
 
 // File Picker - All files
-// PDF Picker
-// View PDF Offline
 
-// View PDF Online
-// View Image Online
-// View Video Online
+// View PDF Online - Google url, download file
+// View Image Online - use coil
+// View Video Online - Exo Player
 
 // Download PDF
 // Download Image
@@ -280,7 +279,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             btnTakePhoto.setOnClickListener {
-                if (!isCameraPresentOnDevice()) return@setOnClickListener
+                if (!isCameraPresentOnDevice()) {
+                    Snackbar.make(binding.root, "You don't have a camera on your device!", Snackbar.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
                 // https://developer.android.com/reference/android/provider/MediaStore#ACTION_IMAGE_CAPTURE
                 takenPhotoFile = getInternalStoragePathOrFile(fileName = "camera_photo_${System.currentTimeMillis()}.jpg").also {
                     if (!it.exists()) it.createNewFile()
@@ -294,7 +296,10 @@ class MainActivity : AppCompatActivity() {
                 takePhotoResult.launch(intent)
             }
             btnTakeVideo.setOnClickListener {
-                if (!isCameraPresentOnDevice()) return@setOnClickListener
+                if (!isCameraPresentOnDevice()) {
+                    Snackbar.make(binding.root, "You don't have a camera on your device!", Snackbar.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
                 takenVideoFile = getInternalStoragePathOrFile(fileName = "camera_video_${System.currentTimeMillis()}.mp4").also {
                     if (!it.exists()) it.createNewFile()
                 }
@@ -305,6 +310,21 @@ class MainActivity : AppCompatActivity() {
                 }
                 if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
                 takeVideoResult.launch(intent)
+            }
+        }
+
+        binding.apply {
+            btnDownloadPdfDownloadManager.setOnClickListener {
+
+            }
+            btnDownloadMultipleFilesDownloadManager.setOnClickListener {
+
+            }
+            btnDownloadImagePrDownloader.setOnClickListener {
+
+            }
+            btnDownloadMultipleFilesPrDownloader.setOnClickListener {
+
             }
         }
     }

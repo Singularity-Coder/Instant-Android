@@ -93,6 +93,38 @@
                 android:layout_height="wrap_content"
                 android:text="Take Video"
                 android:textAllCaps="false" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp" />
+
+            <Button
+                android:id="@+id/btnDownloadPdfDownloadManager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Download Pdf - Download Manager"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnDownloadMultipleFilesDownloadManager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Download Multiple Files - Download Manager"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnDownloadImagePrDownloader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Download Image - Pr Downloader"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnDownloadMultipleFilesPrDownloader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Download Multiple Files - Pr Downloader"
+                android:textAllCaps="false" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

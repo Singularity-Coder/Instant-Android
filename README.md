@@ -61,6 +61,8 @@ A list of android samples on different topics!
 
 
 ## Android Networking
+#### Ktor
+* (Kotlin) Simple Github API call using Ktor Library. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/Ktor1)  
 #### Volley
 * https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworking  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/VolleyNetworkingGSON  

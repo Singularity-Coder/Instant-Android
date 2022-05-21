@@ -18,7 +18,6 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
-
 private const val ARG_TYPE = "ARG_TYPE"
 private const val ARG_PATH = "ARG_PATH"
 private const val ARG_URL = "ARG_URL"

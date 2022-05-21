@@ -2,6 +2,7 @@ package com.example.androidstoragemadness
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.DownloadManager
 import android.content.ContentUris
 import android.content.Context
 import android.content.pm.PackageManager
@@ -401,6 +402,26 @@ fun String?.sanitize(): String {
         }
     }
     return sanitizedString
+}
+
+fun Cursor.isStatusSuccessful(): Boolean {
+    val columnStatus = this.getColumnIndex(DownloadManager.COLUMN_STATUS)
+    return this.getInt(columnStatus) == DownloadManager.STATUS_SUCCESSFUL
+}
+
+fun Cursor.fileName(): String {
+    val columnTitle = this.getColumnIndex(DownloadManager.COLUMN_TITLE)
+    return this.getString(columnTitle)
+}
+
+fun Cursor.uriString(): String {
+    val columnUri = this.getColumnIndex(DownloadManager.COLUMN_URI)
+    return this.getString(columnUri)
+}
+
+fun Cursor.localUriString(): String {
+    val columnLocalUri = this.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI)
+    return this.getString(columnLocalUri)
 }
 
 private enum class UriAuthority(val value: String) {
