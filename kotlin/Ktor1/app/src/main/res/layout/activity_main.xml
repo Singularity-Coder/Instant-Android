@@ -1,33 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp"
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
 
-    <Button
-        android:id="@+id/btn_get_users"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get Users" />
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <Button
-        android:id="@+id/btn_get_users_offline"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Get Users Offline" />
+        <Button
+            android:id="@+id/btn_get_github_users"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Github Users" />
 
-    <TextView
-        android:id="@+id/tv_users"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <Button
+            android:id="@+id/btn_get_github_users_offline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Github Users Offline" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/btn_get_reqres_users"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get ReqRes Users" />
+
+        <Button
+            android:id="@+id/btn_get_reqres_user_not_found"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get ReqRes User Not Found" />
+
+        <Button
+            android:id="@+id/btn_create_reqres_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create ReqRes User" />
+
+        <TextView
+            android:id="@+id/tv_users"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
+</ScrollView>

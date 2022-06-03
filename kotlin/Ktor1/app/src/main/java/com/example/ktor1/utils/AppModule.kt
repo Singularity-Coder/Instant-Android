@@ -1,7 +1,11 @@
-package com.example.ktor1
+package com.example.ktor1.utils
 
 import android.content.Context
 import android.util.Log
+import com.example.ktor1.BuildConfig
+import com.example.ktor1.apiservice.GithubApiEndPointsService
+import com.example.ktor1.apiservice.ReqResApiEndPointsService
+import com.example.ktor1.model.ApiError
 import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.google.gson.Gson
 import dagger.Module
@@ -32,7 +36,6 @@ import java.text.DateFormat
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
@@ -43,8 +46,14 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun injectApiService(client: HttpClient): ApiEndPointsService {
-        return ApiEndPointsService(client)
+    fun injectGithubApiService(client: HttpClient): GithubApiEndPointsService {
+        return GithubApiEndPointsService(client)
+    }
+
+    @Singleton
+    @Provides
+    fun injectReqResApiService(client: HttpClient): ReqResApiEndPointsService {
+        return ReqResApiEndPointsService(client)
     }
 
     @Singleton
@@ -90,14 +99,14 @@ object AppModule {
             install(Logging) {
                 logger = object : Logger {
                     override fun log(message: String) {
-                        Log.v("Logger Ktor =>", message)
+                        if (BuildConfig.DEBUG) Log.v("Logger Ktor =>", message)
                     }
                 }
                 level = LogLevel.ALL
             }
             install(ResponseObserver) {
                 onResponse { response ->
-                    Log.d("HTTP status:", "${response.status.value}")
+                    if (BuildConfig.DEBUG) Log.d("HTTP status:", "${response.status.value}")
                 }
             }
             install(DefaultRequest) {
@@ -111,9 +120,9 @@ object AppModule {
             HttpResponseValidator {
                 validateResponse { response ->
                     if (response.status.value !in 200..299) {
-                        val error: KtorError = response.body()
+                        val error: ApiError = response.body()
                         if (error.code != 0) {
-                            throw CustomResponseException(response, "Code: ${error.code}, message: ${error.message}")
+                            if (BuildConfig.DEBUG) throw CustomResponseException(response, "Code: ${error.code}, message: ${error.message}")
                         }
                     }
                 }
@@ -122,7 +131,7 @@ object AppModule {
                     val exceptionResponse = exception.response
                     if (exceptionResponse.status == HttpStatusCode.NotFound) {
                         val exceptionResponseText = exceptionResponse.bodyAsText()
-                        throw MissingPageException(exceptionResponse, exceptionResponseText)
+                        if (BuildConfig.DEBUG) throw MissingPageException(exceptionResponse, exceptionResponseText)
                     }
                 }
             }

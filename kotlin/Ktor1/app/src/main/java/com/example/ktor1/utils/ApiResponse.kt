@@ -1,4 +1,4 @@
-package com.example.ktor1
+package com.example.ktor1.utils
 
 import io.ktor.client.statement.*
 

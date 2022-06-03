@@ -1,4 +1,4 @@
-package com.example.ktor1
+package com.example.ktor1.model
 
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 // @SerialName is not working
 
 @Serializable
-data class User(
+data class GithubUser(
     var login: String? = null,
     var id: Int? = null,
     @SerializedName("node_id") var nodeId: String? = null,

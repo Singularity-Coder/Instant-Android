@@ -1,4 +1,4 @@
-package com.example.ktor1
+package com.example.ktor1.utils
 
 import com.google.gson.ExclusionStrategy
 import com.google.gson.FieldAttributes

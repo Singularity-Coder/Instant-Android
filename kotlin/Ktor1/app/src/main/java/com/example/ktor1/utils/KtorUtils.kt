@@ -1,4 +1,4 @@
-package com.example.ktor1
+package com.example.ktor1.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -107,4 +107,25 @@ suspend infix fun HttpResponse.onFailure(doTask: suspend (statusCode: Int) -> Un
         doTask.invoke(this.status.value)
     }
     return this
+}
+
+class CustomResponseException(
+    response: HttpResponse,
+    cachedResponseText: String
+) : ResponseException(response, cachedResponseText) {
+    override val message: String = """
+        Custom server error: ${response.call.request.url}
+        Status: ${response.status}
+        Text: $cachedResponseText
+    """.trimIndent()
+}
+
+class MissingPageException(
+    response: HttpResponse,
+    cachedResponseText: String
+) : ResponseException(response, cachedResponseText) {
+    override val message: String = """
+        Missing page: ${response.call.request.url}
+        Status: ${response.status}
+    """.trimIndent()
 }

@@ -2,7 +2,6 @@ package com.example.androidstoragemadness
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -117,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         val data = it.data ?: return@registerForActivityResult
         val uri = data.data ?: Uri.EMPTY
         contentResolver.takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION) // Permission needed if you want to retain access even after reboot
-        val path = makeFileCopyInCacheDir(uri)
+        val path = makeFileCopyInCacheDir(uri) ?: ""
         val file = File(path)
 
         println("originalPdfUri: ${data.data}")
@@ -315,24 +314,61 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             btnDownloadPdfDownloadManager.setOnClickListener {
+                if (!isDownloadValidated(isDownloadManager = true)) return@setOnClickListener
 
             }
             btnDownloadMultipleFilesDownloadManager.setOnClickListener {
+                if (!isDownloadValidated(isDownloadManager = true)) return@setOnClickListener
 
             }
             btnDownloadImagePrDownloader.setOnClickListener {
+                if (!isDownloadValidated()) return@setOnClickListener
 
             }
             btnDownloadMultipleFilesPrDownloader.setOnClickListener {
+                if (!isDownloadValidated()) return@setOnClickListener
 
             }
         }
     }
 
+    private fun isDownloadValidated(isDownloadManager: Boolean = false): Boolean {
+        if (!isOnline()) {
+            binding.root.showSnackBar("You are offline. Connect to the Internet and try again.")
+            return false
+        }
+
+        if (!isExternalStorageReadable()) {
+            binding.root.showSnackBar("Cannot read your external storage.")
+            return false
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (availableStorageSpace() < 15 * MB) {
+                binding.root.showSnackBar("Insufficient storage space. Need at least 15 MB free space available.")
+                return false
+            }
+        }
+
+        if (batteryPercent() < 5) {
+            binding.root.showSnackBar("Insufficient battery. Need at least 5 percent power.")
+            return false
+        }
+
+        if (isDownloadManager) {
+            if (!isAppEnabled(App.DOWNLOAD_MANAGER.id)) {
+                binding.root.showSnackBar("Download Manager system App is disabled. Go to Settings -> Apps -> All Apps -> Show System -> Search for Download Manager -> Enable")
+                return false
+            }
+        }
+
+        return true
+    }
+
     private fun showFile(
         type: String,
         path: String,
-        url: String? = null
+        url: String? = null,
     ) {
         supportFragmentManager.beginTransaction().add(
             binding.clContainer.id,

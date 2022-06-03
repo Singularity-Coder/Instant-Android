@@ -5,10 +5,12 @@ import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.ContentUris
 import android.content.Context
+import android.content.Context.BATTERY_SERVICE
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.BatteryManager
 import android.os.Build
 import android.os.Environment
 import android.os.storage.StorageManager
@@ -25,6 +27,11 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
 import kotlin.math.min
+
+const val KB = 1024L
+const val MB = 1024L * KB
+const val GB = 1024L * MB
+const val TB = 1024L * GB
 
 const val FILE_PROVIDER_AUTHORITY = BuildConfig.APPLICATION_ID + ".fileprovider"
 
@@ -159,7 +166,7 @@ private fun Context.getFilePathFromUriApi19AndAbove(fileUri: Uri): String? {
 fun Context.getFilePathFromUri(
     uri: Uri,
     selection: String? = null,
-    selectionArgs: Array<String>? = null
+    selectionArgs: Array<String>? = null,
 ): String? {
     // Get Column Data
     if (uri == Uri.EMPTY) return null
@@ -234,11 +241,11 @@ fun Context.getFileExtension(uri: Uri?): String? {
     return mimeType.getExtensionFromMimeType(contentResolver.getType(uri!!))
 }
 
-fun Context.hasCameraPermission(): Boolean {
+fun Context.isCameraPermissionGranted(): Boolean {
     return ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
 }
 
-fun Context.hasOldStorageWritePermission(): Boolean {
+fun Context.isOldStorageWritePermissionGranted(): Boolean {
     return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
 }
 
@@ -302,26 +309,15 @@ fun isExternalStorageReadable(): Boolean {
     return Environment.getExternalStorageState() in setOf(Environment.MEDIA_MOUNTED, Environment.MEDIA_MOUNTED_READ_ONLY)
 }
 
-fun Context.isCameraPresentOnDevice(): Boolean {
-    return packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)
-}
-
-/**
- * One MB = 1024L * 1024L
- * One GB = 1024L * 1024L * 1024L
- * One TB = 1024L * 1024L * 1024L * 1024L
- * */
 @RequiresApi(Build.VERSION_CODES.O)
-fun Context.isRequiredSpaceAvailableOnDeviceStorage(
-    storageType: Int = 0,
-    spaceNeeded: Long = 1024L * 1024L * 15L // App needs 15 MB within storage.
-): Boolean {
+fun Context.availableStorageSpace(
+    storageType: StorageType = StorageType.INTERNAL,
+): Long {
     val internalStorage = filesDir
     val externalStorage = getExternalFilesDir("") ?: File("")
-    val storageManager = applicationContext.getSystemService<StorageManager>() ?: return false
-    val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(if (storageType == 0) internalStorage else externalStorage)
-    val availableBytes: Long = storageManager.getAllocatableBytes(appSpecificInternalDirUuid)
-    return availableBytes >= spaceNeeded
+    val storageManager = applicationContext.getSystemService<StorageManager>() ?: return 0L
+    val appSpecificInternalDirUuid: UUID = storageManager.getUuidForPath(if (storageType == StorageType.INTERNAL) internalStorage else externalStorage)
+    return storageManager.getAllocatableBytes(appSpecificInternalDirUuid) // Available Bytes
 }
 
 fun File.sizeInBytes(): Int {
@@ -371,14 +367,14 @@ fun File?.customPath(directory: String?, fileName: String?): String {
 /** /data/user/0/com.example.androidstoragemadness/files */
 fun Context.getInternalStoragePathOrFile(
     directory: String? = null,
-    fileName: String? = null
+    fileName: String? = null,
 ): File = File(filesDir.customPath(directory, fileName))
 
 /** /storage/emulated/0/Android/data/com.example.androidstoragemadness/files */
 fun Context.getExternalStoragePathOrFile(
     rootDir: String = "",
     subDir: String? = null,
-    fileName: String? = null
+    fileName: String? = null,
 ): File = File(getExternalFilesDir(rootDir).customPath(subDir, fileName))
 
 /**
@@ -463,6 +459,10 @@ enum class MimeType(val value: String) {
     VIDEO_WMV("video/wmv"),
     VIDEO_AVI("video/avi"),
     VIDEO_MKV("video/mkv"),
+}
+
+enum class StorageType {
+    INTERNAL, EXTERNAL
 }
 
 val extDir = File(Environment.getExternalStorageDirectory(), "take_photo.jpg")
