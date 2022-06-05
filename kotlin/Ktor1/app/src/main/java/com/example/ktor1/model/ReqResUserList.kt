@@ -9,12 +9,12 @@ data class ReqResUserList(
     @SerializedName("per_page") var perPage: Int? = null,
     var total: Int? = null,
     @SerializedName("total_pages") var totalPages: Int? = null,
-    var data: ArrayList<Data> = arrayListOf(),
+    var data: ArrayList<ReqResUser> = arrayListOf(),
     var support: Support? = Support(),
 )
 
 @Serializable
-data class Data(
+data class ReqResUser(
     var id: Int? = null,
     var email: String? = null,
     @SerializedName("first_name") var firstName: String? = null,

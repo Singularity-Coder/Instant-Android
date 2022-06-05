@@ -1,5 +1,10 @@
 package com.example.ktor1.view
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.BatteryManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ktor1.apiservice.GithubApiEndPointsService
@@ -20,12 +25,14 @@ import io.ktor.http.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
+
 
 // https://ktor.io/
 // https://ktor.io/docs/response.html
@@ -48,7 +55,22 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var reqResApiService: ReqResApiEndPointsService
 
-    lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var uploadJob: Job
+
+    // https://stackoverflow.com/questions/3291655/get-battery-level-and-state-in-android
+    private val batteryInfoReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+            val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+            val batteryPercent = level * 100 / scale.toFloat()
+            println("Battery percent: $batteryPercent")
+            if (batteryPercent > 2) return
+            if (!this@MainActivity::uploadJob.isInitialized) return
+            if (!uploadJob.isActive || uploadJob.isCompleted || uploadJob.isCancelled) return
+            uploadJob.cancel()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +92,16 @@ class MainActivity : AppCompatActivity() {
         binding.btnCreateReqresUser.setOnClickListener {
             CoroutineScope(IO).launch { createReqResUser() }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        registerReceiver(batteryInfoReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        unregisterReceiver(batteryInfoReceiver)
     }
 
     private suspend fun getGithubUserList() {
@@ -247,14 +279,16 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        val httpResponse = try {
-            reqResApiService.uploadFile(formBuilder = formBuilder, multipartBody = multipartBody)
-        } catch (e: ResponseException) {
-            println("Error: ${e.response.status.description}")
-            e.response
-        } catch (e: Exception) {
-            println(e.message)
-            null
+        uploadJob = CoroutineScope(IO).launch {
+            val httpResponse = try {
+                reqResApiService.uploadFile(formBuilder = formBuilder, multipartBody = multipartBody)
+            } catch (e: ResponseException) {
+                println("Error: ${e.response.status.description}")
+                e.response
+            } catch (e: Exception) {
+                println(e.message)
+                null
+            }
         }
     }
 }
