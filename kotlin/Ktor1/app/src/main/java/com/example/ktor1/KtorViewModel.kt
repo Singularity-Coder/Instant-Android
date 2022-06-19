@@ -5,28 +5,23 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ktor1.model.GithubUser
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class KtorViewModel @Inject constructor(
     application: Application,
-    val repository: KtorRepository,
+    private val repository: KtorRepository,
 ) : AndroidViewModel(application) {
 
     private val _githubUserListSharedFlow = MutableSharedFlow<List<GithubUser>>()
     val githubUserListSharedFlow = _githubUserListSharedFlow.asSharedFlow()
 
     private val _githubUserListStateFlow = MutableStateFlow<List<GithubUser>>(emptyList())
-    val githubUserListStateFlow = _githubUserListStateFlow.asSharedFlow()
+    val githubUserListStateFlow = _githubUserListStateFlow.asStateFlow()
 
-    fun loadGithubUserListFromSharedFlow() = viewModelScope.launch {
+    fun loadGithubUserListViaSharedFlow() = viewModelScope.launch {
         repository
             .getGithubUserList(getApplication())
             .catch { it: Throwable ->
@@ -37,7 +32,7 @@ class KtorViewModel @Inject constructor(
             }
     }
 
-    fun loadGithubUserListFromStateFlow() = viewModelScope.launch {
+    fun loadGithubUserListViaStateFlow() = viewModelScope.launch {
         repository
             .getGithubUserList(getApplication())
             .catch { it: Throwable ->

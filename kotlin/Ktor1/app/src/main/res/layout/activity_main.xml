@@ -13,10 +13,16 @@
         android:padding="24dp">
 
         <Button
-            android:id="@+id/btn_get_github_users"
+            android:id="@+id/btn_get_github_users_shared_flow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Get Github Users" />
+            android:text="Get Github Users Shared Flow" />
+
+        <Button
+            android:id="@+id/btn_get_github_users_state_flow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Get Github Users State Flow" />
 
         <Button
             android:id="@+id/btn_get_github_users_offline"

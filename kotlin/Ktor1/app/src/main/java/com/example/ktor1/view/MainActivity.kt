@@ -93,9 +93,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpClickListeners() {
-        binding.btnGetGithubUsers.setOnClickListener {
-            viewModel.loadGithubUserListFromSharedFlow()
-    //            CoroutineScope(IO).launch { getGithubUserList() }
+        binding.btnGetGithubUsersSharedFlow.setOnClickListener {
+            viewModel.loadGithubUserListViaSharedFlow()
+        }
+        binding.btnGetGithubUsersStateFlow.setOnClickListener {
+            viewModel.loadGithubUserListViaStateFlow()
         }
         binding.btnGetGithubUsersOffline.setOnClickListener {
             CoroutineScope(IO).launch { getGithubUserListWithOfflineFeature() }

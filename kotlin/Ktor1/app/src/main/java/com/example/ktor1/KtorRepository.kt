@@ -17,7 +17,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class KtorRepository @Inject constructor(val githubApiService: GithubApiEndPointsService, val gson: Gson) {
+class KtorRepository @Inject constructor(
+    private val githubApiService: GithubApiEndPointsService,
+    private val gson: Gson,
+) {
     suspend fun getGithubUserList(context: Context): Flow<List<GithubUser>> = flow<List<GithubUser>> {
         if (!context.isOnline()) {
             println("Device is offline")
