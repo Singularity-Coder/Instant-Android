@@ -78,6 +78,9 @@ A list of android samples on different topics!
 #### HttpUrlConnection
 * Fetch list of restaurants from Zomato API using HttpUrlConnection. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/HttpURLConnection2)  
 
+## Tools
+* Chucker to monitor http network stuff. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/ChuckerNetworkInterceptor2)  
+
 
 ## Android Data Storage
 * A simple Room ORM example without any views. [Link](https://github.com/Singularity-Coder/Blog/tree/master/java/SimpleRoomDB)  
@@ -179,14 +182,16 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 
 
 ## Java Native Interface (JNI)
-* (Kotlin) Fetching strings from native code to Kotlin code using JNI. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JavaNativeInterface1)  
-
+* (Kotlin) Fetching strings from native code to Kotlin code using JNI. [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/JavaNativeInterface1) 
 
 ## Testing
 #### Espresso Testing
 * https://github.com/Singularity-Coder/Blog/tree/master/java/RoomNews  
 * https://github.com/Singularity-Coder/Blog/tree/master/java/RetrofitPOSTwithGSON  
 #### Unit Testing
+
+## Airbnb Epoxy
+* Basic Recycler View with dummy data [Link](https://github.com/Singularity-Coder/Android-Examples/tree/master/kotlin/Epoxy1) 
 
 
 ## RxJava

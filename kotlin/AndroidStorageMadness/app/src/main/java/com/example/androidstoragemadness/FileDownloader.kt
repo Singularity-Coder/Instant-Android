@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 
 class FileDownloader(
-    downloadItemsList: ArrayList<DownloadItem>,
+    downloadItemsList: List<DownloadItem>,
     private val context: Context,
     private val fileDirectory: String,
     private val downloadTitle: String,
@@ -72,7 +72,7 @@ class FileDownloader(
 
             if (isStatusSuccessful) {
                 downloadedFilesCount++
-                context.getExternalStoragePathOrFile(subDir = fileDirectory, fileName = fileName).setLastModified(System.currentTimeMillis())
+                context.externalFilesDir(subDir = fileDirectory, fileName = fileName).setLastModified(System.currentTimeMillis())
                 if (downloadedFilesCount == expectedFilesCount) {
                     unregisterReceiver(context)
                     onSuccess.invoke()
@@ -96,7 +96,7 @@ class FileDownloader(
         startDownloading(downloadItemsList)
     }
 
-    private fun startDownloading(downloadItemsList: ArrayList<DownloadItem>) = CoroutineScope(IO).launch {
+    private fun startDownloading(downloadItemsList: List<DownloadItem>) = CoroutineScope(IO).launch {
         if (downloadItemsList.isEmpty()) return@launch
         downloadedFilesCount = 0
         expectedFilesCount = downloadItemsList.size

@@ -5,12 +5,10 @@ import android.annotation.SuppressLint
 import android.app.DownloadManager
 import android.content.ContentUris
 import android.content.Context
-import android.content.Context.BATTERY_SERVICE
 import android.content.pm.PackageManager
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.BatteryManager
 import android.os.Build
 import android.os.Environment
 import android.os.storage.StorageManager
@@ -21,6 +19,12 @@ import android.webkit.MimeTypeMap
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -28,10 +32,10 @@ import java.io.IOException
 import java.util.*
 import kotlin.math.min
 
-const val KB = 1024L
-const val MB = 1024L * KB
-const val GB = 1024L * MB
-const val TB = 1024L * GB
+const val KB = 1024.0
+const val MB = 1024.0 * KB
+const val GB = 1024.0 * MB
+const val TB = 1024.0 * GB
 
 const val FILE_PROVIDER_AUTHORITY = BuildConfig.APPLICATION_ID + ".fileprovider"
 
@@ -209,22 +213,26 @@ fun createFile() {
 }
 
 // https://stackoverflow.com/questions/7769806/convert-bitmap-to-file
-fun Bitmap.toFile(fileName: String, context: Context): File {
+fun Bitmap.toFile(
+    fileName: String,
+    context: Context,
+): File {
     // create a file to write bitmap data
-    val file = File(context.filesDir, fileName)
-    file.createNewFile()
+    val file = context.internalFilesDir(fileName = fileName).also {
+        it.createNewFile() // This doesnt work on subdirectories for some reason even after granting storage read permission
+    }
 
     // Convert bitmap to byte array
-    val bitmap: Bitmap = this
     val bos = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.PNG, 100 /*ignored for PNG*/, bos)
-    val bitmapdata: ByteArray = bos.toByteArray()
+    this.compress(Bitmap.CompressFormat.PNG, 100 /*ignored for PNG*/, bos)
+    val bitmapByteArray: ByteArray = bos.toByteArray()
 
     // write the bytes in file
-    val fos = FileOutputStream(file)
-    fos.write(bitmapdata)
-    fos.flush()
-    fos.close()
+    FileOutputStream(file).run {
+        write(bitmapByteArray)
+        flush()
+        close()
+    }
 
     return file
 }
@@ -365,17 +373,39 @@ fun File?.customPath(directory: String?, fileName: String?): String {
 }
 
 /** /data/user/0/com.example.androidstoragemadness/files */
-fun Context.getInternalStoragePathOrFile(
+fun Context.internalFilesDir(
     directory: String? = null,
     fileName: String? = null,
 ): File = File(filesDir.customPath(directory, fileName))
 
 /** /storage/emulated/0/Android/data/com.example.androidstoragemadness/files */
-fun Context.getExternalStoragePathOrFile(
+fun Context.externalFilesDir(
     rootDir: String = "",
     subDir: String? = null,
     fileName: String? = null,
 ): File = File(getExternalFilesDir(rootDir).customPath(subDir, fileName))
+
+// https://stackoverflow.com/questions/3425906/creating-temporary-files-in-android
+fun Context.createTempFile() {
+
+}
+
+inline fun deleteAllFilesFrom(
+    directory: File?,
+    withName: String,
+    crossinline onDone: () -> Unit = {}
+) {
+    CoroutineScope(Default).launch {
+        directory?.listFiles()?.forEach files@{ it: File? ->
+            it ?: return@files
+            if (it.name.contains(withName)) {
+                if (it.exists()) it.delete()
+            }
+        }
+
+        withContext(Main) { onDone.invoke() }
+    }
+}
 
 /**
  * The idea is to replace all special characters with underscores

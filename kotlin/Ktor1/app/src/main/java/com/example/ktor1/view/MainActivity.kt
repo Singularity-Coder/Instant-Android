@@ -6,15 +6,14 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.BatteryManager
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ktor1.KtorViewModel
 import com.example.ktor1.apiservice.GithubApiEndPointsService
 import com.example.ktor1.apiservice.ReqResApiEndPointsService
 import com.example.ktor1.databinding.ActivityMainBinding
 import com.example.ktor1.model.*
-import com.example.ktor1.utils.isOnline
-import com.example.ktor1.utils.onFailure
-import com.example.ktor1.utils.onOffline
-import com.example.ktor1.utils.onSuccess
+import com.example.ktor1.utils.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -55,6 +54,8 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var reqResApiService: ReqResApiEndPointsService
 
+    private val viewModel: KtorViewModel by viewModels()
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var uploadJob: Job
 
@@ -77,8 +78,24 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        subscribeToData()
+        setUpClickListeners()
+    }
+
+    private fun subscribeToData() {
+        collectLatestLifecycleFlow(flow = viewModel.githubUserListSharedFlow) { it: List<GithubUser> ->
+            binding.tvUsers.text = it.toString()
+        }
+
+        collectLatestLifecycleFlow(flow = viewModel.githubUserListStateFlow) { it: List<GithubUser> ->
+            binding.tvUsers.text = it.toString()
+        }
+    }
+
+    private fun setUpClickListeners() {
         binding.btnGetGithubUsers.setOnClickListener {
-            CoroutineScope(IO).launch { getGithubUserList() }
+            viewModel.loadGithubUserListFromSharedFlow()
+    //            CoroutineScope(IO).launch { getGithubUserList() }
         }
         binding.btnGetGithubUsersOffline.setOnClickListener {
             CoroutineScope(IO).launch { getGithubUserListWithOfflineFeature() }

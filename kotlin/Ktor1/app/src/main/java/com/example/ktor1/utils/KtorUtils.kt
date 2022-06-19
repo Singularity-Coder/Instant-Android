@@ -6,10 +6,16 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import io.ktor.client.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 
 // Random experiment
@@ -107,6 +113,14 @@ suspend infix fun HttpResponse.onFailure(doTask: suspend (statusCode: Int) -> Un
         doTask.invoke(this.status.value)
     }
     return this
+}
+
+fun <T> AppCompatActivity.collectLatestLifecycleFlow(flow: Flow<T>, collect: suspend (T) -> Unit) {
+    lifecycleScope.launch {
+        repeatOnLifecycle(Lifecycle.State.STARTED) {
+            flow.collectLatest(collect)
+        }
+    }
 }
 
 class CustomResponseException(

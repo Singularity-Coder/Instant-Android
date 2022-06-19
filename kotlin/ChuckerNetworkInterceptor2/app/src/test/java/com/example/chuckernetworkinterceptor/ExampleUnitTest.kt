@@ -1,4 +1,4 @@
-package com.example.ktor1
+package com.example.chuckernetworkinterceptor
 
 import org.junit.Test
 

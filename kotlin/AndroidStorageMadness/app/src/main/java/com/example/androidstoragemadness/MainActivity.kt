@@ -283,7 +283,7 @@ class MainActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
                 // https://developer.android.com/reference/android/provider/MediaStore#ACTION_IMAGE_CAPTURE
-                takenPhotoFile = getInternalStoragePathOrFile(fileName = "camera_photo_${System.currentTimeMillis()}.jpg").also {
+                takenPhotoFile = internalFilesDir(fileName = "camera_photo_${System.currentTimeMillis()}.jpg").also {
                     if (!it.exists()) it.createNewFile()
                 }
                 /** fileProvider file should be exactly in the "path" attribute that u define in file_paths.xml and declare provider in manifest */
@@ -299,7 +299,7 @@ class MainActivity : AppCompatActivity() {
                     Snackbar.make(binding.root, "You don't have a camera on your device!", Snackbar.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
-                takenVideoFile = getInternalStoragePathOrFile(fileName = "camera_video_${System.currentTimeMillis()}.mp4").also {
+                takenVideoFile = internalFilesDir(fileName = "camera_video_${System.currentTimeMillis()}.mp4").also {
                     if (!it.exists()) it.createNewFile()
                 }
                 /** fileProvider file should be exactly in the "path" attribute that u define in file_paths.xml and declare provider in manifest */
@@ -315,7 +315,17 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             btnDownloadPdfDownloadManager.setOnClickListener {
                 if (!isDownloadValidated(isDownloadManager = true)) return@setOnClickListener
-
+                val downloadItemList = listOf(
+                    FileDownloader.DownloadItem("", ""),
+                    FileDownloader.DownloadItem("", ""),
+                )
+                FileDownloader(
+                    downloadItemsList = downloadItemList,
+                    context = this@MainActivity,
+                    "",
+                    "",
+                    ""
+                )
             }
             btnDownloadMultipleFilesDownloadManager.setOnClickListener {
                 if (!isDownloadValidated(isDownloadManager = true)) return@setOnClickListener
