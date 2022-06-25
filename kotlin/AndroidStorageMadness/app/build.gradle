@@ -64,11 +64,11 @@ dependencies {
     implementation 'com.mindorks.android:prdownloader:0.6.0'
 
     // Exo Player
-    implementation "com.google.android.exoplayer:exoplayer:2.17.1"
+    implementation "com.google.android.exoplayer:exoplayer:2.18.0"
 
-    // AndroidX Fragment - need this for registerForActivityResult else wont work on Samsung and OnePlus
+    // AndroidX Fragment
     implementation "androidx.fragment:fragment-ktx:1.4.1"
 
-    // AndroidX Activity - need this for registerForActivityResult else wont work on Samsung and OnePlus
+    // AndroidX Activity
     implementation "androidx.activity:activity-ktx:1.4.0"
 }

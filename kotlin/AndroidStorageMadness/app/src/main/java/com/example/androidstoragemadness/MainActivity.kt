@@ -13,6 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.FileProvider
+import com.downloader.OnDownloadListener
+import com.downloader.PRDownloader
 import com.example.androidstoragemadness.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
@@ -166,6 +168,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    // Doesnt work on samsung, oppo, oneplus
     private val takePhotoResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
         if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
         val data = it.data ?: return@registerForActivityResult
@@ -313,36 +316,93 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.apply {
-            btnDownloadPdfDownloadManager.setOnClickListener {
-                if (!isDownloadValidated(isDownloadManager = true)) return@setOnClickListener
-                val downloadItemList = listOf(
-                    FileDownloader.DownloadItem("", ""),
-                    FileDownloader.DownloadItem("", ""),
-                )
+            btnDownloadMultipleFilesDownloadManager.setOnClickListener {
+                if (!isValidDownload(isDownloadManager = true)) return@setOnClickListener
+                val downloadItemList = videoUrlList.map { url: String ->
+                    FileDownloader.DownloadItem(
+                        url = url,
+                        fileName = url.substringAfterLast(delimiter = "/").substringBeforeLast(delimiter = ".").sanitize()
+                    )
+                }
                 FileDownloader(
                     downloadItemsList = downloadItemList,
                     context = this@MainActivity,
-                    "",
-                    "",
-                    ""
+                    fileDirectory = DIRECTORY_DOWNLOAD_MANAGER_VIDEOS,
+                    downloadTitle = "Download Videos",
+                    downloadDesc = "Downloading Pixabay Videos...",
+                    onSuccess = { it: ArrayList<FileDownloader.DownloadItem> ->
+                        showFile(
+                            type = FileType.VIDEO.value,
+                            path = internalFilesDir(directory = DIRECTORY_DOWNLOAD_MANAGER_VIDEOS).listFiles()?.last()?.absolutePath ?: ""
+                        )
+                    },
+                    onFailure = { it: ArrayList<FileDownloader.DownloadItem> ->
+                        binding.root.showSnackBar("Failed to download files.")
+                    }
                 )
             }
-            btnDownloadMultipleFilesDownloadManager.setOnClickListener {
-                if (!isDownloadValidated(isDownloadManager = true)) return@setOnClickListener
+            btnDownloadMultipleVideosPrDownloader.setOnClickListener {
+                if (!isValidDownload()) return@setOnClickListener
+                val downloadedFilesSuccessList = ArrayList<File>()
+                val downloadedFilesFailedList = ArrayList<File>()
+                var urlCount = 0
+                val url = videoUrlList.first()
 
-            }
-            btnDownloadImagePrDownloader.setOnClickListener {
-                if (!isDownloadValidated()) return@setOnClickListener
+                fun downloadWithPrDownloader(url: String, onDownloadComplete: () -> Unit = {}) {
+                    val fileName = prepareCustomName(url = url, prefix = "pr_download")
+                    val file = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS, fileName = fileName)
+                    val filePath = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS).absolutePath
 
-            }
-            btnDownloadMultipleFilesPrDownloader.setOnClickListener {
-                if (!isDownloadValidated()) return@setOnClickListener
+                    showNotification(fileName)
 
+                    println(
+                        """
+                        File name: $fileName
+                        File path: ${file.absolutePath}
+                    """.trimIndent()
+                    )
+
+                    if (file.exists()) {
+                        if (urlCount < videoUrlList.size) {
+                            downloadWithPrDownloader(videoUrlList[urlCount++])
+                        } else {
+                            onDownloadComplete.invoke()
+                        }
+                        return
+                    }
+
+                    PRDownloader
+                        .download(url, filePath, fileName)
+                        .build()
+                        .start(object : OnDownloadListener {
+                            override fun onDownloadComplete() {
+                                binding.root.showSnackBar("$fileName Download Complete")
+                                downloadedFilesSuccessList.add(file)
+                                if (urlCount < videoUrlList.size) {
+                                    downloadWithPrDownloader(videoUrlList[urlCount++])
+                                } else {
+                                    onDownloadComplete.invoke()
+                                }
+                            }
+
+                            override fun onError(error: com.downloader.Error?) {
+                                binding.root.showSnackBar("Error downloading $fileName - $error")
+                                downloadedFilesFailedList.add(file)
+                            }
+                        })
+                }
+
+                downloadWithPrDownloader(url) {
+                    showFile(
+                        type = FileType.VIDEO.value,
+                        path = downloadedFilesSuccessList.last().absolutePath
+                    )
+                }
             }
         }
     }
 
-    private fun isDownloadValidated(isDownloadManager: Boolean = false): Boolean {
+    private fun isValidDownload(isDownloadManager: Boolean = false): Boolean {
         if (!isOnline()) {
             binding.root.showSnackBar("You are offline. Connect to the Internet and try again.")
             return false

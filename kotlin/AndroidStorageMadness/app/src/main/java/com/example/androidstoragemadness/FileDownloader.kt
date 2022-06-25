@@ -6,12 +6,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.Uri
+import android.os.Parcelable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.parcelize.Parcelize
+
+// Checksum - expected downloads == actual downloads
+// Retry failed downloads twice and quit
+// Show failed downloads in a popup
 
 class FileDownloader(
-    downloadItemsList: List<DownloadItem>,
+    private val downloadItemsList: List<DownloadItem>,
     private val context: Context,
     private val fileDirectory: String,
     private val downloadTitle: String,
@@ -19,87 +25,32 @@ class FileDownloader(
     private val isOAuth: Boolean = false,
     private val oAuthHeader: String? = "",
     private val oAuthValue: String? = "",
-    private val onSuccess: () -> Unit = {},
-    private val onFailure: () -> Unit = {},
+    private val onSuccess: (downloadedItemsList: ArrayList<DownloadItem>) -> Unit,
+    private val onFailure: (downloadedItemsList: ArrayList<DownloadItem>) -> Unit,
 ) {
-    private val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-    private var expectedFilesCount = 0
-    private var downloadedFilesCount = 0
-    private var retryCount = 2
-    private var reDownloadItemsList = ArrayList<DownloadItem>()
 
+    /** This will be called when the downloads are complete in CustomBroadcastReceiver */
     private val downloadCompleteReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val query = DownloadManager.Query().also { it: DownloadManager.Query ->
-                val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0)
-                it.setFilterById(downloadId)
-            }
-            val cursor = downloadManager.query(query)
-            var isStatusSuccessful = false
-            var fileName = ""
-            var uriString = ""
-            var localUriString = ""
-
-            try {
-                if (cursor != null && cursor.moveToFirst()) {
-                    isStatusSuccessful = cursor.isStatusSuccessful()
-                    fileName = cursor.fileName()
-                    uriString = cursor.uriString()
-                    localUriString = cursor.localUriString()
-                    cursor.close()
-                }
-            } catch (e: Exception) {
-                println(e.message)
-            }
-
-            println("""
-                    isStatusSuccessful: $isStatusSuccessful
-                    fileName: $fileName
-                    uriString: $uriString
-                    localUriString: $localUriString
-                 """.trimIndent())
-
-//          if (localUriString?.contains("biiiigfile") == true) {
-//              val file = File(Uri.parse(downloadFileLocalUri).path)
-//              val path = file.absolutePath
-//              moveFile(
-//                  context = context,
-//                  inputPath = getDirectory(path),
-//                  path = downloadFileLocalUri.substringBeforeLast("/").substringAfterLast("/"),
-//                  fileName = downloadFileLocalUri.substringAfterLast("/")
-//              )
-//          }
-
-            if (isStatusSuccessful) {
-                downloadedFilesCount++
-                context.externalFilesDir(subDir = fileDirectory, fileName = fileName).setLastModified(System.currentTimeMillis())
-                if (downloadedFilesCount == expectedFilesCount) {
-                    unregisterReceiver(context)
-                    onSuccess.invoke()
-                }
+            if (intent.action != BROADCAST_DOWNLOAD_COMPLETE) return
+            val downloadedItemsList = intent.getParcelableArrayListExtra<DownloadItem>(INTENT_DOWNLOAD_STATUS)
+            if (downloadItemsList.size == downloadedItemsList?.size) {
+                unregisterReceiver(context)
+                onSuccess.invoke(downloadedItemsList)
             } else {
-                reDownloadItemsList.add(DownloadItem(url = uriString, fileName = fileName))
-                if (retryCount > 0) {
-                    startDownloading(reDownloadItemsList)
-                    retryCount--
-                    reDownloadItemsList.clear()
-                } else {
-                    unregisterReceiver(context)
-                    onFailure.invoke()
-                }
+                onFailure.invoke(ArrayList())
             }
         }
     }
 
     init {
         registerReceiver()
-        startDownloading(downloadItemsList)
+        start()
     }
 
-    private fun startDownloading(downloadItemsList: List<DownloadItem>) = CoroutineScope(IO).launch {
+    private fun start() = CoroutineScope(IO).launch {
         if (downloadItemsList.isEmpty()) return@launch
-        downloadedFilesCount = 0
-        expectedFilesCount = downloadItemsList.size
+        val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         downloadItemsList.forEach { downloadItem: DownloadItem ->
             val downloadRequest = DownloadManager.Request(Uri.parse(downloadItem.url)).apply {
                 if (isOAuth) addRequestHeader(oAuthHeader, oAuthValue)
@@ -118,25 +69,19 @@ class FileDownloader(
     }
 
     private fun registerReceiver() {
-        try {
-            context.registerReceiver(downloadCompleteReceiver, IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) // Register broadcast receiver to get download status
-        } catch (e: Exception) {
-            println(e.message)
-        }
+        context.registerReceiver(downloadCompleteReceiver, IntentFilter(BROADCAST_DOWNLOAD_COMPLETE))
     }
 
     private fun unregisterReceiver(context: Context) {
-        try {
-            context.unregisterReceiver(downloadCompleteReceiver)
-        } catch (e: Exception) {
-            println(e.message)
-        }
+        context.unregisterReceiver(downloadCompleteReceiver)
     }
 
+    @Parcelize
     data class DownloadItem(
-        var url: String,
-        var fileName: String,
-    )
+        val url: String,
+        val fileName: String,
+        val isDownloaded: Boolean = false,
+    ) : Parcelable
 }
 
 

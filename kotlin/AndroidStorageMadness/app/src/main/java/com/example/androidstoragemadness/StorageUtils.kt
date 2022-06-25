@@ -39,6 +39,22 @@ const val TB = 1024.0 * GB
 
 const val FILE_PROVIDER_AUTHORITY = BuildConfig.APPLICATION_ID + ".fileprovider"
 
+const val DIRECTORY_DOWNLOAD_MANAGER_VIDEOS = "DIRECTORY_DOWNLOAD_MANAGER_VIDEOS"
+const val DIRECTORY_PR_DOWNLOADER_VIDEOS = "DIRECTORY_PR_DOWNLOADER_VIDEOS"
+
+const val BROADCAST_DOWNLOAD_COMPLETE = "BROADCAST_DOWNLOAD_COMPLETE"
+
+val videoUrlList = arrayOf(
+    "https://pixabay.com/videos/download/video-2119_medium.mp4",
+    "https://pixabay.com/videos/download/video-13704_medium.mp4",
+    "https://pixabay.com/videos/download/video-3998_medium.mp4",
+    "https://pixabay.com/videos/download/video-4006_medium.mp4",
+    "https://pixabay.com/videos/download/video-22183_medium.mp4",
+    "https://pixabay.com/videos/download/video-1890_medium.mp4",
+    "https://pixabay.com/videos/download/video-110790_medium.mp4",
+    "https://pixabay.com/videos/download/video-113004_medium.mp4"
+)
+
 val allowedImageFormats = arrayOf(
     MimeType.IMAGE_JPG.value,
     MimeType.IMAGE_JPEG.value,
@@ -292,7 +308,11 @@ fun Context.readFileFromExternalDbAndWriteFileToInternalDb(inputFileUri: Uri): F
     )
 
     // Copy file to internal storage
-    try {
+    return copyFileToInternalStorage(inputFileUri, inputFileName ?: "")
+}
+
+fun Context.copyFileToInternalStorage(inputFileUri: Uri, inputFileName: String): File? {
+    return try {
         val outputFile = File(filesDir?.absolutePath + File.separator + inputFileName) // Place where our input file is copied
         val fileOutputStream = FileOutputStream(outputFile)
         val fileInputStream = contentResolver?.openInputStream(inputFileUri)
@@ -300,11 +320,11 @@ fun Context.readFileFromExternalDbAndWriteFileToInternalDb(inputFileUri: Uri): F
         fileInputStream?.close()
         fileOutputStream.flush()
         fileOutputStream.close()
-        return outputFile
+        outputFile
     } catch (e: IOException) {
         println(e.message)
+        null
     }
-    return null
 }
 
 /** Checks if a volume containing external storage is available for read and write. */
@@ -448,6 +468,14 @@ fun Cursor.uriString(): String {
 fun Cursor.localUriString(): String {
     val columnLocalUri = this.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI)
     return this.getString(columnLocalUri)
+}
+
+fun prepareCustomName(
+    url: String,
+    prefix: String,
+): String {
+    if (url.isBlank() || prefix.isBlank()) return "file_${UUID.randomUUID()}".sanitize()
+    return prefix.sanitize() + "_" + url.substringAfterLast(delimiter = "/").substringBeforeLast(delimiter = ".").sanitize()
 }
 
 private enum class UriAuthority(val value: String) {

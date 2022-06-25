@@ -99,13 +99,6 @@
                 android:layout_height="16dp" />
 
             <Button
-                android:id="@+id/btnDownloadPdfDownloadManager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Download Pdf - Download Manager"
-                android:textAllCaps="false" />
-
-            <Button
                 android:id="@+id/btnDownloadMultipleFilesDownloadManager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,17 +106,10 @@
                 android:textAllCaps="false" />
 
             <Button
-                android:id="@+id/btnDownloadImagePrDownloader"
+                android:id="@+id/btnDownloadMultipleVideosPrDownloader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Download Image - Pr Downloader"
-                android:textAllCaps="false" />
-
-            <Button
-                android:id="@+id/btnDownloadMultipleFilesPrDownloader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Download Multiple Files - Pr Downloader"
+                android:text="Download Multiple Videos - Pr Downloader"
                 android:textAllCaps="false" />
         </LinearLayout>
     </ScrollView>

@@ -10,6 +10,7 @@ import android.os.Build
 import android.view.View
 import androidx.annotation.RequiresPermission
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
 import com.google.android.material.snackbar.Snackbar
 
 fun Activity?.isAppEnabled(fullyQualifiedAppId: String): Boolean {
@@ -58,6 +59,14 @@ fun Context.isOnline(): Boolean {
 
         hasWifi || hasCellular || hasEthernet
     } else checkOldWay()
+}
+
+fun Context.showNotification(fileName: String) {
+    NotificationCompat.Builder(this, "channelId")
+        .setContentTitle("Downloading $fileName")
+        .setSmallIcon(R.drawable.ic_launcher_foreground)
+        .setPriority(NotificationCompat.PRIORITY_HIGH) // For < API 26 this is a must
+        .build()
 }
 
 enum class App(val id: String) {

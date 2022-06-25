@@ -12,7 +12,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 
+const val INTENT_DOWNLOAD_STATUS = "INTENT_DOWNLOAD_STATUS"
+
 class CustomBroadcastReceiver : BroadcastReceiver() {
+
+    val downloadedItemsList = ArrayList<FileDownloader.DownloadItem>()
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
@@ -46,33 +50,66 @@ class CustomBroadcastReceiver : BroadcastReceiver() {
     }
 
     @SuppressLint("Range")
-    private fun doOnDownloadComplete(context: Context, intent: Intent) {
+    private fun doOnDownloadComplete(context: Context, intent: Intent) = CoroutineScope(IO).launch {
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0)
         val query = DownloadManager.Query().also { it: DownloadManager.Query ->
+            val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0)
             it.setFilterById(downloadId)
         }
-        val cursor = downloadManager.query(query)
-        val downloadIntent = Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        val downloadStatusIntent = Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        val cursor = downloadManager.query(query) ?: return@launch
 
         try {
-            if (cursor != null && cursor.moveToFirst()) {
-                val columnStatus = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
-                val success = cursor.getInt(columnStatus) == DownloadManager.STATUS_SUCCESSFUL
-                if (success) {
+            if (!cursor.moveToFirst()) {
+                if (downloadedItemsList.isEmpty()) return@launch
+                downloadStatusIntent.putParcelableArrayListExtra(INTENT_DOWNLOAD_STATUS, downloadedItemsList)
+                context.sendBroadcast(downloadStatusIntent)
+                downloadedItemsList.clear()
+                return@launch
+            }
+
+            val fileName = cursor.fileName()
+            val uriString = cursor.uriString()
+            val localUriString = cursor.localUriString()
+            val columnStatus = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
+
+            println("""
+                    fileName: $fileName
+                    uriString: $uriString
+                    localUriString: $localUriString
+                """.trimIndent())
+
+            when (cursor.getInt(columnStatus)) {
+                DownloadManager.STATUS_SUCCESSFUL -> {
+                    println("$fileName download successful")
                     val downloadUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_URI))
                     val downloadFileLocalUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI))
                     if (downloadFileLocalUri != null) {
                         val uri = Uri.parse(downloadFileLocalUri) ?: Uri.EMPTY
                         val file = File(uri.path ?: "")
-                        downloadIntent.putExtra("FILE_CHECKSUM_PASSED", file.absolutePath)
+                        if (localUriString.contains("videos")) {
+//                            context.externalFilesDir(subDir = fileDirectory, fileName = fileName).setLastModified(System.currentTimeMillis())
+                            context.copyFileToInternalStorage(inputFileUri = Uri.parse(downloadFileLocalUri), inputFileName = DIRECTORY_DOWNLOAD_MANAGER_VIDEOS)
+                            // TODO delete file from external storage after copying to internal storage
+                        }
+                        val downloadItem = FileDownloader.DownloadItem(
+                            url = "",
+                            fileName = "",
+                            isDownloaded = true
+                        )
+                        downloadedItemsList.add(downloadItem)
                     }
                 }
+                DownloadManager.STATUS_PAUSED -> println("$fileName download paused")
+                DownloadManager.STATUS_PENDING -> println("$fileName download pending")
+                DownloadManager.STATUS_RUNNING -> println("$fileName download running")
+                DownloadManager.STATUS_FAILED -> println("$fileName download failed")
+                else -> println("Unknown error ${cursor.getInt(columnStatus)} for $fileName")
             }
+
+            cursor.close()
         } catch (e: Exception) {
             println(e.message)
         }
-        cursor.close()
-        context.sendBroadcast(downloadIntent)
     }
 }
