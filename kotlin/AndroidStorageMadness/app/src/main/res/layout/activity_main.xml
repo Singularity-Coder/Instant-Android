@@ -106,6 +106,13 @@
                 android:textAllCaps="false" />
 
             <Button
+                android:id="@+id/btnDownloadFilePrDownloader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Download Video - Pr Downloader"
+                android:textAllCaps="false" />
+
+            <Button
                 android:id="@+id/btnDownloadMultipleVideosPrDownloader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

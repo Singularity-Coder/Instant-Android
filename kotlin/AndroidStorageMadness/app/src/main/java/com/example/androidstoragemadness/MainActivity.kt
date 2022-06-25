@@ -341,6 +341,46 @@ class MainActivity : AppCompatActivity() {
                     }
                 )
             }
+            btnDownloadFilePrDownloader.setOnClickListener {
+                val url = videoUrlList.first()
+                val fileName = prepareCustomName(url = url, prefix = "pr_download")
+                val file = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS, fileName = fileName)
+                val filePath = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS).absolutePath
+
+                showNotification(fileName)
+
+                println(
+                    """
+                        File name: $fileName
+                        File path: ${file.absolutePath}
+                    """.trimIndent()
+                )
+
+                if (file.exists()) {
+                    showFile(
+                        type = FileType.VIDEO.value,
+                        path = file.absolutePath
+                    )
+                    return@setOnClickListener
+                }
+
+                PRDownloader
+                    .download(url, filePath, fileName)
+                    .build()
+                    .start(object : OnDownloadListener {
+                        override fun onDownloadComplete() {
+                            binding.root.showSnackBar("$fileName Download Complete")
+                            showFile(
+                                type = FileType.VIDEO.value,
+                                path = file.absolutePath
+                            )
+                        }
+
+                        override fun onError(error: com.downloader.Error?) {
+                            binding.root.showSnackBar("Error downloading $fileName - $error")
+                        }
+                    })
+            }
             btnDownloadMultipleVideosPrDownloader.setOnClickListener {
                 if (!isValidDownload()) return@setOnClickListener
                 val downloadedFilesSuccessList = ArrayList<File>()
