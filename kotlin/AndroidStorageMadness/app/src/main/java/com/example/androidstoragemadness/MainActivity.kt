@@ -19,7 +19,6 @@ import com.example.androidstoragemadness.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
-
 // https://stackoverflow.com/questions/51565897/saving-files-in-android-for-beginners-internal-external-storage
 
 // MANAGE_EXTERNAL_STORAGE - https://www.youtube.com/watch?v=0313bhp-8uA
@@ -171,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    // Doesnt work on samsung, oppo, oneplus
+    /** Photo picking doesnt work on samsung, oppo, oneplus. Use old onActivityResult */
     private val takePhotoResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
         if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
         val data = it.data ?: return@registerForActivityResult
@@ -284,7 +283,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             btnTakePhoto.setOnClickListener {
-                if (!isCameraPresent()) {
+                if (isCameraPresent().not()) {
                     Snackbar.make(binding.root, "You don't have a camera on your device!", Snackbar.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
@@ -301,7 +300,7 @@ class MainActivity : AppCompatActivity() {
                 takePhotoResult.launch(intent)
             }
             btnTakeVideo.setOnClickListener {
-                if (!isCameraPresent()) {
+                if (isCameraPresent().not()) {
                     Snackbar.make(binding.root, "You don't have a camera on your device!", Snackbar.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
@@ -319,8 +318,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.apply {
+            /** Download manager needs external storage permission */
             btnDownloadMultipleFilesDownloadManager.setOnClickListener {
-                if (!isValidDownload(isDownloadManager = true)) return@setOnClickListener
+                if (isValidDownload(isDownloadManager = true).not()) return@setOnClickListener
                 getDownloadableUrlFromWebView(url = videoUrlList.shuffled().first()) { downloadableUrl: String ->
                     val downloadItemList = listOf(downloadableUrl).map { url: String ->
                         FileDownloader.DownloadItem(
@@ -347,13 +347,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             btnDownloadFilePrDownloader.setOnClickListener {
-                if (!isValidDownload()) return@setOnClickListener
+                if (isValidDownload().not()) return@setOnClickListener
                 getDownloadableUrlFromWebView(url = videoUrlList.first()) { downloadableUrl: String ->
                     val fileName = prepareCustomName(url = downloadableUrl, prefix = "pr_download")
                     val file = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS, fileName = fileName)
                     val filePath = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS).absolutePath
-
-                    showNotification(fileName)
 
                     println(
                         """
@@ -369,6 +367,8 @@ class MainActivity : AppCompatActivity() {
                         )
                         return@getDownloadableUrlFromWebView
                     }
+
+                    showNotification(fileName)
 
                     PRDownloader
                         .download(downloadableUrl, filePath, fileName)
@@ -389,7 +389,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             btnDownloadMultipleVideosPrDownloader.setOnClickListener {
-                if (!isValidDownload()) return@setOnClickListener
+                if (isValidDownload().not()) return@setOnClickListener
                 val downloadedFilesSuccessList = ArrayList<File>()
                 val downloadedFilesFailedList = ArrayList<File>()
                 var urlCount = 0
@@ -400,8 +400,6 @@ class MainActivity : AppCompatActivity() {
                         val fileName = prepareCustomName(url = downloadableUrl, prefix = "pr_download")
                         val file = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS, fileName = fileName)
                         val filePath = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS).absolutePath
-
-                        showNotification(fileName)
 
                         println(
                             """
@@ -418,6 +416,8 @@ class MainActivity : AppCompatActivity() {
                             }
                             return@getDownloadableUrlFromWebView
                         }
+
+                        showNotification(fileName)
 
                         PRDownloader
                             .download(downloadableUrl, filePath, fileName)
@@ -441,6 +441,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
+                // FIXME - callback not working even though its getting called
                 downloadWithPrDownloader(url) {
                     println("All downloads complete. Show file ${downloadedFilesSuccessList.last().absolutePath}")
                     showFile(
@@ -453,12 +454,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun isValidDownload(isDownloadManager: Boolean = false): Boolean {
-        if (!isOnline()) {
+        if (isOnline().not()) {
             binding.root.showSnackBar("You are offline. Connect to the Internet and try again.")
             return false
         }
 
-        if (!isExternalStorageReadable()) {
+        if (isExternalStorageReadable().not()) {
             binding.root.showSnackBar("Cannot read your external storage.")
             return false
         }
@@ -476,7 +477,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (isDownloadManager) {
-            if (!isAppEnabled(App.DOWNLOAD_MANAGER.id)) {
+            if (isOldStorageWritePermissionGranted().not()) {
+                binding.root.showSnackBar("Need external storage permission to download with download manager.")
+                return false
+            }
+
+            if (isAppEnabled(App.DOWNLOAD_MANAGER.id).not()) {
                 binding.root.showSnackBar("Download Manager system App is disabled. Go to Settings -> Apps -> All Apps -> Show System -> Search for Download Manager -> Enable")
                 return false
             }
