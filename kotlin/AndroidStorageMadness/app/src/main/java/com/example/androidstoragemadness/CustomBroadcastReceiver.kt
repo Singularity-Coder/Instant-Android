@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Parcelable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.delay
@@ -15,8 +16,6 @@ import java.io.File
 const val INTENT_DOWNLOAD_STATUS = "INTENT_DOWNLOAD_STATUS"
 
 class CustomBroadcastReceiver : BroadcastReceiver() {
-
-    val downloadedItemsList = ArrayList<FileDownloader.DownloadItem>()
 
     override fun onReceive(context: Context, intent: Intent) {
         when (intent.action) {
@@ -56,17 +55,11 @@ class CustomBroadcastReceiver : BroadcastReceiver() {
             val downloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0)
             it.setFilterById(downloadId)
         }
-        val downloadStatusIntent = Intent(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+        val downloadStatusIntent = Intent(BROADCAST_DOWNLOAD_COMPLETE)
         val cursor = downloadManager.query(query) ?: return@launch
 
         try {
-            if (!cursor.moveToFirst()) {
-                if (downloadedItemsList.isEmpty()) return@launch
-                downloadStatusIntent.putParcelableArrayListExtra(INTENT_DOWNLOAD_STATUS, downloadedItemsList)
-                context.sendBroadcast(downloadStatusIntent)
-                downloadedItemsList.clear()
-                return@launch
-            }
+            if (!cursor.moveToFirst()) return@launch
 
             val fileName = cursor.fileName()
             val uriString = cursor.uriString()
@@ -87,17 +80,22 @@ class CustomBroadcastReceiver : BroadcastReceiver() {
                     if (downloadFileLocalUri != null) {
                         val uri = Uri.parse(downloadFileLocalUri) ?: Uri.EMPTY
                         val file = File(uri.path ?: "")
-                        if (localUriString.contains("videos")) {
-//                            context.externalFilesDir(subDir = fileDirectory, fileName = fileName).setLastModified(System.currentTimeMillis())
-                            context.copyFileToInternalStorage(inputFileUri = Uri.parse(downloadFileLocalUri), inputFileName = DIRECTORY_DOWNLOAD_MANAGER_VIDEOS)
+                        if (localUriString.contains(DIRECTORY_DOWNLOAD_MANAGER_VIDEOS)) {
+//                            context.internalFilesDir(directory = DIRECTORY_DOWNLOAD_MANAGER_VIDEOS, fileName = fileName).also {
+//                                if (!it.exists()) it.createNewFile()
+//                            }
+//                            context.copyFileToInternalStorage(
+//                                inputFileUri = Uri.parse(downloadFileLocalUri),
+//                                inputCustomPath = DIRECTORY_DOWNLOAD_MANAGER_VIDEOS,
+//                                inputFileName = fileName
+//                            )
+                            // context.externalFilesDir(subDir = fileDirectory, fileName = fileName).setLastModified(System.currentTimeMillis())
+                            // TODO copy file to internal not working with custom path
                             // TODO delete file from external storage after copying to internal storage
                         }
-                        val downloadItem = FileDownloader.DownloadItem(
-                            url = "",
-                            fileName = "",
-                            isDownloaded = true
-                        )
-                        downloadedItemsList.add(downloadItem)
+                        val downloadItem = FileDownloader.DownloadItem(url = "", fileName = "", isDownloaded = true)
+                        downloadStatusIntent.putParcelableArrayListExtra(INTENT_DOWNLOAD_STATUS, ArrayList<FileDownloader.DownloadItem>().apply { add(downloadItem) })
+                        context.sendBroadcast(downloadStatusIntent)
                     }
                 }
                 DownloadManager.STATUS_PAUSED -> println("$fileName download paused")

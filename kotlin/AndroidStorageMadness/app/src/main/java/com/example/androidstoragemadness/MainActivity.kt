@@ -19,6 +19,9 @@ import com.example.androidstoragemadness.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
+
+// https://stackoverflow.com/questions/51565897/saving-files-in-android-for-beginners-internal-external-storage
+
 // MANAGE_EXTERNAL_STORAGE - https://www.youtube.com/watch?v=0313bhp-8uA
 // Google Play Store rejects this if u are not one of these apps - https://support.google.com/googleplay/android-developer/answer/10467955?hl=en#zippy=%2Cpermitted-uses-of-the-all-files-access-permission
 
@@ -281,7 +284,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.apply {
             btnTakePhoto.setOnClickListener {
-                if (!isCameraPresentOnDevice()) {
+                if (!isCameraPresent()) {
                     Snackbar.make(binding.root, "You don't have a camera on your device!", Snackbar.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
@@ -298,7 +301,7 @@ class MainActivity : AppCompatActivity() {
                 takePhotoResult.launch(intent)
             }
             btnTakeVideo.setOnClickListener {
-                if (!isCameraPresentOnDevice()) {
+                if (!isCameraPresent()) {
                     Snackbar.make(binding.root, "You don't have a camera on your device!", Snackbar.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
@@ -318,78 +321,35 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             btnDownloadMultipleFilesDownloadManager.setOnClickListener {
                 if (!isValidDownload(isDownloadManager = true)) return@setOnClickListener
-                val downloadItemList = videoUrlList.map { url: String ->
-                    FileDownloader.DownloadItem(
-                        url = url,
-                        fileName = url.substringAfterLast(delimiter = "/").substringBeforeLast(delimiter = ".").sanitize()
-                    )
-                }
-                FileDownloader(
-                    downloadItemsList = downloadItemList,
-                    context = this@MainActivity,
-                    fileDirectory = DIRECTORY_DOWNLOAD_MANAGER_VIDEOS,
-                    downloadTitle = "Download Videos",
-                    downloadDesc = "Downloading Pixabay Videos...",
-                    onSuccess = { it: ArrayList<FileDownloader.DownloadItem> ->
-                        showFile(
-                            type = FileType.VIDEO.value,
-                            path = internalFilesDir(directory = DIRECTORY_DOWNLOAD_MANAGER_VIDEOS).listFiles()?.last()?.absolutePath ?: ""
+                getDownloadableUrlFromWebView(url = videoUrlList.shuffled().first()) { downloadableUrl: String ->
+                    val downloadItemList = listOf(downloadableUrl).map { url: String ->
+                        FileDownloader.DownloadItem(
+                            url = url,
+                            fileName = prepareCustomName(url = url, prefix = "download_man")
                         )
-                    },
-                    onFailure = { it: ArrayList<FileDownloader.DownloadItem> ->
-                        binding.root.showSnackBar("Failed to download files.")
                     }
-                )
-            }
-            btnDownloadFilePrDownloader.setOnClickListener {
-                val url = videoUrlList.first()
-                val fileName = prepareCustomName(url = url, prefix = "pr_download")
-                val file = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS, fileName = fileName)
-                val filePath = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS).absolutePath
-
-                showNotification(fileName)
-
-                println(
-                    """
-                        File name: $fileName
-                        File path: ${file.absolutePath}
-                    """.trimIndent()
-                )
-
-                if (file.exists()) {
-                    showFile(
-                        type = FileType.VIDEO.value,
-                        path = file.absolutePath
-                    )
-                    return@setOnClickListener
-                }
-
-                PRDownloader
-                    .download(url, filePath, fileName)
-                    .build()
-                    .start(object : OnDownloadListener {
-                        override fun onDownloadComplete() {
-                            binding.root.showSnackBar("$fileName Download Complete")
+                    FileDownloader(
+                        downloadItemsList = downloadItemList,
+                        context = this@MainActivity,
+                        fileDirectory = DIRECTORY_DOWNLOAD_MANAGER_VIDEOS,
+                        downloadTitle = "Download Videos",
+                        downloadDesc = "Downloading Pixabay Videos...",
+                        onSuccess = { it: ArrayList<FileDownloader.DownloadItem?> ->
                             showFile(
                                 type = FileType.VIDEO.value,
-                                path = file.absolutePath
+                                path = externalFilesDir(subDir = DIRECTORY_DOWNLOAD_MANAGER_VIDEOS).listFiles()?.last()?.absolutePath ?: ""
                             )
+                        },
+                        onFailure = { it: ArrayList<FileDownloader.DownloadItem?> ->
+                            binding.root.showSnackBar("Failed to download files.")
                         }
-
-                        override fun onError(error: com.downloader.Error?) {
-                            binding.root.showSnackBar("Error downloading $fileName - $error")
-                        }
-                    })
+                    )
+                }
             }
-            btnDownloadMultipleVideosPrDownloader.setOnClickListener {
+            btnDownloadFilePrDownloader.setOnClickListener {
                 if (!isValidDownload()) return@setOnClickListener
-                val downloadedFilesSuccessList = ArrayList<File>()
-                val downloadedFilesFailedList = ArrayList<File>()
-                var urlCount = 0
-                val url = videoUrlList.first()
-
-                fun downloadWithPrDownloader(url: String, onDownloadComplete: () -> Unit = {}) {
-                    val fileName = prepareCustomName(url = url, prefix = "pr_download")
+                getDownloadableUrlFromWebView(url = videoUrlList.first()) { downloadableUrl: String ->
+                    val fileName = prepareCustomName(url = downloadableUrl, prefix = "pr_download")
                     val file = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS, fileName = fileName)
                     val filePath = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS).absolutePath
 
@@ -403,36 +363,86 @@ class MainActivity : AppCompatActivity() {
                     )
 
                     if (file.exists()) {
-                        if (urlCount < videoUrlList.size) {
-                            downloadWithPrDownloader(videoUrlList[urlCount++])
-                        } else {
-                            onDownloadComplete.invoke()
-                        }
-                        return
+                        showFile(
+                            type = FileType.VIDEO.value,
+                            path = file.absolutePath
+                        )
+                        return@getDownloadableUrlFromWebView
                     }
 
                     PRDownloader
-                        .download(url, filePath, fileName)
+                        .download(downloadableUrl, filePath, fileName)
                         .build()
                         .start(object : OnDownloadListener {
                             override fun onDownloadComplete() {
                                 binding.root.showSnackBar("$fileName Download Complete")
-                                downloadedFilesSuccessList.add(file)
-                                if (urlCount < videoUrlList.size) {
-                                    downloadWithPrDownloader(videoUrlList[urlCount++])
-                                } else {
-                                    onDownloadComplete.invoke()
-                                }
+                                showFile(
+                                    type = FileType.VIDEO.value,
+                                    path = file.absolutePath
+                                )
                             }
 
                             override fun onError(error: com.downloader.Error?) {
                                 binding.root.showSnackBar("Error downloading $fileName - $error")
-                                downloadedFilesFailedList.add(file)
                             }
                         })
                 }
+            }
+            btnDownloadMultipleVideosPrDownloader.setOnClickListener {
+                if (!isValidDownload()) return@setOnClickListener
+                val downloadedFilesSuccessList = ArrayList<File>()
+                val downloadedFilesFailedList = ArrayList<File>()
+                var urlCount = 0
+                val url = videoUrlList.first()
+
+                fun downloadWithPrDownloader(url: String, onDownloadComplete: () -> Unit = {}) {
+                    getDownloadableUrlFromWebView(url = url) { downloadableUrl: String ->
+                        val fileName = prepareCustomName(url = downloadableUrl, prefix = "pr_download")
+                        val file = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS, fileName = fileName)
+                        val filePath = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS).absolutePath
+
+                        showNotification(fileName)
+
+                        println(
+                            """
+                            File name: $fileName
+                            File path: ${file.absolutePath}
+                        """.trimIndent()
+                        )
+
+                        if (file.exists()) {
+                            if (urlCount < videoUrlList.lastIndex) {
+                                downloadWithPrDownloader(videoUrlList[urlCount++])
+                            } else {
+                                onDownloadComplete.invoke()
+                            }
+                            return@getDownloadableUrlFromWebView
+                        }
+
+                        PRDownloader
+                            .download(downloadableUrl, filePath, fileName)
+                            .build()
+                            .start(object : OnDownloadListener {
+                                override fun onDownloadComplete() {
+                                    binding.root.showSnackBar("$fileName Download Complete")
+                                    downloadedFilesSuccessList.add(file)
+                                    if (urlCount < videoUrlList.lastIndex) {
+                                        downloadWithPrDownloader(videoUrlList[urlCount++])
+                                    } else {
+                                        onDownloadComplete.invoke()
+                                    }
+                                }
+
+                                override fun onError(error: com.downloader.Error?) {
+                                    binding.root.showSnackBar("Error downloading $fileName - $error")
+                                    downloadedFilesFailedList.add(file)
+                                }
+                            })
+                    }
+                }
 
                 downloadWithPrDownloader(url) {
+                    println("All downloads complete. Show file ${downloadedFilesSuccessList.last().absolutePath}")
                     showFile(
                         type = FileType.VIDEO.value,
                         path = downloadedFilesSuccessList.last().absolutePath

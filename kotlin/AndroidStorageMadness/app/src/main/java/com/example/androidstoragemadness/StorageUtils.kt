@@ -20,7 +20,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
@@ -44,7 +43,7 @@ const val DIRECTORY_PR_DOWNLOADER_VIDEOS = "DIRECTORY_PR_DOWNLOADER_VIDEOS"
 
 const val BROADCAST_DOWNLOAD_COMPLETE = "BROADCAST_DOWNLOAD_COMPLETE"
 
-val videoUrlList = arrayOf(
+val videoUrlList = listOf(
     "https://pixabay.com/videos/download/video-2119_medium.mp4",
     "https://pixabay.com/videos/download/video-13704_medium.mp4",
     "https://pixabay.com/videos/download/video-3998_medium.mp4",
@@ -308,12 +307,20 @@ fun Context.readFileFromExternalDbAndWriteFileToInternalDb(inputFileUri: Uri): F
     )
 
     // Copy file to internal storage
-    return copyFileToInternalStorage(inputFileUri, inputFileName ?: "")
+    return copyFileToInternalStorage(inputFileUri = inputFileUri, inputFileName = inputFileName ?: "")
 }
 
-fun Context.copyFileToInternalStorage(inputFileUri: Uri, inputFileName: String): File? {
+fun Context.copyFileToInternalStorage(
+    inputFileUri: Uri,
+    inputCustomPath: String = "",
+    inputFileName: String,
+): File? {
     return try {
-        val outputFile = File(filesDir?.absolutePath + File.separator + inputFileName) // Place where our input file is copied
+        val outputFile = if (inputCustomPath.isNotBlank()) {
+            File(filesDir?.absolutePath + File.separator + inputCustomPath + File.separator + inputFileName) // Place where our input file is copied
+        } else {
+            File(filesDir?.absolutePath + File.separator + inputFileName) // Place where our input file is copied
+        }
         val fileOutputStream = FileOutputStream(outputFile)
         val fileInputStream = contentResolver?.openInputStream(inputFileUri)
         fileOutputStream.write(fileInputStream?.readBytes())
@@ -413,7 +420,7 @@ fun Context.createTempFile() {
 inline fun deleteAllFilesFrom(
     directory: File?,
     withName: String,
-    crossinline onDone: () -> Unit = {}
+    crossinline onDone: () -> Unit = {},
 ) {
     CoroutineScope(Default).launch {
         directory?.listFiles()?.forEach files@{ it: File? ->
@@ -475,7 +482,11 @@ fun prepareCustomName(
     prefix: String,
 ): String {
     if (url.isBlank() || prefix.isBlank()) return "file_${UUID.randomUUID()}".sanitize()
-    return prefix.sanitize() + "_" + url.substringAfterLast(delimiter = "/").substringBeforeLast(delimiter = ".").sanitize()
+    return prefix.sanitize() + "_" +
+            url.substringAfterLast(delimiter = "/")
+                .substringBeforeLast(delimiter = ".")
+                .lowercase(Locale.ROOT)
+                .sanitize()
 }
 
 private enum class UriAuthority(val value: String) {

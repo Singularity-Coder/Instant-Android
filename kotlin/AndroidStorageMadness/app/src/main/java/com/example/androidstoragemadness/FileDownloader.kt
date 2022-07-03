@@ -25,18 +25,20 @@ class FileDownloader(
     private val isOAuth: Boolean = false,
     private val oAuthHeader: String? = "",
     private val oAuthValue: String? = "",
-    private val onSuccess: (downloadedItemsList: ArrayList<DownloadItem>) -> Unit,
-    private val onFailure: (downloadedItemsList: ArrayList<DownloadItem>) -> Unit,
+    private val onSuccess: (downloadedItemsList: ArrayList<DownloadItem?>) -> Unit,
+    private val onFailure: (downloadedItemsList: ArrayList<DownloadItem?>) -> Unit,
 ) {
+
+    var downloadedItemsListFromIntent = ArrayList<DownloadItem?>()
 
     /** This will be called when the downloads are complete in CustomBroadcastReceiver */
     private val downloadCompleteReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action != BROADCAST_DOWNLOAD_COMPLETE) return
-            val downloadedItemsList = intent.getParcelableArrayListExtra<DownloadItem>(INTENT_DOWNLOAD_STATUS)
-            if (downloadItemsList.size == downloadedItemsList?.size) {
+            downloadedItemsListFromIntent.add(intent.getParcelableArrayListExtra<DownloadItem>(INTENT_DOWNLOAD_STATUS)?.first())
+            if (downloadItemsList.size == downloadedItemsListFromIntent.size) {
                 unregisterReceiver(context)
-                onSuccess.invoke(downloadedItemsList)
+                onSuccess.invoke(downloadedItemsListFromIntent)
             } else {
                 onFailure.invoke(ArrayList())
             }
@@ -52,6 +54,9 @@ class FileDownloader(
         if (downloadItemsList.isEmpty()) return@launch
         val downloadManager = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         downloadItemsList.forEach { downloadItem: DownloadItem ->
+            val file = context.externalFilesDir(subDir = DIRECTORY_DOWNLOAD_MANAGER_VIDEOS, fileName = downloadItem.fileName)
+            println("download man file path: ${file.absolutePath}")
+            if (file.exists()) return@forEach
             val downloadRequest = DownloadManager.Request(Uri.parse(downloadItem.url)).apply {
                 if (isOAuth) addRequestHeader(oAuthHeader, oAuthValue)
                 setAllowedOverMetered(true)
