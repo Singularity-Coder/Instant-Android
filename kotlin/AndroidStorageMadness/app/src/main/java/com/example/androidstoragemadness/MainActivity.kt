@@ -35,9 +35,7 @@ import java.io.File
 // View Image Online - use coil
 // View Video Online - Exo Player
 
-// Download PDF
-// Download Image
-// Download Video
+// TODO download progress
 
 class MainActivity : AppCompatActivity() {
 
@@ -170,18 +168,11 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    /** Photo picking doesnt work on samsung, oppo, oneplus. Use old onActivityResult */
-    private val takePhotoResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
-        if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
-        val data = it.data ?: return@registerForActivityResult
-        val thumbnailBitmap = (data.extras?.get("data") as? Bitmap)
+    private val takePhotoResult = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess: Boolean? ->
+        if (isSuccess?.not() == true) return@registerForActivityResult
+//        val thumbnailBitmap = (data.extras?.get("data") as? Bitmap)
 
-        println(
-            """
-            thumbnailBitmap: ${data.extras?.get("data")}
-            originalImagePath: ${takenPhotoFile.absolutePath}
-        """.trimIndent()
-        )
+        println("originalImagePath: ${takenPhotoFile.absolutePath}")
 
         showFile(
             type = FileType.IMAGE.value,
@@ -189,17 +180,11 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private val takeVideoResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { it: ActivityResult? ->
-        if (it?.resultCode != Activity.RESULT_OK) return@registerForActivityResult
-        val data = it.data ?: return@registerForActivityResult
-        val thumbnailBitmap = (data.extras?.get("data") as? Bitmap)
+    private val takeVideoResult = registerForActivityResult(ActivityResultContracts.CaptureVideo()) { isSuccess: Boolean? ->
+        if (isSuccess?.not() == true) return@registerForActivityResult
+//        val thumbnailBitmap = (data.extras?.get("data") as? Bitmap)
 
-        println(
-            """
-            thumbnailBitmap: ${data.extras?.get("data")}
-            originalVideoPath: ${takenVideoFile.absolutePath}
-        """.trimIndent()
-        )
+        println("originalVideoPath: ${takenVideoFile.absolutePath}")
 
         showFile(
             type = FileType.VIDEO.value,
@@ -293,11 +278,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 /** fileProvider file should be exactly in the "path" attribute that u define in file_paths.xml and declare provider in manifest */
                 val fileProvider = FileProvider.getUriForFile(this@MainActivity, FILE_PROVIDER_AUTHORITY, takenPhotoFile)
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE).apply {
-                    putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
-                }
-                if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
-                takePhotoResult.launch(intent)
+                takePhotoResult.launch(fileProvider)
             }
             btnTakeVideo.setOnClickListener {
                 if (isCameraPresent().not()) {
@@ -309,11 +290,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 /** fileProvider file should be exactly in the "path" attribute that u define in file_paths.xml and declare provider in manifest */
                 val fileProvider = FileProvider.getUriForFile(this@MainActivity, FILE_PROVIDER_AUTHORITY, takenVideoFile)
-                val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE).apply {
-                    putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
-                }
-                if (intent.resolveActivity(packageManager) == null) return@setOnClickListener
-                takeVideoResult.launch(intent)
+                takeVideoResult.launch(fileProvider)
             }
         }
 
@@ -395,7 +372,15 @@ class MainActivity : AppCompatActivity() {
                 var urlCount = 0
                 val url = videoUrlList.first()
 
-                fun downloadWithPrDownloader(url: String, onDownloadComplete: () -> Unit = {}) {
+                fun downloadWithPrDownloader(url: String) {
+                    fun onDownloadComplete() {
+                        println("All downloads complete. Show file ${downloadedFilesSuccessList.last().absolutePath}")
+                        showFile(
+                            type = FileType.VIDEO.value,
+                            path = downloadedFilesSuccessList.last().absolutePath
+                        )
+                    }
+
                     getDownloadableUrlFromWebView(url = url) { downloadableUrl: String ->
                         val fileName = prepareCustomName(url = downloadableUrl, prefix = "pr_download")
                         val file = internalFilesDir(directory = DIRECTORY_PR_DOWNLOADER_VIDEOS, fileName = fileName)
@@ -412,7 +397,7 @@ class MainActivity : AppCompatActivity() {
                             if (urlCount < videoUrlList.lastIndex) {
                                 downloadWithPrDownloader(videoUrlList[urlCount++])
                             } else {
-                                onDownloadComplete.invoke()
+                                onDownloadComplete()
                             }
                             return@getDownloadableUrlFromWebView
                         }
@@ -429,7 +414,7 @@ class MainActivity : AppCompatActivity() {
                                     if (urlCount < videoUrlList.lastIndex) {
                                         downloadWithPrDownloader(videoUrlList[urlCount++])
                                     } else {
-                                        onDownloadComplete.invoke()
+                                        onDownloadComplete()
                                     }
                                 }
 
@@ -441,14 +426,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                // FIXME - callback not working even though its getting called
-                downloadWithPrDownloader(url) {
-                    println("All downloads complete. Show file ${downloadedFilesSuccessList.last().absolutePath}")
-                    showFile(
-                        type = FileType.VIDEO.value,
-                        path = downloadedFilesSuccessList.last().absolutePath
-                    )
-                }
+                downloadWithPrDownloader(url)
             }
         }
     }
