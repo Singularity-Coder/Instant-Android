@@ -135,6 +135,7 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 * (Kotlin) https://github.com/Singularity-Coder/Android-Dialogs  
 * (Kotlin) Modal Bottom Sheet [Link](https://github.com/Singularity-Coder/Blog/tree/master/kotlin/BottomSheetDialogFragment)
 * (Kotlin) Persistent Bottom Sheet [Link](https://github.com/Singularity-Coder/Blog/tree/master/kotlin/BottomSheet)  
+* (Kotlin) Multi Touch [Link](https://github.com/Singularity-Coder/Blog/tree/master/kotlin/MultiTouchy)  
 
 
 ## Multi-Threading & Background Processing
@@ -289,3 +290,216 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 * MVI Architecture (Model View Intent)
 * Clean Architecture
 
+___________________________________________________________________________________________________________________________________________________
+
+# Android FAQ
+
+Activity/Fragment/Broadcast/Application/Service Lifecycle (Explain with one line description)
+
+Which lifecycle method gets called when A goes to B/come back to A?Activity Launch Modes with examples
+
+Let’s say 4 activities are there A->B->C->D. How to launch A from D finishing in between activities?
+
+4 Activities are there A->B->C->D.How to finish application from D if none of the activities opened earlier finished till now?
+
+How CLEAR_TOP flag intent works in android?
+
+Service vs IntentService?When to prefer which type of service?
+
+Explain ways for Activity to activity communication/Activity to fragment communication/Fragment to fragment communication.
+
+How to make a service persist even after Application killed?
+
+How to achieve Interprocess communication in android?
+
+How Async task internally works? Async task implementation?
+
+Cons of using Async task? How to overcome this limitation?
+
+Why Job Scheduler?
+
+Notification related changes in Oreo?
+
+How to handle Background service and execution limits with new Oreo Updates?
+
+Have you seen Google I/O 2018? What were the updates for Android there?
+
+Why do we use Headless fragments?
+
+Memory Leakage, Causes, and preventions in Android? I have written a blog out here.You can refer this too
+
+Ways to optimize an Android Application.
+
+Proguard-Obfuscation/ Minification, Build Variants, Flavours.
+
+How to achieve MultiThreading in Android?
+
+Suppose you have 10 images to fetch from Server. What is the best way to fetch images? (Hint: Read about ThreadPool and Executor)
+
+Builder vs Factory Pattern with an example
+
+Why MVP not MVC? They will ask you to make a wireframe kind of thing on paper to demonstrate MVP pattern in android.
+
+Why RXJAVA so popular nowadays?
+
+Problems in RXJAVA? They can provide you with some scenarios to get to know if you can find out the problems with it.
+
+Map vs Flat map? (Most commonly asked in RXJAVA)
+
+Should we provide a context in presenter/Model? Answering yes/no is not enough. You have to provide a solution for it.
+
+Why Schedulers and How Rxjava internally works with them?SusbcribeOn vs ObserveOn, Schedulers on which both of these work?.subscribe(new Subscriber…) vs .subscribe(new Observer…)
+
+IOScheduler/new Thread Scheduler in RXJava
+
+How dagger internally worksDagger vs Dagger2? Explain the purpose of every annotation taken in Dagger2.
+
+How do you decide scope in Dagger? Why Qualifier annotation?
+
+Why do we use Handlers? Do you know the Loopers? What’s the role of Message queue? With this, they will go for Main Thread working. They will also ask you about the exceptions we get as Looper.prepare() exceptions
+
+Cause of Memory leak during the Async Task?
+
+Explain Singleton pattern. Problems with it and Handling. (hint: Double checked locking/synchronization)
+
+Why do you prefer Retrofit over Volley? Why Picasso? Now they will ask all the third party libraries you have used. Be honest with your answer. They may go deep in any of those.
+
+Why ConstraintLayout?Barriers vs Guidelines, Why Group/Chains?
+
+Why do we prefer Framelayout for Fragments?
+
+Why ANR?How to prevent it?
+
+Do async.execute make threads in parallel or serial?
+
+How to make a custom view in android? Explain lifecycle methods. Difference between onLayout/onMeasure.
+
+Have you ever faced any issue with SingleInstance launch mode or example if you have used it? Providing real-life examples are preferred more.
+
+When 1 fragment added over another-Explain lifecycle methods. Another question would be if you replace instead of adding it. The 3rd question will be if you have back stack there.
+
+Why fragment newInstance() is there (Best practice for instantiating a new Android Fragment)
+
+Suppose you have to update location every minute even if you don’t get permission. But the tricky thing here is how will you notify the server-Through the same service you were sending updates using FusedLocationProvider/Will you use some other service or broadcast. Just design the whole thing.
+
+Observable.just/Observable.from/Observable.create in RXJAVA?
+
+Why Instant Apps? How do you achieve this?
+
+How to load Large Bitmaps? Handle Memory leaks and Sample sizing
+
+How parcelable internally works? Design it.
+
+What happens if your serializable class contains a member which is not serializable? How to handle it?
+
+Why do we use WeakReferences?
+
+How to retain data on orientation change? Explain lifecycle during orientation changes.
+
+How to make endless circular recyclerView?
+
+Suppose you have given an array of array of custom Objects. Which data structure will you use to show these on UI?
+
+How do you handle opening activity using notifications?
+
+How to achieve Push notifications in android? Explain behavior during App in front/Background-How to handle both scenarios.
+
+How to download files in parallel?
+
+Why Realm?Realm Methods, Realm vs Sqlite.
+
+How to handle different screen sizes/density/languages/orientation in android?
+
+What the Fragment’s method setRetainInstance(boolean) does?
+
+Keep yourself up to date with the latest library versions if using.
+
+Why is there a need for JobIntentService?(hint:: Oreo update)
+
+Basics for Testing in Android-They will ask some questions about Espresso,mockito,roboelectric(not in that deep).Stub vs mock. Also if you are following MVP pattern. Be prepared for the questions now.
+
+How the OS handles process flow. When is the app killed or removed from recent memory? How OS decides this.
+
+Which method gets called when home button pressed, back pressed etc.(Most commonly asked)
+
+Manifest related attributes -allowBackup,intent-filters,process,taskAffinity,permission vs uses-permission etc.
+
+Draw a simple basic design you follow to make an android application(folder structure, methods, variables)
+
+Why services preferred over Broadcast receiver for background applications
+
+Broadcast-related changes in Oreo and Handling them.
+
+Accessibility services in android. How do you handle system apps(I mentioned this work too, so asked)
+
+Thread.start() vs run method,submit vs Execute ,callable vs runnable
+
+View Holder pattern.ListView vs RecyclerView.
+
+Remote Views and How to use them?
+
+Inner Classes vs Static Classes?
+
+Volatile vs Transient
+
+Internal Implementation of Picasso, Glide
+
+Internal implementation of Recyclerview
+
+Design Patterns and Practical Usage
+
+Custom View and Lifecycle
+
+Singleton vs Static and why we use them?
+
+Deep vs Dynamic Linking
+
+Livedata postValue vs set
+
+Livedata vs ObservableField
+
+ViewModelFactory
+
+HashCode and Equals Implementation
+
+Dagger - Component vs SubComponenets
+
+TDD and frameworks - if using , tell the challenges faced
+
+GSON vs Jackson vs Moshi
+
+MultiModule Benfeits
+
+Android Bundle - and Dynamic Feature usage
+
+Proguard vs R8
+
+What is Scoped Storage and how to implement?
+
+Observable vs Completable vs Single
+
+Rx vs Coroutines. Which one you prefer and when?
+
+Difference between MVP and MVVM?
+
+Explain SOLID principles?
+
+Difference between const and val
+
+When is onPause() called without onStop() being called?
+
+Dagger vs Koin?
+
+Any 5 RxJava operatrs. How subscribeOn and observeOn works?
+
+Headless Fragments.
+
+Workmanager, type of requests, methods, minimum interval before a job repeat itself.
+
+Workmanager vs JobScheduler.
+
+Why ConstraintLayout? Tell some properties which I find worth.
+
+How SharedPreferences work internally?
+
+You will be given assignments as your first/last round. They just want to know how you follow the standards. Some ask for UI thing, other ask for architectural patterns. Just check your methods and play well with the logic.That’s all.
