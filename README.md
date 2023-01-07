@@ -293,6 +293,7 @@ Shape Drawables, Fav Gradients, 9 patch images, material components, custom UI c
 ___________________________________________________________________________________________________________________________________________________
 
 # Android FAQ
+## I collected these questions from some medium article. I forgot to add the source at that time. I will attach it when I find it.
 
 Activity/Fragment/Broadcast/Application/Service Lifecycle (Explain with one line description)
 
